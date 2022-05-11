@@ -17,7 +17,7 @@
         'data/approval_categories/pharma_approval_general_category.xml',
         'data/uom_data.xml',
         # 'data/setu.pharma.city.csv',
-        # 'data/fiscal_year.xml',
+        'data/fiscal_year.xml',
 
         # Sequences
         'data/ir_sequences_setu_pharma.xml',
