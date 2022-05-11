@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_personal_booking_search">
+        <field name="name">view.personal.booking.search</field>
+        <field name="model">setu.pharma.pob</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="partner_id"/>
+                <field name="pob_date"/>
+                <field name="division_id"/>
+                <field name="company_id"/>
+                <group string="Group By">
+                    <filter name="employee_id" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="partner_id" string="Doctor" context="{'group_by':'partner_id'}"/>
+                    <filter name="pob_date" string="Date" context="{'group_by':'pob_date'}"/>
+                    <filter name="division_id" string="Division" context="{'group_by':'division_id'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                </group>
+                <filter string="Date" name="filter_create_date" date="pob_date"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_personal_order_booking_tree">
+        <field name="name">view.personal.order.booking.tree</field>
+        <field name="model">setu.pharma.pob</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="pob_date"/>
+                <field name="employee_id"/>
+                <field name="partner_id"/>
+                <field name="division_id"/>
+
+                <field name="total_amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_personal_order_booking_form">
+        <field name="name">view.personal.order.booking.form</field>
+        <field name="model">setu.pharma.pob</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="True"/>
+                            <field name="partner_id" domain="[('is_doctor', '=', True)]" required="True"
+                                   context="{'default_is_doctor':True}"/>
+                            <field name="division_id" required="True"/>
+                        </group>
+                        <group>
+                            <field name="pob_date"/>
+                            <field name="company_id" required="1" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Information" name="line_ids">
+                            <field
+                                    name="line_ids"
+                                    widget="section_and_note_one2many"
+                                    mode="tree">
+                                <tree string="LINES" editable="bottom">
+                                    <field name="product_id" required="1"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit" required="1"/>
+                                    <field name="subtotal"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field name="note" class="oe-bordered-editor" nolabel="1"
+                                           placeholder="Remarks..."/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right"  name="pob_total">
+                                    <div>
+                                        <label for="total_amount" style="font-size:20px;"/>
+                                    </div>
+                                    <div style="font-size:20px;">
+                                        <field name="total_amount"/>
+                                    </div>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_personal_order_booking_kanban">
+        <field name="name">view.personal.order.booking.kanban</field>
+        <field name="model">setu.pharma.pob</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="partner_id"/>
+                <field name="total_amount"/>
+                <field name="pob_date"/>
+                <field name="division_id"/>
+                <field name="line_ids"/>
+                <field name="company_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <ul>
+                                <li>POB :
+                                    <field name="name"/>
+                                </li>
+                                <li>Employee :
+                                    <field name="employee_id"/>
+                                </li>
+                                <li>Doctor :
+                                    <field name="partner_id"/>
+                                </li>
+                                <li>Division:
+                                    <field name="division_id"/>
+                                </li>
+                                <li>Company:
+                                    <field name="company_id"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_personal_order_booking">
+        <field name="name">Personal Order Booking</field>
+        <field name="res_model">setu.pharma.pob</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+</odoo>

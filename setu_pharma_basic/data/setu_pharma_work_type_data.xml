@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="setu_pharma_work_type_AD" model="setu.pharma.work.type">
+        <field name="name">Admin Day</field>
+        <field name="code">AD</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+
+    <record id="setu_pharma_work_type_IT" model="setu.pharma.work.type">
+        <field name="name">On International Tour</field>
+        <field name="code">IT</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+
+    <record id="setu_pharma_work_type_TG" model="setu.pharma.work.type">
+        <field name="name">On Training</field>
+        <field name="code">TG</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_VS" model="setu.pharma.work.type">
+        <field name="name">On Visa Related Activities</field>
+        <field name="code">VS</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_CP" model="setu.pharma.work.type">
+        <field name="name">For Medical Camp Attending or Organizing</field>
+        <field name="code">CP</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_CD" model="setu.pharma.work.type">
+        <field name="name">Chemist Booking Day</field>
+        <field name="code">CD</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_MT" model="setu.pharma.work.type">
+        <field name="name">Meeting</field>
+        <field name="code">MT</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_TT" model="setu.pharma.work.type">
+        <field name="name">In Transits</field>
+        <field name="code">TT</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_CN" model="setu.pharma.work.type">
+        <field name="name">Conference</field>
+        <field name="code">CN</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+    <record id="setu_pharma_work_type_RW" model="setu.pharma.work.type">
+        <field name="name">Regular Working</field>
+        <field name="code">RW</field>
+        <field name="applicable_for_allowance">0</field>
+    </record>
+
+</odoo>

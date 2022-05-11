@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="setu_pharma_stock_locations_extends_form" model="ir.ui.view">
+        <field name="name">setu.pharma.stock.locations.extends.form</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/group" position="inside">
+                <field name="employee_id" readonly="1"/>
+                <field name="headquarter_id" readonly="1"/>
+                <field name="division_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_pharma_stock_locations_extends_search" model="ir.ui.view">
+        <field name="name">setu.pharma.stock.locations.extends.search</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="employee_id"/>
+                <field name="headquarter_id"/>
+                <field name="division_id"/>
+                <group string="Group By">
+                    <filter string="Employee" name="group_employee_id" context="{'group_by':'employee_id'}"/>
+                    <filter string="Headquarter" name="group_headquarter_id"
+                            context="{'group_by':'headquarter_id'}"/>
+                    <filter string="Division" name="group_division_id" context="{'group_by':'division_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_pharma_stock_locations_extends_act_window" model="ir.actions.act_window">
+        <field name="name">Stock Location</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.location</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

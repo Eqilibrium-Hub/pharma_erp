@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="setu_pharma_area_list">
+        <field name="name">setu.pharma.area.list</field>
+        <field name="model">setu.pharma.area</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="city_id"/>
+                <field name="pincode"/>
+                <field name="division_id"/>
+                <field name="headquarter_id"/>
+                <field name="company_id"/>
+                <field name="requester_id" optional="hide"/>
+                <field name="state" decoration-success="state == 'approved'" decoration-info="state == 'draft'"
+                       decoration-danger="state == 'cancel'" widget="badge"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="setu_pharma_area_form">
+        <field name="name">setu.pharma.area.form</field>
+        <field name="model">setu.pharma.area</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,pending,approved,refused,cancel"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" required="1"/>
+                            <field name="pincode" required="1"/>
+                            <field name="city_id" required="1"/>
+                            <field name="division_id"/>
+                            <field name="headquarter_id"/>
+                        </group>
+                        <group>
+                            <field name="approval_request_id" readonly="1"/>
+                            <field name="requester_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="setu_pharma_area_search" model="ir.ui.view">
+        <field name="name">setu.pharma.area.search</field>
+        <field name="model">setu.pharma.area</field>
+        <field name="arch" type="xml">
+            <search string="Search Area">
+                <!--Simple Field Filters-->
+                <field name="name" string="Area Name"/>
+                <field name="code" string="Area Code"/>
+                <field name="division_id"/>
+                <field name="pincode" string="Pincode"/>
+                <field name="company_id"/>
+                <field name="requester_id"/>
+                <field name="state"/>
+                <!--Group By-->
+                <group string="Group By">
+                    <filter string="Headquarter" name="group_headquarter" context="{'group_by':'headquarter_id'}"/>
+                    <filter string="Pincode" name="group_pincode" context="{'group_by':'pincode'}"/>
+                    <filter string="Company" name="group_company_id" context="{'group_by':'company_id'}"/>
+                    <filter string="Requester" name="group_requester_id" context="{'group_by':'requester_id'}"/>
+                    <filter string="Division" name="group_division_id" context="{'group_by':'division_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                </group>
+                <filter string="Active" name="filter_is_active"
+                        domain="[('active','!=',False)]"/>
+                <filter string="Inactive" name="filter_is_not_active"
+                        domain="[('active','=',False)]"/>
+                <separator/>
+                <filter name="state_new" domain="[('approval_request_id.request_status','ilike','new')]" string="New"/>
+                <filter name="state_pending" domain="[('approval_request_id.request_status','ilike','pending')]"
+                        string="Submitted"/>
+                <filter name="state_approved" domain="[('approval_request_id.request_status','ilike','approved')]"
+                        string="Approved"/>
+                <filter name="state_refused" domain="[('approval_request_id.request_status','ilike','refused')]"
+                        string="Refused"/>
+                <filter name="state_cancel" domain="[('approval_request_id.request_status','ilike','cancel')]"
+                        string="Cancel"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="setu_pharma_area_action_window">
+        <field name="name">Area</field>
+        <field name="res_model">setu.pharma.area</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="setu_pharma_area_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Area Found!
+            </p>
+            <p>
+                Please Create Areas.
+            </p>
+        </field>
+    </record>
+
+
+
+
+</odoo>

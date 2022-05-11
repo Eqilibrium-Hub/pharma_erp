@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_tp_line_selection_wizard_form">
+        <field name="name">Doctor/Stockists/Chemists Selection Wizard</field>
+        <field name="model">tp.line.partner.selection.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="tp_line" readonly="1" invisible="1"/>
+                        <field name="city_id" readonly="1"/>
+                        <field name="partner_ids" domain="[('city_id', '=', city_id)]"
+                        >
+                            <tree>
+                                <field name="name"/>
+                                <field name="city_id" />
+                                <field name="is_doctor"/>
+                                <field name="is_chemist"/>
+                                <field name="is_stockist"/>
+                                <field name="is_prescriber"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="update_tp_lines_with_selected_partners" string="Add Doctors" type="object"
+                            class="oe_highlight" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="tp_line_selection_wizard_action">
+        <field name="name">Doctor/Stockists/Chemists Selection Wizard</field>
+        <field name="res_model">tp.line.partner.selection.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

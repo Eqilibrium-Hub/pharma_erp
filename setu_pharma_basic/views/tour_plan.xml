@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_tour_plan_search">
+        <field name="name">view.tour.plan.search</field>
+        <field name="model">setu.pharma.tour.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="designation_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="requester_id"/>
+                <field name="division_id"/>
+                <field name="period_id"/>
+                <field name="company_id"/>
+                <filter string="New" name="filter_state_new" domain="[('state','=','new')]"/>
+                <filter string="Pending" name="filter_state_pending"
+                        domain="[('state','=','pending')]"/>
+                <filter string="Approved" name="filter_approved" domain="[('state','=','approved')]"/>
+                <filter string="Refused" name="filter_refused" domain="[('state','=','refused')]"/>
+                <filter string="Cancel" name="filter_cancel" domain="[('state','=','cancel')]"/>
+                <group string="Group By">
+                    <filter name="group_by_employee_id" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="group_by_date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                    <filter name="group_by_requester_id" string="Requester" context="{'group_by':'requester_id'}"/>
+                    <filter name="group_by_division_id" string="Division" context="{'group_by':'division_id'}"/>
+                    <filter name="group_by_period_id" string="Fiscal period" context="{'group_by':'period_id'}"/>
+                    <filter name="group_by_company_id" string="Company" context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_tour_plan_tree">
+        <field name="name">view.tour.plan.tree</field>
+        <field name="model">setu.pharma.tour.plan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="designation_id"/>
+                <field name="division_id"/>
+                <field name="date"/>
+                <field name="period_id"/>
+                <field name="requester_id" optional="hide"/>
+                <field name="state" optional="hide"/>
+                <field name="company_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_tour_plan_form">
+        <field name="name">view.tour.plan.form</field>
+        <field name="model">setu.pharma.tour.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_tour_plan_lines"
+                            type="object"
+                            string="Generate TP Lines"/>
+                    <button name="click_on_submitted"
+                            type="object"
+                            string="Submit"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="1"/>
+                            <field name="designation_id" readonly="1"/>
+                            <field name="division_id" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="period_id" required="1"/>
+                            <field name="approval_request_id" readonly="1"/>
+                            <field name="requester_id" readonly="1"/>
+                            <field name="company_id" required="1" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Plan Lines">
+                            <field name="tour_plan_lines">
+                                <tree editable="bottom">
+                                    <field name="tour_id" invisible="1"/>
+                                    <field name="dcr_id" readonly="1"/>
+                                    <field name="day_working_type"/>
+                                    <field name="working_date_start" widget="date"/>
+                                    <field name="working_date_end" widget="date" invisible="1"/>
+                                    <field name="city_id" required="1"/>
+                                    <field name="visiting_partner_ids" widget="many2many_tags" nolabel="1"
+                                           domain="[('city_id', '=', city_id)]" readonly="1"
+                                    />
+                                    <button name="add_partners_to_visit" type="object" icon="fa-users"
+                                            aria-label="Add Doctors/Stockists/Chemists" width="0.1"
+                                            title="Add Doctors/Stockists/Chemists"
+                                            class="float-right oe_read_only"/>
+                                    <field name="visit_counts"/>
+                                    <field name="day_name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_tour_plan_kanban">
+        <field name="name">view.tour.plan.kanban</field>
+        <field name="model">setu.pharma.tour.plan</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard o_appointment_kanban" default_order="date">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="division_id"/>
+                <field name="date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary col-12 p-0 w-75">
+                                        <field name="period_id"/>
+                                        -
+                                        <field name="date"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content mt-3">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <button class="btn btn-primary mr-2"
+                                                name="action_open_tour_plan_calendar"
+                                                type="object">
+                                            <field name="total_of_planned_date"/>
+                                            Plans
+                                        </button>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>Employee :
+                                        <field name="employee_id"/>
+                                    </li>
+                                    <li>Division :
+                                        <field name="division_id"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_tour_plan">
+        <field name="name">Tour Plan</field>
+        <field name="res_model">setu.pharma.tour.plan</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem name="Expenses Type"
+              id="menu_setu_pharma_expense_type"
+              action="setu_pharma_expense_type_window"
+              parent="hr_expense.menu_hr_expense_configuration"
+    />
+    <menuitem name="Expenses Configurator"
+              id="menu_setu_pharma_expense_configurator"
+              action="setu_pharma_expense_configurator_window"
+              parent="hr_expense.menu_hr_expense_configuration"
+    />
+
+    <menuitem name="Distance Range"
+              id="menu_setu_pharma_distance_range"
+              action="setu_pharma_distance_range_window"
+              parent="hr_expense.menu_hr_expense_configuration"
+    />
+</odoo>

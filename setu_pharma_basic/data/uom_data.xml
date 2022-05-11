@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="product_uom_milligram" model="uom.uom">
+        <field name="category_id" ref="uom.product_uom_categ_kgm"/>
+        <field name="name">mg</field>
+        <field name="factor" eval="100000"/>
+        <field name="uom_type">smaller</field>
+    </record>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_stockist_statement_search">
+        <field name="name">view_stockist_statement_search</field>
+        <field name="model">setu.pharma.monthly.closing.process</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="division_id"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="partner_id"/>
+                <group string="Group BY">
+                    <filter name="division_id" string="Division" context="{'group_by':'division_id'}"/>
+                    <filter name="employee_id" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="partner_id" string="Stockist" context="{'group_by':'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stockist_statement_tree">
+        <field name="name">view_stockist_statement_tree</field>
+        <field name="model">setu.pharma.monthly.closing.process</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="employee_id"/>
+                <field name="division_id"/>
+                <field name="date"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stockist_statement_form">
+        <field name="name">view_stockist_statement_form</field>
+        <field name="model">setu.pharma.monthly.closing.process</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="employee_id"/>
+                            <field name="division_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="company_id" required="1" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Information" name="line_ids">
+                            <field name="line_ids" widget="section_and_note_one2many" mode="tree">
+                                <tree string="Closing Lines" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="date"/>
+                                    <field name="sales_quantity"/>
+                                    <field name="closing_quantity"/>
+                                    <field name="price_unit"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stockist_statement_kanban">
+        <field name="name">view.stockist.statement.kanban</field>
+        <field name="model">setu.pharma.monthly.closing.process</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="division_id"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <ul>
+                                <li>Name :
+                                    <field name="name"/>
+                                </li>
+                                <li>Division :
+                                    <field name="division_id"/>
+                                </li>
+                                <li>Employee:
+                                    <field name="employee_id"/>
+                                </li>
+                                <li>Company:
+                                    <field name="company_id"/>
+                                </li>
+                                <li>Date:
+                                    <field name="date"/>
+                                </li>
+                                <li>Stockist:
+                                    <field name="partner_id"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_stockist_statement">
+        <field name="name">Stockist Statement</field>
+        <field name="res_model">setu.pharma.monthly.closing.process</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+
+</odoo>

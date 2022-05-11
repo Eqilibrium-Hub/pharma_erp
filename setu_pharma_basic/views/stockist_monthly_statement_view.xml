@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.actions.act_window" id="action_setu_sale_order">
+        <field name="name">Setu Sale Order Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="sale.view_order_tree"/>
+    </record>
+
+    <record id="setu_stockist_monthly_statement_tree_view" model="ir.ui.view">
+        <field name="name">setu.stockist.monthly.statement.tree.view</field>
+        <field name="model">setu.stockist.monthly.statement</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="fiscal_period_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div class="text-center">
+                                <strong class="o_kanban_record_title">
+                                    <span>
+                                        <field name="fiscal_period_id"/>
+                                    </span>
+                                </strong>
+                            </div>
+                            <div class="text-center oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <span class="oe_black">Closing Sales Amount :
+                                            <field name="closing_month_total_sales_amount"/>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="oe_black">Next Month Order Total :
+                                            <field name="next_month_order_total"/>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="oe_black">Difference in Sale Order :
+                                            <field name="difference_of_order"/>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="setu_stockist_monthly_statement_line_tree_view" model="ir.ui.view">
+        <field name="name">setu.stockist.monthly.statement.line.tree.view</field>
+        <field name="model">setu.stockist.monthly.statement.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" default_order='purchase desc'>
+                <field name="product_id"/>
+                <field name="opening_stock" readonly="1" force_save="1"/>
+                <field name="purchase"/>
+                <field name="purchase_amount"/>
+                <field name="purchase_return"/>
+                <field name="purchase_return_amount" optional="hide" readonly="1" force_save="1"/>
+                <field name="sales"/>
+                <field name="sales_amount" readonly="1" force_save="1"/>
+                <field name="free_schema"/>
+                <field name="sales_return"/>
+                <field name="sales_return_amount" optional="hide" readonly="1" force_save="1"/>
+                <field name="closing" readonly="1" force_save="1"/>
+                <field name="closing_amount" optional="hide" readonly="1" force_save="1"/>
+                <field name="next_month_order_qty" optional="hide" readonly="1" force_save="1"/>
+                <field name="next_month_order_value" optional="hide" readonly="1" force_save="1"/>
+                <field name="free_schema_amount" optional="hide" readonly="1" force_save="1"/>
+                <field name="product_price" optional="hide" readonly="1" force_save="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="setu_stockist_monthly_statement_form_view" model="ir.ui.view">
+        <field name="name">setu.stockist.monthly.statement.form.view</field>
+        <field name="model">setu.stockist.monthly.statement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" name="sale_order_creation" class="btn btn-primary"
+                            string="create sale order" attrs="{'invisible': ['|',('next_month_order_total', '=', 0),('sale_order_id','>',0)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sale_order" string="Sale Order"
+                                type="object" class="oe_stat_button" icon="fa-globe icon"/>
+                    </div>
+                    <group attrs="{'readonly': [('sale_order_id','>',0)]}">
+                        <group attrs="{'readonly': [('sale_order_id','>',0)]}">
+                            <field name="partner_id" readonly="1"/>
+                            <field name="fiscal_period_id"/>
+                            <field name="sale_order_id" invisible="1"/>
+                            <field name="division_id" readonly="1"/>
+                            <field name="headquarter_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="previous_month_total_sales_amount"/>
+                            <field name="closing_month_total_sales_amount"/>
+                            <field name="next_month_order_total"/>
+                        </group>
+                    </group>
+                    <notebook>
+
+                        <page string="Products">
+                            <field name="stockist_monthly_statement_ids" no_label="1"
+                                   attrs="{'readonly':[('sale_order_id','>', 0 ) ] }"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_setu_stockist_monthly_statement">
+        <field name="name">Setu Stockist Monthly Statement Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">setu.stockist.monthly.statement</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('partner_id','=',active_id)]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_setu_stockist_monthly_statement_lineX">
+        <field name="name">Setu Stockist Monthly Statement Line Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">setu.stockist.monthly.statement.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

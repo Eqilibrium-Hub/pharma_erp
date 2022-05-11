@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="setu_pharma_stock_picking_extends_form" model="ir.ui.view">
+        <field name="name">setu.pharma.stock.picking.extends.from</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="is_gift_order" widget="boolean_toggle"/>
+                <field name="is_sample_order" widget="boolean_toggle"/>
+                <field name="return_expired_stock" widget="boolean_toggle"/>
+                <field name="return_damage" widget="boolean_toggle"/>
+            </field>
+            <field name="location_dest_id" position="after">
+                <field name="headquarter_id" required="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="setu_pharma_stock_pickings_extends_search" model="ir.ui.view">
+        <field name="name">setu.pharma.stock.pickings.extends.search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="is_gift_order"/>
+                <field name="return_expired_stock"/>
+                <field name="return_damage"/>
+                <field name="is_sample_order"/>
+                <field name="headquarter_id"/>
+                <!--Group By-->
+                <group string="Group By">
+                    <filter string="Return expired stock ?" name="group_return_expired_stock"
+                            context="{'group_by':'return_expired_stock'}"/>
+                    <filter string="Return damage stock ?" name="group_return_damage"
+                            context="{'group_by':'return_damage'}"/>
+                    <filter string="Gift Order" name="group_is_gift_order"
+                            context="{'group_by':'is_gift_order'}"/>
+                    <filter string="Sample order ?" name="group_is_sample_order"
+                            context="{'group_by':'is_sample_order'}"/>
+                    <filter string="Headquarter" name="group_headquarter_id"
+                            context="{'group_by':'headquarter_id'}"/>
+                </group>
+                <filter string="Return expired stock ?" name="return_expired_stock"
+                        domain="[('return_expired_stock','=',True)]"/>
+                <filter string="Return damage stock ?" name="return_damage" domain="[('return_damage','=',True)]"/>
+                <separator/>
+                <filter string="Is Gift order ?" name="is_group_order" domain="[('is_gift_order','=',True)]"/>
+                <filter string="Sample order ?" name="is_sample_order" domain="[('is_sample_order','=',True)]"/>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_pharma_stock_picking_extends_acts_window" model="ir.actions.act_window">
+        <field name="name">Stock Picking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Update Prefix of the Internal Sequence -->
+    <function model="ir.model.data" name="write">
+        <value model="ir.model.data"
+               eval="obj().search([('module','=','stock'), ('name','=','seq_picking_internal')]).ids"/>
+        <value eval="{'noupdate': False}"/>
+    </function>
+    <function model="ir.sequence" name="write">
+        <value model="ir.sequence" eval="obj().search([('id', '=', ref('stock.seq_picking_internal'))]).ids"/>
+        <value eval="{'prefix': 'STKDIST/'}"/>
+    </function>
+    <function model="ir.model.data" name="write">
+        <value model="ir.model.data"
+               eval="obj().search([('module','=','stock'), ('name','=','seq_picking_internal')]).ids"/>
+        <value eval="{'noupdate': True}"/>
+    </function>
+
+</odoo>

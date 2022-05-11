@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Inherited Action to display the Employees for "Current" target window-->
+    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+        <field name="target">current</field>
+    </record>
+</odoo>

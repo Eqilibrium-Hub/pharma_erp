@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="setu_pharma_basic_view_employee_daily_call_report_form" model="ir.ui.view">
+            <field name="name">setu_pharma_basic_view_employee_daily_call_report_form</field>
+            <field name="model">setu.pharma.employee.daily.call</field>
+            <field name="inherit_id" ref="setu_pharma_basic.view_employee_daily_call_report_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/field[@name='state']" position="before">
+                    <button name="generate_dcr_expense" string="Generate Expense" type="object"
+                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='daily_call_history']/tree/field[@name='work_type']" position="after">
+                    <field name="is_return_trip"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

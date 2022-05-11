@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_search_setu">
+        <field name="name">view.employee.search</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <field name="area_ids"/>
+                <field name="division_id"/>
+                <field name="headquarter_id"/>
+                <field name="designation_id"/>
+                <field name="headquarter_id"/>
+                <group string="Group by">
+                    <field name="division_id" string="Division" context="{'group_by':'division_id'}"/>
+                    <filter name="headquarter_id" string="Headquarter" context="{'group_by':'headquarter_id'}"/>
+                    <filter name="designation_id" string="Designation" context="{'group_by':'designation_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_tree">
+        <field name="name">view.employee.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="area_ids" optional="hide"/>
+                <field name="division_id"/>
+                <field name="headquarter_id" optional="hide"/>
+                <field name="designation_id"/>
+                <field name="dcr_submit_lock_days" optional="hide"/>
+                <field name="dcr_edit_lock_days" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_form">
+        <field name="name">view.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="coach_id" position="after">
+                <field name="division_id" required="1"/>
+                <field name="designation_id" required="1"/>
+                <field name="headquarter_id" required="1"/>
+            </field>
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="pharma" string="Pharma">
+                    <group>
+                        <group>
+                            <field name="area_ids" widget="many2many_tags"/>
+                            <field name="ex_headquarter_ids" widget="many2many_tags"/>
+                            <field name="stock_location_id"/>
+                        </group>
+                        <group>
+                            <field name="dcr_submit_lock_days"/>
+                            <field name="dcr_edit_lock_days"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="doctor_ids" string="Doctors">
+                    <field name="doctor_ids">
+                        <tree editable="bottom">
+                            <field name="partner_id"/>
+                            <field name="total_visit"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <field name="company_id" position="after">
+                <field name="aadhar_no" required="1"/>
+                <field name="pan_no" required="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

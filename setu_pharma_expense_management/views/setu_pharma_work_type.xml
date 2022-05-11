@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="pharma_work_type_list">
+        <field name="name">pharma.work.type.list</field>
+        <field name="model">setu.pharma.work.type</field>
+        <field name="inherit_id" ref="setu_pharma_basic.setu_pharma_work_type_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='applicable_for_allowance']" position="after">
+                <field name="is_two_way_entry"/>
+                <field name="expense_type_ids" readonly="0" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

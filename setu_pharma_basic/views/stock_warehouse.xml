@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_warehouse_extends_form" model="ir.ui.view">
+        <field name="name">stock.warehouse.extends.form</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/group/field[@name='code']" position="after">
+                <field name="headquarter_id" readonly="1"/>
+                <field name="is_depo_warehouse"/>
+                <field name="depo_manager_id" attrs="{'invisible': [('is_depo_warehouse', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//form/sheet/group/group/field[@name='partner_id']" position="after">
+                <field name="division_id" readonly="1"/>
+                <field name="city_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page name="employees" string="Employees">
+                    <field name="employee_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_pharma_stock_warehouse_search" model="ir.ui.view">
+        <field name="name">setu.pharma.stock.warehouse.search</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.stock_warehouse_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="headquarter_id"/>
+                <field name="depo_manager_id"/>
+                <field name="division_id"/>
+                <field name="employee_ids"/>
+                <group string="Group By">
+                    <filter string="Headquarter" name="group_headquarter" context="{'group_by':'headquarter_id'}"/>
+                    <filter string="Division" name="group_division_id" context="{'group_by':'division_id'}"/>
+                    <filter string="City" name="group_city_id"
+                            context="{'group_by':'city_id'}"/>
+                </group>
+                <filter string="Depo Warehouse" name="filter_is_depo_warehouse"
+                        domain="[('is_depo_warehouse', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_pharma_stock_warehouse_kanban" model="ir.ui.view">
+        <field name="name">setu.pharma.stock.warehouse.kanban</field>
+        <field name="model">stock.warehouse</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="code"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">Warehouse :</strong>
+                                    <span>
+                                        <field name="name"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <b class="o_kanban_record_title">Code :</b>
+                                    <span>
+                                        <field name="code"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_setu_pharma_stock_warehouse_kanban">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="setu_pharma_stock_warehouse_kanban"/>
+        <field name="act_window_id" ref="stock.action_warehouse_form"/>
+    </record>
+</odoo>

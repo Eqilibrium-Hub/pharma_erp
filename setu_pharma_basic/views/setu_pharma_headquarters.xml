@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Form View-->
+    <record id="setu_pharma_headquarters_form_view" model="ir.ui.view">
+        <field name="name">setu.pharma.headquarters.form</field>
+        <field name="model">setu.pharma.headquarters</field>
+        <field name="arch" type="xml">
+            <form string="Headquarter">
+                <header>
+                    <button name="button_employees_stock_location" string="Generate Employee Location" type="object"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-map-marker"
+                                attrs="{'invisible': [('total_of_ex_headquarters', '=', 0)]}"
+                                context="{'open_ex_headquarters': True}"
+                        >
+                            <field name="total_of_ex_headquarters" widget="statinfo" string="Ex. Headquarters"/>
+                        </button>
+                        <button name="action_view_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users"
+                                attrs="{'invisible': [('total_employees', '=', 0)]}"
+                                context="{'open_employees': True}"
+                        >
+                            <field name="total_employees" widget="statinfo" string="Employees"/>
+                        </button>
+                        <button name="action_view_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-building-o"
+                                attrs="{'invisible': [('total_employee_locations', '=', 0)]}"
+                                context="{'open_employee_stock_locations': True}"
+                        >
+                            <field name="total_employee_locations" widget="statinfo" string="Locations"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" required="1" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="city_id" required="1" options="{'no_create_edit': True, 'no_create': True}"/>
+                            <field name="area_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                            <field name="code" required="1"/>
+                            <field name="division_id" options="{'no_create_edit': True, 'no_create': True}"
+                                   required="1"/>
+                            <field name="warehouse_id" readonly="1"/>
+                        </group>
+                        <group>
+<!--                            <field name="ex_headquarter_ids"/>-->
+                            <field name="company_id" readonly="1" required="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="employees" string="Employees">
+                            <field name="employee_ids" readonly="0" domain="[('headquarter_id','=',False)]">
+                                <tree string="Employees">
+                                    <field name="name"/>
+                                    <field name="designation_id"/>
+                                    <field name="division_id"/>
+                                    <field name="aadhar_no"/>
+                                    <field name="pan_no"/>
+                                    <field name="company_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="ex_headquarter_ids" string="Ex. Headquarters">
+                            <field name="ex_headquarter_ids">
+                                <tree string="Ex. Headquarter">
+                                    <field name="city_id"/>
+                                    <field name="distance"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="employee_location_ids" string="Employee's Stock Locations">
+                            <field name="employee_location_ids" readonly="1">
+                                <tree string="Employee's Stock Locations">
+                                    <field name="employee_id"/>
+                                    <field name="name"/>
+                                    <field name="warehouse_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Tree View-->
+    <record id="setu_pharma_headquarters_tree_view" model="ir.ui.view">
+        <field name="name">setu.pharma.headquarters.tree</field>
+        <field name="model">setu.pharma.headquarters</field>
+        <field name="arch" type="xml">
+            <tree string="Headquarters">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="city_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Search View-->
+    <record id="setu_pharma_headquarters_search_view" model="ir.ui.view">
+        <field name="name">setu.pharma.headquarters.search</field>
+        <field name="model">setu.pharma.headquarters</field>
+        <field name="arch" type="xml">
+            <search string="Headquarters Search">
+                <!--Field Search-->
+                <field name="name" string="Headquarter Name"
+                       filter_domain="[('name', 'ilike', self)]"/>
+                <field name="city_id" string="City"
+                       filter_domain="[('city_id', 'ilike', self)]"/>
+                <field name="area_id" string="Area"/>
+                <field name="city_id" string="City"/>
+                <field name="division_id" string="Division"/>
+                <field name="company_id" string="Company"/>
+                <!--Group by-->
+                <group expand="1" string="Group By">
+                    <filter string="HQ Code" name="code"
+                            context="{'group_by':'code'}"/>
+                    <filter string="Division" name="division_id"
+                            context="{'group_by':'division_id'}"/>
+                    <filter string="City" name="city_id"
+                            context="{'group_by':'city_id'}"/>
+                    <filter string="Area" name="area_id"
+                            context="{'group_by':'area_id'}"/>
+                    <filter string="City" name="city_id"
+                            context="{'group_by':'city_id'}"/>
+                    <filter string="Company" name="company_id"
+                            context="{'group_by':'company_id'}"/>
+                    <filter string="Active/Inactive" name="active"
+                            context="{'group_by':'active'}"/>
+                </group>
+                <!--Filters-->
+                <filter name="active_hqs" string="Active"
+                        domain="[('active', '=', True)]"/>
+                <filter name="in_active_hqs" string="In-active"
+                        domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!--Kanban View-->
+    <record id="setu_pharma_headquarters_kanban_view" model="ir.ui.view">
+        <field name="name">setu.pharma.headquarters.kanban</field>
+        <field name="model">setu.pharma.headquarters</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="city_id"/>
+                <field name="total_employees"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_res_partner_kanban">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title oe_partner_heading">
+                                    <field name="name"/>
+                                    -
+                                    <field name="division_id"/>
+                                </strong>
+                                <br/>
+                                <field name="area_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--Window Action-->
+    <record id="setu_pharma_headquarters_act_window" model="ir.actions.act_window">
+        <field name="name">Headquarters</field>
+        <field name="res_model">setu.pharma.headquarters</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Headquarters.
+            </p>
+            <p>
+                Setu's Headquarter structure is used to manage all Pharma headquarters
+                related to employees by headquarters: designations, divisions, cities, etc.
+            </p>
+        </field>
+    </record>
+</odoo>

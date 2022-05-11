@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="setu_pharma_dashboard_kanban_View" model="ir.ui.view">
+        <field name="name">setu.pharma.dashboard.kanban</field>
+        <field name="model">setu.pharma.division</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile oe_background_grey o_emphasize_colors" create="0" sample="1">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary" t-if="!selection_mode">
+                                            <a type="object" name="get_stock_picking_action_picking_type">
+                                                <field name="name"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <span>
+                                        <field name="name"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <b class="o_kanban_record_title">Code :</b>
+                                    <span>
+                                        <field name="code"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="stock_picking_type_kanban" model="ir.ui.view">
+        <field name="name">stock.picking.type.kanban</field>
+        <field name="model">stock.picking.type</field>
+        <field name="mode">primary</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile oe_background_grey o_emphasize_colors" create="0" sample="1">
+                <field name="display_name"/>
+                <field name="color"/>
+                <field name="count_picking_ready"/>
+                <field name="code"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-if="['incoming', 'outgoing', 'internal'].indexOf(record.code.raw_value) > -1" t-attf-class="oe_kanban_card #{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
+                            <div class="o_kanban_card_header">
+                                <div class="o_primary o_kanban_record_title">
+                                    <field name="name"/>
+                                </div>
+                                <div class="o_secondary">
+                                    <field name="warehouse_id" readonly="1" groups="stock.group_stock_multi_warehouses"/>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content o_kanban_button">
+                                <div class="row text-muted">
+                                    <button class="btn btn-primary" name="get_action_picking_tree_ready_kanban" type="object">
+                                        <t t-esc="record.count_picking_ready.value"/> To Process
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

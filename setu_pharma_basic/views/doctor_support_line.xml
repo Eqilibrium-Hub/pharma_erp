@@ -1,0 +1,40 @@
+<odoo>
+    <record model="ir.ui.view" id="view_doctor_support_line_tree">
+        <field name="name">view.doctor.support.line.tree</field>
+        <field name="model">setu.pharma.monthly.doctor.support.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="support_id"/>
+                <field name="product_id"/>
+                <group string="Group By">
+                    <filter name="support_id" string="Support" context="{'group_by':'support_id'}"/>
+                    <filter name="product_id" string="Product" context="{'group_by':'product_id'}"/>
+                    <filter name="quantity" string="Quantity" context="{'group_by':'quantity'}"/>
+                    <filter name="date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="price_unit" string="Price" context="{'group_by':'price_unit'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_doctor_support_line_tree">
+        <field name="name">view.doctor.support.line.tree</field>
+        <field name="model">setu.pharma.monthly.doctor.support.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="support_id"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="date"/>
+                <field name="price_unit"/>
+                <field name="sub_total"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_doctor_support_line">
+        <field name="name">Doctor Support line</field>
+        <field name="res_model">setu.pharma.monthly.doctor.support.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

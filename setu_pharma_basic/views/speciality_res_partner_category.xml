@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_category_view_search_pharma" model="ir.ui.view">
+        <field name="name">res.partner.category.view.search.pharma</field>
+        <field name="model">res.partner.category</field>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <group>
+                    <filter string="Color" name="group_color" context="{'group_by':'color'}"/>
+                    <filter string="Parent Category" name="group_parent_category" context="{'group_by':'parent_id'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+    <record id="action_partner_category_form_pharma" model="ir.actions.act_window">
+        <field name="name">Speciality</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.category</field>
+        <field name="search_view_id" ref="res_partner_category_view_search_pharma"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a New Speciality
+            </p>
+            <p>
+                Assign speciality to your doctors to organize, filter and track them.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_fiscal_year_search">
+        <field name="name">Fiscal Year Search</field>
+        <field name="name">view_fiscal_year_search</field>
+        <field name="model">setu.pharma.fiscalyear</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="start_month"/>
+                <field name="end_month"/>
+                <!--Group By-->
+                <group string="Group By">
+                    <filter string="Start Date" name="group_start_month" context="{'group_by':'start_month'}"/>
+                    <filter string="End Date" name="group_end_month" context="{'group_by':'end_month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="fiscal_view_list" model="ir.ui.view">
+        <field name="name">Fiscal Year List</field>
+        <field name="model">setu.pharma.fiscalyear</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="start_month"/>
+                <field name="end_month"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="fiscal_form_view" model="ir.ui.view">
+        <field name="name">fiscal_form_view</field>
+        <field name="model">setu.pharma.fiscalyear</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_fiscal_period"
+                            type="object"
+                            string="Generate Fiscal Period"
+                            class="btn btn-warning"
+                            attrs="{'invisible': [('period_ids', '!=', [])]}"
+                    />
+                    <button name="reset_fiscal_period"
+                            type="object"
+                            string="Reset Fiscal Period"
+                            class="btn btn-danger"
+                            attrs="{'invisible': [('period_ids', '=', [])]}"
+                    />
+
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <div class="oe_title">
+                                Fiscal Year<br/>
+                                <h1>
+                                    <field name="name" />
+                                </h1>
+                            </div>
+                        </group>
+                        <group style="text-align: center; vertical-align: middle;">
+                            <span style="font-size:18px">
+                                <div class="row">
+
+                                    <div class="col-4">
+                                        <span style="font-size:20px; font-weight:bold">
+                                            Start Year
+                                        </span>
+                                        <br/>
+                                        <field name="start_year" required="True"/>
+                                        <br/>
+                                        <field name="start_month" required="True"/>
+                                    </div>
+                                    -
+                                    <div class="col-4">
+                                        <span style="font-size:20px; font-weight:bold">
+                                            End Year
+                                        </span>
+                                        <br/>
+                                        <field name="end_year" readonly="1"/>
+                                        <br/>
+                                        <field name="end_month" readonly="1"/>
+                                    </div>
+                                </div>
+                            </span>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Periods" name="setu_pharma_fiscal_periods_ids">
+                            <field name="period_ids" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_fiscal_year" model="ir.actions.act_window">
+        <field name="name">Fiscal Year</field>
+        <field name="res_model">setu.pharma.fiscalyear</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

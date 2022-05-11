@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="setu_pharma_work_type_list">
+        <field name="name">setu.pharma.work.type.list</field>
+        <field name="model">setu.pharma.work.type</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" required="1"/>
+                <field name="code" required="1"/>
+                <field name="applicable_for_allowance"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="setu_pharma_work_type_search" model="ir.ui.view">
+        <field name="name">setu.pharma.work.type.search</field>
+        <field name="model">setu.pharma.work.type</field>
+        <field name="arch" type="xml">
+            <search string="Search Area">
+                <!--Simple Field Filters-->
+                <field name="name"/>
+                <field name="applicable_for_allowance"/>
+                <!-- Filters -->
+                <filter string="Applicable For Allowance" name="filter_applicable_for_allowance"
+                        domain="[('applicable_for_allowance','!=',False)]"/>
+                <separator/>
+                <filter string="Invalid For Allowance" name="filter_valid_for_allowance"
+                        domain="[('applicable_for_allowance','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="setu_pharma_work_type_action_window">
+        <field name="name">Work Type</field>
+        <field name="res_model">setu.pharma.work.type</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="setu_pharma_work_type_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Work Type Found!
+            </p>
+            <p>
+                Please Create New Work Type.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

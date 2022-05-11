@@ -1,0 +1,38 @@
+<odoo>
+    <record model="ir.ui.view" id="view_stockist_statement_line_search">
+        <field name="name">view.stockist.statement.line.search</field>
+        <field name="model">setu.pharma.monthly.closing.process.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="statement_id"/>
+                <group string="Group By">
+                    <filter name="product_id" string="Product" context="{'group_by':'product_id'}"/>
+                    <filter name="date" string="Date" context="{'group_by':'date'}"/>
+                    <filter name="statement_id" string="Statement" context="{'group_by':'statement_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stockist_statement_line_tree">
+        <field name="name">view.stockist.statement.line.tree</field>
+        <field name="model">setu.pharma.monthly.closing.process.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id"/>
+                <field name="sales_quantity"/>
+                <field name="date"/>
+                <field name="price_unit"/>
+                <field name="statement_id"/>
+                <field name="closing_quantity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_stockist_statement_line">
+        <field name="name">Stockiest Statement Line</field>
+        <field name="res_model">setu.pharma.monthly.closing.process.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

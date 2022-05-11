@@ -1,0 +1,110 @@
+<odoo>
+    <record id="view_city_distance_search" model="ir.ui.view">
+        <field name="name">view_city_distance_search</field>
+        <field name="model">setu.pharma.city.distance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="from_city_id"/>
+                <field name="to_city_id"/>
+                <field name="distance"/>
+                <group string="Group by">
+                    <filter name="group_by_from_city_id" string="From" context="{'group_by':'from_city_id'}"/>
+                    <filter name="group_by_to_city_id" string="To" context="{'group_by':'to_city_id'}"/>
+                    <filter name="group_by_distance" string="Distance" context="{'group_by':'distance'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_city_distance_tree" model="ir.ui.view">
+        <field name="name">view_city_distance_tree</field>
+        <field name="model">setu.pharma.city.distance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="from_city_id"/>
+                <field name="to_city_id"/>
+                <field name="distance"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_city_distance_form" model="ir.ui.view">
+        <field name="name">view_city_distance_form</field>
+        <field name="model">setu.pharma.city.distance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="from_city_id" required="True"
+                                   domain="[('id', '!=', to_city_id)]"/>
+                            <field name="to_city_id" attrs="{'required': [('from_city_id', '!=', False)]}"
+                                   domain="[('id', '!=', from_city_id)]"/>
+                        </group>
+                        <group style="text-align: center; vertical-align: middle;">
+                            <h2 style="font-size:36px">
+                                <field name="distance"/>
+                                <hr/>
+                                <label class="o_form_label" for="distance" style="font-size:14px">Total Distance</label>
+                            </h2>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_city_distance_kanban" model="ir.ui.view">
+        <field name="name">view.city.distance.kanban</field>
+        <field name="model">setu.pharma.city.distance</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="from_city_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_content oe_kanban_global_click">
+                            <div class="row" style="padding:10px">
+                                <div class="col-8">
+                                    <span style="font-size:14px;">
+                                        <b>From:</b>
+                                        <field name="from_city_id"/>
+                                        <br/>
+                                        <br/>
+                                        <b>To:</b>
+                                        <field name="to_city_id"/>
+                                    </span>
+                                </div>
+                                <div class="col-4" style="text-align:center; vertical-align:middle">
+                                    <br/>
+                                    <h2>
+                                        <field name="distance"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_city_distance" model="ir.actions.act_window">
+        <field name="name">City Distance</field>
+        <field name="res_model">setu.pharma.city.distance</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_city_distance_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Distance Found!
+            </p>
+            <p>
+                Please Create Records.
+            </p>
+        </field>
+    </record>
+</odoo>

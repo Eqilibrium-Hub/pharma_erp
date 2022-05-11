@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_daily_call_report_search">
+        <field name="name">view.employee.daily.call.report.search</field>
+        <field name="model">setu.pharma.employee.daily.call</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="division_id"/>
+                <field name="call_date"/>
+                <field name="company_id"/>
+                <group string="Group By">
+                    <filter name="group_by_employee_id" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="group_by_division_id" string="Division" context="{'group_by':'division_id'}"/>
+                    <filter name="call_date" string="Call date" context="{'group_by':'call_date'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_daily_call_report_tree">
+        <field name="name">view.employee.daily.call.report.tree</field>
+        <field name="model">setu.pharma.employee.daily.call</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="division_id"/>
+                <field name="call_date"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_daily_call_report_form">
+        <field name="name">view.employee.daily.call.report.form</field>
+        <field name="model">setu.pharma.employee.daily.call</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit_dcr" type="object" string="Submit" class="btn btn-primary"
+                            attrs="{'invisible': [('state', '=', 'submitted')]}"
+                    />
+                    <button name="action_reset_dcr" type="object" string="Reset To Draft" class="btn btn-danger"
+                            attrs="{'invisible': [('state', '=', 'draft')]}"
+                    />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="1"
+                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
+                            <field name="division_id" required="1"/>
+                            <field name="headquarter_id" required="1"/>
+                            <field name="distance_calculation_type"
+                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
+                            <field name="is_join_working" widget="boolean_toggle"
+                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
+                        </group>
+                        <group>
+                            <field name="call_date" required="1" readonly="1"/>
+                            <field name="tour_plan_id" required="1" readonly="1"/>
+                            <field name="company_id" required="1" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Call History">
+                            <field name="daily_call_history"
+                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"
+                            >
+                                <tree editable="bottom">
+                                    <field name="call_date" required="1"/>
+                                    <field name="manager_ids" widget="many2many_tags"
+                                           attrs="{'column_invisible': [('parent.is_join_working', '!=', True)]}"/>
+                                    <field name="call_type"/>
+                                    <field name="work_type"
+                                           attrs="{'readonly': [('call_type', 'not in', ['no_working_type', False])],
+                                           'required': [('call_type', '=', 'no_working_type')]}"
+                                    />
+                                    <field name="city_id" string="City" required="1"/>
+                                    <field name="partner_id" string="Doctor/Stockist/Chemist" required="1"
+                                    />
+                                    <field name="doctor_products" readonly="1" widget="many2many_tags"
+                                           attrs="{'no_open': True}"/>
+                                    <button name="add_product_with_quantity" type="object" icon="fa-cubes"
+                                            aria-label="Add Products" width="0.1"
+                                            title="Add Products"
+                                            class="float-right oe_read_only"/>
+                                    <field name="distance"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_daily_call_report_kanban">
+        <field name="name">view.employee.daily.call.report.kanban</field>
+        <field name="model">setu.pharma.employee.daily.call</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard o_appointment_kanban" default_order="call_date">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="division_id"/>
+                <field name="call_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary col-12 p-0 w-75">
+                                        <field name="name"/>
+                                        -
+                                        <field name="call_date"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content mt-3">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <button class="btn btn-primary mr-2"
+                                                name="action_open_call_history"
+                                                type="object">
+                                            <field name="total_of_call_history"/>
+                                            Calls
+                                        </button>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>Employee :
+                                        <field name="employee_id"/>
+                                    </li>
+                                    <li>Division :
+                                        <field name="division_id"/>
+                                    </li>
+                                    <li>Call date :
+                                        <field name="call_date"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_employee_daily_call_report">
+        <field name="name">Daily Call Report</field>
+        <field name="res_model">setu.pharma.employee.daily.call</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_employee_daily_call_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Daily Call Report Found!
+            </p>
+            <p>
+                Please Create Daily Call Report.
+            </p>
+        </field>
+    </record>
+
+</odoo>

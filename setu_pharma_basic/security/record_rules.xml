@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="setu_pharma_area_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Area- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_area"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_division_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Division- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_division"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_designation_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Designation- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_designation"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_monthly_doctor_support_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Doctor Support- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_monthly_doctor_support"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_employee_daily_call_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Daily Call Report- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_employee_daily_call"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_stock_distribution_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Stock Distribution- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_stock_distribution"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_pob_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Personal Order Booking- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_pob"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_monthly_closing_process_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Stockist Statement- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_monthly_closing_process"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_tour_plan_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Tour Plan- User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_tour_plan"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="setu_pharma_headquarters_user_record_rule" model="ir.rule">
+        <field name="name">Pharma Headquarters - User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_pharma_headquarters"/>
+        <field name="domain_force">[
+            ('company_id', 'in', company_ids)
+            ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+</odoo>

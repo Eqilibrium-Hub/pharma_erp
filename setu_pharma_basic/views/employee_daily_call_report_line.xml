@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_employee_daily_call_report_line_search">
+        <field name="name">view.employee.daily.call.report.line.search</field>
+        <field name="model">setu.pharma.employee.daily.call.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="dcr_id"/>
+                <filter name="today_filter" string="Today's Call"
+                        domain="[('call_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_daily_call_report_line_tree">
+        <field name="name">view.employee.daily.call.report.line.tree</field>
+        <field name="model">setu.pharma.employee.daily.call.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="dcr_id"/>
+                <field name="call_date"/>
+                <field name="call_type"/>
+                <field name="work_type"/>
+                <field name="partner_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_daily_call_line_report_form">
+        <field name="name">view.employee.daily.call.report.line.form</field>
+        <field name="model">setu.pharma.employee.daily.call.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="call_date" required="1"/>
+                            <field name="call_date_start" readonly="1"/>
+                            <field name="call_date_end" readonly="1"/>
+                            <field name="manager_ids" widget="many2many_tags"/>
+                            <field name="call_type"/>
+                            <field name="work_type"
+                                   attrs="{'readonly': [('call_type', 'not in', ['no_working_type', False])],
+                                           'required': [('call_type', '=', 'no_working_type')]}"
+                            />
+                            <field name="city_id" string="City" required="1"
+                            />
+                            <field name="partner_id" string="Doctor/Stockist/Chemist" required="1"
+                            />
+                        </group>
+                        <group>
+                            <div>
+                                <button name="add_product_with_quantity" type="object"
+                                        help="Add Products with Quantities for Sample or Gift"
+                                        icon="fa-plus"
+                                        class="btn btn-warning">
+                                    Add Products
+                                </button>
+                            </div>
+                            <field name="doctor_products" readonly="1" widget="many2many_tags"
+                                   string="Products"
+                                   attrs="{'no_open': True}"/>
+                            <field name="distance"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_employee_daily_call_report_line_calendar" model="ir.ui.view">
+        <field name="name">setu.pharma.employee.daily.call.line.calendar</field>
+        <field name="model">setu.pharma.employee.daily.call.line</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Daily Calls" date_start="call_date_start" date_stop="call_date_end"
+                      event_open_popup="true"
+                      form_view_id="%(setu_pharma_basic.view_employee_daily_call_line_report_form)d"
+                      mode="week"
+                      quick_add="False"
+                      color="partner_id"
+            >
+                <field name="dcr_id"/>
+                <field name="partner_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_employee_daily_call_report_line">
+        <field name="name">Daily Call Report Log</field>
+        <field name="res_model">setu.pharma.employee.daily.call.line</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="search_view_id" ref="view_employee_daily_call_report_line_search"/>
+    </record>
+
+</odoo>

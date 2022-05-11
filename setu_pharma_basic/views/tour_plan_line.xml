@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_tour_plan_line_tree">
+        <field name="name">view.tour.plan.line.tree</field>
+        <field name="model">setu.pharma.tour.plan.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="tour_id"/>
+                <field name="city_id"/>
+                <field name="working_date_start"/>
+                <field name="working_date_end"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_tour_plan_line_form">
+        <field name="name">setu.pharma.tour.plan.line.form</field>
+        <field name="model">setu.pharma.tour.plan.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="day_name"/>
+                            <field name="working_date_start" widget="date" required="1"/>
+                            <field name="working_date_end" widget="date" required="1"/>
+                            <field name="day_working_type"/>
+                            <field name="tour_id" invisible="1"/>
+                            <field name="dcr_id" readonly="1" invisible="1"/>
+                            <field name="city_id" required="1"/>
+                        </group>
+                        <group>
+                            <div>
+                                <button name="add_partners_to_visit" type="object"
+                                title="Add Doctors/Stockists/Chemists" icon="fa-users"
+                                class="btn btn-danger">
+                                    Add Users
+                                </button>
+                            </div>
+                            <field name="visiting_partner_ids" widget="many2many_tags" nolabel="1"
+                                   domain="[('city_id', '=', city_id)]" readonly="1"
+                            />
+                            <field name="visit_counts"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tour_plan_line_calendar" model="ir.ui.view">
+        <field name="name">setu.pharma.tour.plan.line.calendar</field>
+        <field name="model">setu.pharma.tour.plan.line</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Plan Dates" date_start="working_date_start" date_stop="working_date_end"
+                      event_open_popup="true"
+                      form_view_id="%(setu_pharma_basic.view_tour_plan_line_form)d"
+                      mode="month"
+                      quick_add="False"
+                      color="city_id"
+            >
+                <field name="tour_id"/>
+                <field name="working_date_start"/>
+            </calendar>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_tour_plan_line">
+        <field name="name">Tour Plan Line</field>
+        <field name="res_model">setu.pharma.tour.plan.line</field>
+        <field name="view_mode">calendar,tree,form</field>
+    </record>
+
+
+</odoo>

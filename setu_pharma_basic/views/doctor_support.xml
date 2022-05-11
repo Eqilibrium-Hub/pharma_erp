@@ -1,0 +1,151 @@
+<odoo>
+    <record model="ir.ui.view" id="view_doctor_support_search">
+        <field name="name">view.doctor.support.search</field>
+        <field name="model">setu.pharma.monthly.doctor.support</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name"/>
+                <field name="division_id"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="date"/>
+                <group string="Group By">
+                    <filter name="division_id" string="Division" context="{'group_by':'division_id'}"/>
+                    <filter name="employee_id" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="date" string="Date" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_doctor_support_tree">
+        <field name="name">view.doctor.support.tree</field>
+        <field name="model">setu.pharma.monthly.doctor.support</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="division_id" />
+                <field name="employee_id" />
+                <field name="company_id"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+    <!--form-->
+    <record model="ir.ui.view" id="view_doctor_support_form">
+        <field name="name">view_doctor_support_form</field>
+        <field name="model">setu.pharma.monthly.doctor.support</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="1" />
+                            <field name="fiscal_period_id"/>
+                            <field name="division_id"  readonly="1"/>
+                            <field name="headquarter_id" readonly="1"/>
+                        </group>
+                        <group>
+
+                            <field name="company_id" required="1" readonly="1"/>
+                            <field name="date" required="1"/>
+                            <field name="previous_month"/>
+                            <field name="total_amount"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Support Lines" name="line_ids">
+                            <field name="line_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="date" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="sub_total"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" class="mt-2 mt-md-0">
+                                <group class="oe_subtotal_footer oe_right" name="doctor_support_total">
+                                    <div>
+                                        <label for="total_amount" style="font-size:20px;"/>
+                                    </div>
+                                    <div style="font-size:20px;">
+                                        <field name="total_amount"/>
+                                    </div>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_doctor_support_kanban">
+        <field name="name">view.doctor.support.kanban</field>
+        <field name="model">setu.pharma.monthly.doctor.support</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="division_id"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+                <field name="date"/>
+                <field name="line_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <ul>
+                                <li>Division :
+                                    <field name="division_id"/>
+                                </li>
+                                <li>Employee :
+                                    <field name="employee_id"/>
+                                </li>
+                                <li>Company :
+                                    <field name="company_id"/>
+                                </li>
+                                <li>Date :
+                                    <field name="date"/>
+                                </li>
+                                <li>Product closing :
+                                    <field name="line_ids"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_doctor_support">
+        <field name="name">Doctor Support</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">setu.pharma.monthly.doctor.support</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[('employee_id','=',active_id)]</field>
+
+        <field name="search_view_id" ref="view_doctor_support_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Doctor Support Record Found!
+            </p>
+            <p>
+                Please Create Doctor Support Record.
+            </p>
+        </field>
+    </record>
+</odoo>
+

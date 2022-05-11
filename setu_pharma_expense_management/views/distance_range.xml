@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="setu_pharma_distance_range_list">
+        <field name="name">setu.pharma.distance.range.list</field>
+        <field name="model">hr.expense.distance.range.payment</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="distance_range"/>
+                <field name="designation_ids" widget="many2many_tags"/>
+                <field name="amount"/>
+                <field name="expense_configurator_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="setu_pharma_distance_range_window">
+        <field name="name">Distance Range</field>
+        <field name="res_model">hr.expense.distance.range.payment</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

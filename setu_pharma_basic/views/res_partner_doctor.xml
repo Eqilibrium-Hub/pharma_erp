@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_setu_pharma_doctor_tree" model="ir.ui.view">
+        <field name="name">view.setu.pharma.doctor.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Doctors">
+                    <field name="name"/>
+                    <field name="degree_tag_ids" widget="many2many_tags"/>
+                    <field name="speciality_tag_id"/>
+                    <field name="area_id"/>
+                    <field name="city_id"/>
+                    <field name="code" optional="hide"/>
+                    <field name="doctor_class" optional="hide"/>
+                    <field name="birth_date" optional="hide"/>
+                    <field name="anniversary_date" optional="hide"/>
+                    <field name="monthly_visit" optional="hide"/>
+                    <field name="product_ids" widget="many2many_tag"/>
+                    <field name="state" decoration-success="state == 'approved'"
+                           decoration-info="state == 'draft'" decoration-danger="state == 'cancel'" widget="badge"/>
+                    <field name="division_ids" widget="many2many_tags" optional="hide"/>
+                    <field name="chemist_ids" widget="many2many_tags" optional="hide"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="setu_pharma_doctor_form" model="ir.ui.view">
+        <field name="name">setu.pharma.doctor.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,to_be_approved,approved,rejected,cancel"/>
+                </header>
+            </xpath>
+            <xpath expr="//button[@name='schedule_meeting']" position="before">
+                <button name="%(setu_pharma_basic.action_setu_stockist_monthly_statement)d" string="Stockist Statement"
+                        type="action" class="oe_stat_button" icon="fa-book"
+                        attrs="{'invisible':[('is_doctor','=',True)]}"/>
+                <button name="action_view_customer_contract" string="Doctor Statement"
+                        type="object" class="oe_stat_button" icon="fa-book"  attrs="{'invisible':[('is_stockist','=',False)]}"/>
+
+            </xpath>
+            <xpath expr="//form/sheet/group/group/field[@name='vat']" position="after">
+                <field name="is_doctor"/>
+                <field name="is_stockist"/>
+                <field name="is_chemist"/>
+                <field name="is_prescriber"/>
+                <field name="speciality_tag_id"
+                       attrs="{'invisible':[('is_doctor','!=',True)]}"/>
+                <field name="area_id"/>
+                <field name="city_id"/>
+                <field name="birth_date"/>
+                <field name="monthly_visit"/>
+                <field name="degree_tag_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//form/sheet/group/group/field[@name='category_id']" position="after">
+                <field name="doctor_class"
+                       attrs="{'invisible':['|',('is_stockist','=',True),('is_chemist','=',True)]}"/>
+                <field name="code" required="1"/>
+                <field name="anniversary_date"/>
+                <field name="requester_id" readonly="True"/>
+                <field name="approver_id"/>
+                <field name="approval_request_id"/>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[last()]" position="after">
+                <page string="Products" name="products">
+                    <field name="product_ids"/>
+                </page>
+                <page string="Divisions" name="divisions">
+                    <field name="division_ids"/>
+                </page>
+                <page string="Chemist" name="chemist">
+                    <field name="chemist_ids"/>
+                </page>
+                <page string="Related Employees" name="related_employee_ids"
+                      attrs="{'invisible': [('is_doctor', '!=', True)]}">
+                    <field name="related_employee_ids" readonly="1">
+                        <tree>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="employee_id"/>
+                            <field name="total_visit" string="Total Visit Of Current Doctor"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="setu_pharma_doctor_kanban" model="ir.ui.view">
+        <field name="name">setu.pharma.doctor.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="type"/>
+                <field name="parent_id"/>
+                <field name="image_1920"/>
+                <field name="name"/>
+                <field name="is_company"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <div class="class=o_kanban_image_fill_left o_kanban_image_full">
+                                    <div>
+                                        <div class="o_kanban_image">
+                                            <field name="image_1920" widget='image'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <strong class="o_kanban_record_title" style="margin-left: 4px;">
+                                    <field name="name"/>
+                                </strong>
+                                <ul>
+                                    <li style="margin-left: 28px; line-height:0.7em;">
+                                        <field name="degree_tag_ids"/>
+                                        <span style="font-size: 12px;">
+                                            <field name="speciality_tag_id"/>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="setu_pharma_doctor_stockist_chemists_search" model="ir.ui.view">
+        <field name="name">setu.pharma.doctor.stockist.chemist.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="employee_ids"/>
+                <field name="speciality_tag_id"/>
+                <field name="area_id"/>
+                <field name="city_id"/>
+                <field name="code"/>
+                <field name="doctor_class"/>
+                <field name="state"/>
+                <field name="division_ids"/>
+                <field name="approver_id"/>
+                <field name="requester_id"/>
+                <field name="state"/>
+                <filter name="is_prescriber" domain="[('is_prescriber','ilike',True)]" string="Is Prescriber"/>
+                <filter name="state_draft" domain="[('state','ilike','draft')]" string="Draft"/>
+                <filter name="state_to_be_approved" domain="[('state','ilike','to_be_approved')]"
+                        string="To Be Approved"/>
+                <filter name="state_approved" domain="[('state','ilike','approved')]" string="Approved"/>
+                <filter name="state_rejected" domain="[('state','ilike','rejected')]" string="Rejected"/>
+                <filter name="state_cancel" domain="[('state','ilike','cancel')]" string="Cancel"/>
+            </xpath>
+            <xpath expr="//search/group" position="inside">
+                <filter string="Is Doctor" name="group_is_doctor" context="{'group_by':'is_doctor'}"/>
+                <filter string="Is Stockist" name="group_is_stockist" context="{'group_by':'is_stockist'}"/>
+                <filter string="Is Chemist" name="group_is_chemist" context="{'group_by':'is_chemist'}"/>
+                <filter string="Speciality" name="group_speciality_tag_id"
+                        context="{'group_by':'speciality_tag_id'}"/>
+                <filter string="Area" name="group_area_id" context="{'group_by':'area_id'}"/>
+                <filter string="Code" name="group_code" context="{'group_by':'code'}"/>
+                <filter string="Doctor Class" name="group_doctor_class" context="{'group_by':'doctor_class'}"/>
+                <filter string="Date of Birth" name="group_birth_date" context="{'group_by':'birth_date'}"/>
+                <filter string="Birth of anniversary" name="group_anniversary_date"
+                        context="{'group_by':'anniversary_date'}"/>
+                <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                <filter string="Requester" name="group_requester_id" context="{'group_by':'requester_id'}"/>
+                <filter string="Approved by" name="group_approver_id" context="{'group_by':'approver_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="setu_pharma_doctor_action_window">
+        <field name="name">Doctor</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('is_doctor','=',True)]</field>
+        <field name="context">{'default_is_doctor':True}</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="setu_pharma_doctor_action_window_list">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_setu_pharma_doctor_tree"/>
+        <field name="act_window_id" ref="setu_pharma_doctor_action_window"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="setu_pharma_doctor_action_window_kanban">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="setu_pharma_doctor_kanban"/>
+        <field name="act_window_id" ref="setu_pharma_doctor_action_window"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="setu_pharma_doctor_action_window_form">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="setu_pharma_doctor_form"/>
+        <field name="act_window_id" ref="setu_pharma_doctor_action_window"/>
+    </record>
+
+</odoo>

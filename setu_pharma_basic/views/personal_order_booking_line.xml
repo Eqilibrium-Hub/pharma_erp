@@ -1,0 +1,21 @@
+<odoo>
+    <record model="ir.ui.view" id="view_personal_order_booking_line_tree">
+        <field name="name">personal.order.booking.line.tree</field>
+        <field name="model">setu.pharma.pob.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id" required="True"/>
+                <field name="quantity"/>
+                <field name="pob_id"/>
+                <field name="price_unit" required="True"/>
+                <field name="subtotal"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_personal_order_booking_line">
+        <field name="name">Personal Order Booking Line</field>
+        <field name="res_model">setu.pharma.pob.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

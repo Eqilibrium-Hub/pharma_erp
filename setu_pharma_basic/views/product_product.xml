@@ -1,0 +1,55 @@
+<odoo>
+    <record model="ir.ui.view" id="view_product_search">
+        <field name="name">view_product_search</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="molecule"/>
+                <field name="division_id"/>
+                <filter string="Is Focus Product?" name="filter_is_focus_product"
+                        domain="[('is_focus_product','!=',False)]"/>
+                <group string="Group By">
+                    <filter name="group_by_division_id" string="Division" context="{'group_by': 'division_id'}"/>
+                    <filter name="group_by_headquarter_id" string="Headquarter"
+                            context="{'group_by': 'headquarter_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_list">
+        <field name="name">product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="detailed_type" position="after">
+                <field name="is_gift_product"/>
+                <field name="molecule"/>
+                <field name="is_focus_product"/>
+                <field name="division_id"/>
+                <field name="headquarter_id"/>
+            </field>
+            <xpath expr="//label[@for='list_price']" position="attributes">
+                <attribute name="string">M.R.P (Maximum Retail Price)</attribute>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="after">
+                <field name="price_to_stockist"/>
+                <field name="price_to_stockist_percentage"/>
+                <field name="price_to_retailer"/>
+                <field name="price_to_retailer_percentage"/>
+            </xpath>
+            <xpath expr="//notebook/page[last()]" position="after">
+                <page string="Drug Contains" name="drug_contain_lines">
+                    <field name="drug_contain_lines">
+                        <tree editable="bottom">
+                            <field name="name" required="1"/>
+                            <field name="amount" required="1"/>
+                            <field name="drug_uom" required="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

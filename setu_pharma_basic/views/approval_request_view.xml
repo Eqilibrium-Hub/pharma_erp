@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="approvals_approval_request_view_form" model="ir.ui.view">
+            <field name="name">approvals_approval_request_view_form</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='request_main']" position="after">
+                    <group>
+                        <field name="approval_request" string="Approving Request Of" readonly="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

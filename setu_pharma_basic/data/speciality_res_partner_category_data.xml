@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_partner_category_ENT" model="res.partner.category">
+        <field name="name">ENT</field>
+        <field name="color" eval="1"/>
+    </record>
+    <record id="res_partner_category_Gynec" model="res.partner.category">
+        <field name="name">Gynec</field>
+        <field name="color" eval="2"/>
+    </record>
+    <record id="res_partner_category_GP" model="res.partner.category">
+        <field name="name">GP</field>
+        <field name="color" eval="3"/>
+    </record>
+    <record id="res_partner_category_PHY" model="res.partner.category">
+        <field name="name">PHY</field>
+        <field name="color" eval="4"/>
+    </record>
+    <record id="res_partner_category_SUR" model="res.partner.category">
+        <field name="name">SUR</field>
+        <field name="color" eval="5"/>
+    </record>
+    <record id="res_partner_category_URO" model="res.partner.category">
+        <field name="name">URO</field>
+        <field name="color" eval="6"/>
+    </record>
+    <record id="res_partner_category_GASTRO" model="res.partner.category">
+        <field name="name">GASTRO</field>
+        <field name="color" eval="7"/>
+    </record>
+    <record id="res_partner_category_Derma" model="res.partner.category">
+        <field name="name">Derma</field>
+        <field name="color" eval="8"/>
+    </record>
+    <record id="res_partner_category_DEN" model="res.partner.category">
+        <field name="name">DEN</field>
+        <field name="color" eval="9"/>
+    </record>
+    <record id="res_partner_category_ORTHO" model="res.partner.category">
+        <field name="name">ORTHO</field>
+        <field name="color" eval="10"/>
+    </record>
+    <record id="res_partner_category_MS" model="res.partner.category">
+        <field name="name">MS</field>
+        <field name="color" eval="11"/>
+    </record>
+    <record id="res_partner_category_CHEST_PHY" model="res.partner.category">
+        <field name="name">CHEST PHY</field>
+        <field name="color" eval="2"/>
+    </record>
+    <record id="res_partner_category_NEPHRO" model="res.partner.category">
+        <field name="name">NEPHRO</field>
+        <field name="color" eval="4"/>
+    </record>
+    <record id="res_partner_category_Md" model="res.partner.category">
+        <field name="name">Md</field>
+        <field name="color" eval="6"/>
+    </record>
+    <record id="res_partner_category_BAMS" model="res.partner.category">
+        <field name="name">BAMS</field>
+        <field name="color" eval="12"/>
+    </record>
+
+</odoo>

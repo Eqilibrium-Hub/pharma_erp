@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--App Menu-->
+    <menuitem name="Pharma"
+              id="setu_pharma_basic_menu_root"
+              action="setu_pharma_division_action_window"
+              web_icon="setu_pharma_basic,static/description/icon.png"/>
+
+    <!--Root Menus Pharma-->
+    <menuitem name="Pharma"
+              id="setu_pharma_menu"
+              parent="setu_pharma_basic.setu_pharma_basic_menu_root"
+              sequence="1"/>
+
+    <menuitem name="Master"
+              id="setu_pharma_menu_master"
+              parent="setu_pharma_basic.setu_pharma_basic_menu_root"
+              sequence="2"/>
+
+    <menuitem name="Reporting"
+              id="setu_pharma_basic_report_menu_root"
+              parent="setu_pharma_basic.setu_pharma_basic_menu_root"
+              sequence="3"/>
+    <menuitem name="Configuration"
+              id="setu_pharma_menu_configuration"
+              parent="setu_pharma_basic.setu_pharma_basic_menu_root"
+              sequence="4"/>
+
+
+    <!-- Employee Menu -->
+    <menuitem name="Designation"
+              id="setu_pharma_menu_designation"
+              parent="setu_pharma_basic.setu_pharma_menu"
+              action="action_pharma_designation"
+              sequence="3"
+    />
+    <menuitem name="Division"
+              id="setu_pharma_menu_division"
+              parent="setu_pharma_basic.setu_pharma_menu"
+              action="setu_pharma_division_action_window"
+              sequence="2"
+    />
+
+    <menuitem
+            id="hr.menu_hr_employee_user"
+            name="Employees"
+            action="hr.open_view_employee_list_my"
+            parent="hr.menu_hr_employee_payroll"
+            sequence="3"
+    />
+    <menuitem name="Headquarters"
+              id="setu_pharma_headquarters_menu"
+              parent="setu_pharma_basic.setu_pharma_menu"
+              action="setu_pharma_headquarters_act_window"
+              sequence="1"
+    />
+
+    <!-- Configuration Menu -->
+    <menuitem name="City Structure"
+              id="setu_pharma_menu_city_structure"
+              parent="setu_pharma_basic.setu_pharma_menu_configuration"
+    />
+
+    <menuitem name="Area"
+              id="setu_pharma_menu_master_area"
+              parent="setu_pharma_basic.setu_pharma_menu_city_structure"
+              action="setu_pharma_area_action_window"
+    />
+    <menuitem name="City"
+              id="setu_pharma_city"
+              parent="setu_pharma_basic.setu_pharma_menu_city_structure"
+              action="setu_pharma_city_action_window"
+    />
+    <menuitem name="City Distance"
+              id="setu_pharma_menu_city_distance"
+              parent="setu_pharma_basic.setu_pharma_menu_city_structure"
+              action="action_city_distance"
+
+    />
+    <menuitem name="Speciality"
+              id="setu_pharma_menu_master_speciality"
+              parent="setu_pharma_basic.setu_pharma_menu_configuration"
+              action="action_partner_category_form_pharma"
+              sequence="2"
+    />
+    <menuitem name="Fiscal Year"
+              id="setu_pharma_menu_fiscal_year"
+              parent="setu_pharma_basic.setu_pharma_menu_configuration"
+              action="action_fiscal_year"
+              sequence="3"
+
+    />
+    <menuitem name="Pharma Work Type"
+              id="setu_pharma_menu_work_type"
+              parent="setu_pharma_basic.setu_pharma_menu_configuration"
+              action="setu_pharma_work_type_action_window"
+              sequence="1"
+    />
+    <menuitem name="Fiscal Periods"
+              id="setu_pharma_menu_fiscal_periods"
+              parent="hr.menu_human_resources_configuration"
+              action="action_fiscal_period"
+              active="False"
+    />
+
+    <!-- Reporting Menu -->
+    <menuitem name="Tour Plan"
+              id="menu_setu_pharma_tour_plan"
+              action="action_tour_plan"
+              parent="setu_pharma_basic.setu_pharma_basic_report_menu_root"
+    />
+    <menuitem name="Tour Plan Line"
+              id="menu_setu_pharma_tour_plan_line"
+              action="action_tour_plan_line"
+              parent="setu_pharma_basic.setu_pharma_basic_report_menu_root"
+              active="False"
+
+    />
+    <menuitem
+            id="menu_setu_pharma_daily_call_reports"
+            name="Daily Call Report"
+            parent="setu_pharma_basic.setu_pharma_basic_report_menu_root"
+            action="action_employee_daily_call_report"
+    />
+    <menuitem
+            id="menu_setu_pharma_daily_call_reports_log"
+            name="Daily Call Report Log"
+            action="action_employee_daily_call_report_line"
+            parent="setu_pharma_basic.setu_pharma_basic_report_menu_root"
+            active="False"
+    />
+
+    <menuitem name="Master"
+              id="setu_pharma_menu_master"
+              parent="hr.menu_hr_root"
+
+    />
+    <!--Masters Menu Child-->
+    <menuitem name="Doctors"
+              id="setu_pharma_menu_master_doctor"
+              parent="setu_pharma_basic.setu_pharma_menu_master"
+              action="setu_pharma_doctor_action_window"
+
+    />
+    <menuitem name="Retailers"
+              id="setu_pharma_menu_master_retailer"
+              parent="setu_pharma_basic.setu_pharma_menu_master"
+              action="setu_pharma_retailer_action_window"
+
+    />
+    <menuitem name="Stockists"
+              id="setu_pharma_menu_master_stockist"
+              parent="setu_pharma_basic.setu_pharma_menu_master"
+              action="setu_pharma_stockist_action_window"
+
+    />
+
+
+    <!--    &lt;!&ndash;Root Menus&ndash;&gt;-->
+    <!--    <menuitem name="Employee"-->
+    <!--              id="setu_pharma_menu_employees"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_basic_menu_root"-->
+
+    <!--    <menuitem name="Operations"-->
+    <!--              id="setu_pharma_basic_operations_menu_root"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_basic_menu_root"-->
+
+    <!--    />-->
+    <!--    &lt;!&ndash;Setting Child Menu&ndash;&gt;-->
+    <!--    <menuitem name="Settings"-->
+    <!--              id="setu_pharma_menu_settings"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_menu_configuration"-->
+
+    <!--    />-->
+    <!--    &lt;!&ndash;City Structure Child&ndash;&gt;-->
+    <!--    <menuitem name="City - Division Mapping"-->
+    <!--              id="setu_pharma_menu_city_division_mapping"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_menu_city_structure"-->
+    <!--              action="action_city_division_mapping"-->
+
+    <!--    />-->
+
+    <!--    &lt;!&ndash;Employee Menu Child&ndash;&gt;-->
+
+    <!--    />-->
+    <!--    &lt;!&ndash;Operations Child Menu&ndash;&gt;-->
+    <!--    <menuitem name="Personal Order Booking POB"-->
+    <!--              id="menu_setu_pharma_personal_order_booking"-->
+    <!--              action="action_personal_order_booking"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_basic_operations_menu_root"/>-->
+    <!--    <menuitem name="Doctor Support"-->
+    <!--              id="menu_setu_pharma_doctor_support"-->
+    <!--              action="action_doctor_support"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_basic_operations_menu_root"/>-->
+    <!--    <menuitem name="Employee Sampling and Gift Reporting"-->
+    <!--              id="setu_pharma_employee_sampling_and_gift_reporting"-->
+    <!--              action="action_employee_sampling_and_gift_reporting"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_basic_report_menu_root"/>-->
+    <!--    <menuitem name="Stockist Statement"-->
+    <!--              id="menu_setu_pharma_stockist_statement"-->
+    <!--              action="action_stockist_statement"-->
+    <!--              parent="setu_pharma_basic.setu_pharma_basic_operations_menu_root"/>-->
+
+</odoo>

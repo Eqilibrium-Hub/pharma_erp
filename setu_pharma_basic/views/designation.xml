@@ -1,0 +1,95 @@
+<odoo>
+    <record model="ir.ui.view" id="view_designation_search">
+        <field name="name">view.designation.search</field>
+        <field name="model">setu.pharma.designation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="company_id"/>
+                <group string="Group By">
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="code" string="Designation Code" context="{'group_by':'code'}"/>
+                </group>
+                <filter string="Active" name="filter_is_active"
+                        domain="[('active','!=',False)]"/>
+                <filter string="Inactive" name="filter_is_not_active"
+                        domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_designation_list">
+        <field name="name">view.designation.list</field>
+        <field name="model">setu.pharma.designation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="division_ids" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_designation_form">
+        <field name="name">view.designation.form</field>
+        <field name="model">setu.pharma.designation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="code" required="1"/>
+                        <field name="company_id" required="1" readonly="1"/>
+                        <field name="division_ids" readonly="1" >
+                            <tree editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_designation_kanban">
+        <field name="name">view.designation.kanban</field>
+        <field name="model">setu.pharma.designation</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="division_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <ul>
+                                <li>Designation:
+                                    <field name="name"/>
+                                </li>
+                                <li>Company :
+                                    <field name="company_id"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_pharma_designation" model="ir.actions.act_window">
+        <field name="name">Designation</field>
+        <field name="res_model">setu.pharma.designation</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_designation_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Designation Found!
+            </p>
+            <p>
+                Please Create Designations.
+            </p>
+        </field>
+    </record>
+</odoo>

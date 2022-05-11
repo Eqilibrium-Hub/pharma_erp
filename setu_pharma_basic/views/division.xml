@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="setu_pharma_division_list">
+        <field name="name">setu_pharma_division list</field>
+        <field name="model">setu.pharma.division</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="designation_ids" widget="many2many_tags"/>
+                <field name="company_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="setu_pharma_division_form">
+        <field name="name">setu_pharma_division Form</field>
+        <field name="model">setu.pharma.division</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-map-marker"
+                                attrs="{'invisible': [('total_headquarters', '=', 0)]}"
+                                context="{'open_headquarters': True}"
+                        >
+                            <field name="total_headquarters" widget="statinfo" string="Headquarters"/>
+                        </button>
+                        <button name="action_view_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-cubes"
+                                attrs="{'invisible': [('total_products', '=', 0)]}"
+                                context="{'open_products': True}"
+                        >
+                            <field name="total_products" widget="statinfo" string="Products"/>
+                        </button>
+                        <button name="action_view_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users"
+                                attrs="{'invisible': [('total_employees', '=', 0)]}"
+                                context="{'open_employees': True}"
+                        >
+                            <field name="total_employees" widget="statinfo" string="Employees"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="code" required="1"/>
+                        <field name="company_id" required="1" readonly="1"/>
+                        <field name="designation_ids" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page string="Employees">
+                            <field name="employee_ids">
+                                <tree create="0" edit="0" delete="0">
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="job_title"/>
+                                    <field name="department_id"/>
+                                    <field name="work_email"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Products" name="setu_pharma_division_products">
+                            <field name="product_ids">
+                                <tree string="Products" >
+                                    <field name="default_code"/>
+                                    <field name="name"/>
+                                    <field name="detailed_type"/>
+                                    <field name="is_gift_product"/>
+                                    <field name="is_focus_product"/>
+                                    <field name="molecule"/>
+                                    <field name="headquarter_id"/>
+                                    <field name="division_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Headquarters" name="setu_pharma_division_headquarters">
+                            <field name="headquarter_ids" readonly="1">
+                                <tree no_open="1">
+                                    <field name="name"/>
+                                    <field name="area_id"/>
+                                    <field name="city_id"/>
+                                    <field name="warehouse_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="setu_pharma_division_kanban" model="ir.ui.view">
+        <field name="name">setu.pharma.division.kanban</field>
+        <field name="model">setu.pharma.division</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="code"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <div class="o_kanban_record_headings">
+                                    <b class="o_kanban_record_title">Division :</b>
+                                    <span>
+                                        <field name="name"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <b class="o_kanban_record_title">Code :</b>
+                                    <span>
+                                        <field name="code"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="setu_pharma_division_search" model="ir.ui.view">
+        <field name="name">setu.pharma.division.search</field>
+        <field name="model">setu.pharma.division</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="employee_ids"/>
+                <field name="designation_ids"/>
+                <field name="company_id"/>
+                <group string="Group By">
+                    <filter string="Company" name="group_company" context="{'group_by':'company_id'}"
+                            help="Company"/>
+                    <filter string="Division Code" name="group_code" context="{'group_by':'code'}"
+                            help="Division Code"/>
+                </group>
+                <filter string="Active" name="filter_is_active"
+                        domain="[('active','!=',False)]"/>
+                <filter string="Inactive" name="filter_is_not_active"
+                        domain="[('active','=',False)]"/>
+                <separator/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="setu_pharma_division_action_window">
+        <field name="name">Division</field>
+        <field name="res_model">setu.pharma.division</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="setu_pharma_division_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Division Found!
+            </p>
+            <p>
+                Please Create Divisions.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_sampling_and_gift_reporting_line_search">
+        <field name="name">view.employee.sampling.and.gift.reporting.line.search</field>
+        <field name="model">setu.pharma.stock.distribution.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="distribution_id"/>
+                <group string="Group By">
+                    <filter name="group_by_employee_id" string="Employee" context="{'group_by':'employee_id'}"/>
+                    <filter name="group_by_distribution_date" string="Distribution Date"
+                            context="{'group_by':'distribution_date'}"/>
+                    <filter name="group_by_product_id" string="Product" context="{'group_by':'product_id'}"/>
+                    <filter name="group_by_distribution_id" string="Distribution"
+                            context="{'group_by':'distribution_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_sampling_and_gift_reporting_line_tree">
+        <field name="name">view.employee.sampling.and.gift.reporting.line.tree</field>
+        <field name="model">setu.pharma.stock.distribution.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="distribution_date"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="price_unit"/>
+                <field name="subtotal"/>
+                <field name="distribution_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_employee_sampling_and_gift_reporting_line">
+        <field name="name">Employee Sampling And Gift Reporting Line</field>
+        <field name="res_model">setu.pharma.stock.distribution.line</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>

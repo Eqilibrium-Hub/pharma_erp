@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="setu_pharma_expense_configurator_list">
+        <field name="name">setu.pharma.expense.configurator.list</field>
+        <field name="model">hr.expense.configurator</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="expense_type_id"/>
+                <field name="designation_ids" widget="many2many_tags"/>
+                <field name="division_id"/>
+                <field name="headquarter_ids"/>
+                <field name="calculation_type"/>
+                <field name="fixed_amount"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="setu_pharma_expense_configurator_form">
+        <field name="name">setu.pharma.expense.configurator.form</field>
+        <field name="model">hr.expense.configurator</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="expense_type_id"/>
+                            <field name="division_id"/>
+                            <field name="headquarter_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="designation_ids" widget="many2many_tags" required="1"/>
+                            <field name="calculation_type" required="1"/>
+                            <field name="fixed_amount" attrs="{'invisible': [('calculation_type', '=', 'distance')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="distance_range" string="Distance range">
+                            <tree string="Distance range">
+                                <field attrs="{'invisible': [('calculation_type', '!=', 'distance')]}"
+                                       name="distance_range_ids" />
+                            </tree>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="setu_pharma_expense_configurator_search">
+        <field name="name">setu.pharma.expense.configurator.search</field>
+        <field name="model">hr.expense.configurator</field>
+        <field name="arch" type="xml">
+            <search string="Search Area">
+                <!--Simple Field Filters-->
+                <field name="name"/>
+                <field name="expense_type_id"/>
+                <field name="division_id"/>
+                <field name="headquarter_ids"/>
+                <field name="calculation_type"/>
+                <field name="company_id"/>
+                <!--Group By-->
+                <group string="Group By">
+                    <filter string="Expense Type" name="group_expense_type_id"
+                            context="{'group_by':'expense_type_id'}"/>
+                    <filter string="Division" name="group_division_id" context="{'group_by':'division_id'}"/>
+                    <filter string="Calculation pattern" name="group_calculation_type"
+                            context="{'group_by':'calculation_type'}"/>
+                    <filter string="Company" name="group_company_id" context="{'group_by':'company_id'}"/>
+                </group>
+                <filter string="Fixed" name="filter_state_fixed" domain="[('calculation_type','=','fixed')]"/>
+                <filter string="Actual" name="filter_state_actual" domain="[('calculation_type','=','actual')]"/>
+                <filter string="distance" name="filter_state_distance" domain="[('calculation_type','=','distance')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="setu_pharma_expense_configurator_window">
+        <field name="name">Expense Configurator</field>
+        <field name="res_model">hr.expense.configurator</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_dcr_product_selection_wizard_form">
+        <field name="name">Add Products</field>
+        <field name="model">dcr.line.product.selection.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="dcr_line" readonly="1" invisible="1"/>
+                        <field name="partner_id" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Select Products">
+                            <field name="dcr_selection_lines">
+                                <tree editable="bottom">
+                                    <field name="dcr_selection_wiz_id" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="update_tp_lines_with_selected_products" string="Add Products" type="object"
+                            class="oe_highlight" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="dcr_product_selection_wizard_action">
+        <field name="name">Add Products</field>
+        <field name="res_model">dcr.line.product.selection.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

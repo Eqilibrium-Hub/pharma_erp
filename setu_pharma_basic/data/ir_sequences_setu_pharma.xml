@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!--Sequence for Doctor Support (setu.pharma.monthly.doctor.support)-->
+    <record id="doctor_support_setu_pharma_sequence" model="ir.sequence">
+        <field name="name">Doctor Support Sequence</field>
+        <field name="code">setu.pharma.monthly.doctor.support.seq</field>
+        <field name="prefix">DR/SUP/</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <!--Sequence for Employee Daily Call Report (setu.pharma.employee.daily.call)-->
+    <record id="employee_daily_call_report_setu_pharma_sequence" model="ir.sequence">
+        <field name="name">Employee Daily Call Report Sequence</field>
+        <field name="code">setu.pharma.employee.daily.call.seq</field>
+        <field name="prefix">EMP/DCR/</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!--Sequence for Employee Sampling and Gift Reporting (setu.pharma.stock.distribution)-->
+    <record id="stock_distribution_setu_pharma_sequence" model="ir.sequence">
+        <field name="name">Employee Sampling And Gift Reporting Sequence</field>
+        <field name="code">setu.pharma.stock.distribution.seq</field>
+        <field name="prefix">STK/DIST/</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!--Sequence for Personal Order Booking (setu.pharma.pob)-->
+    <record id="personal_order_booking_setu_pharma_sequence" model="ir.sequence">
+        <field name="name">Personal Order Booking Sequence</field>
+        <field name="code">setu.pharma.pob.seq</field>
+        <field name="prefix">POB</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!--Sequence for Stockist Statement (setu.pharma.monthly.closing.process)-->
+    <record id="stockist_statement_setu_pharma_sequence" model="ir.sequence">
+        <field name="name">Stockist Statement Sequence</field>
+        <field name="code">setu.pharma.monthly.closing.process.seq</field>
+        <field name="prefix">STCK/STMT/</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!--Sequence for Tour Plan (setu.pharma.tour.plan)-->
+    <record id="tour_plan_setu_pharma_sequence" model="ir.sequence">
+        <field name="name">Tour Plan Sequence</field>
+        <field name="code">setu.pharma.tour.plan.seq</field>
+        <field name="prefix">TP/</field>
+        <field name="padding">7</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>
