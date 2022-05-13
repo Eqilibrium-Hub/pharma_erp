@@ -7,7 +7,8 @@
     'author': 'Setu Consulting Services Pvt. Ltd.',
     'website': 'https://www.setuconsulting.com/',
     'license': 'Other proprietary',
-    'depends': ['hr', 'sale_stock', 'sale_management', 'approvals', 'crm', 'sale'],
+    'depends': ['hr', 'sale_stock', 'sale_management', 'approvals', 'crm', 'sale',
+                'product_expiry'],
     'data': [
         # Datas
         'data/speciality_res_partner_category_data.xml',
