@@ -26,8 +26,8 @@ class Designation(models.Model):
                 ('code', '=ilike', designation.code),
                 ('id', '!=', designation.id),
             ]):
-                raise ValidationError(_("Duplicate Designation Name Found.\n"
-                                        "Please Add Different Designation Name"))
+                raise ValidationError(_("Duplicate Designation Code Found.\n"
+                                        "Please Add Different Designation Code"))
 
     @api.model
     def create(self, vals):

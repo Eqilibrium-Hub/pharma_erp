@@ -14,7 +14,7 @@
                         >
                             <tree>
                                 <field name="name"/>
-                                <field name="city_id" />
+                                <field name="city_id"  options="{'no_create': True}"/>
                                 <field name="is_doctor"/>
                                 <field name="is_chemist"/>
                                 <field name="is_stockist"/>

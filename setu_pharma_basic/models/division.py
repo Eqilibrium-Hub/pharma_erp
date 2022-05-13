@@ -53,7 +53,7 @@ class Division(models.Model):
                 ('id', '!=', division.id),
             ]):
                 raise ValidationError(
-                    _("Duplicate Area Division Found.\nPlease Add Different Division Code"))
+                    _("Duplicate Division Code Found.\nPlease Add Different Division Code"))
 
     def action_view_records(self):
         """ Open Records for XML button with dynamic context. """

@@ -15,4 +15,4 @@ class SetuPharmaExHeadquarter(models.Model):
             quarter = self.search([('id', '!=', ex_headquater.id), ('city_id', '=', ex_headquater.city_id.id),
                                   ('headquarter_id', '=', ex_headquater.headquarter_id.id)])
             if quarter:
-                raise UserError(_('city must be unique !!!'))
+                raise UserError(_('City must be unique !!!'))

@@ -10,6 +10,3 @@ class ResCompany(models.Model):
     def _inverse_partner_code(self):
         for company in self:
             company.partner_id.code = company.code
-
-
-
