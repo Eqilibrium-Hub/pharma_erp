@@ -42,9 +42,11 @@
                     <group>
                         <group>
                             <field name="from_city_id" required="True"
-                                   domain="[('id', '!=', to_city_id)]"/>
+                                   domain="[('id', '!=', to_city_id)]"
+                                   options="{'no_create': True, 'no_open': True}"/>
                             <field name="to_city_id" attrs="{'required': [('from_city_id', '!=', False)]}"
-                                   domain="[('id', '!=', from_city_id)]"/>
+                                   domain="[('id', '!=', from_city_id)]"
+                                   options="{'no_create': True, 'no_open': True}"/>
                         </group>
                         <group style="text-align: center; vertical-align: middle;">
                             <h2 style="font-size:36px">

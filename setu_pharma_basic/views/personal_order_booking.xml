@@ -53,10 +53,10 @@
                     </div>
                     <group>
                         <group>
-                            <field name="employee_id" required="True"/>
+                            <field name="employee_id" required="True"  options="{'no_create': True}"/>
                             <field name="partner_id" domain="[('is_doctor', '=', True)]" required="True"
-                                   context="{'default_is_doctor':True}"/>
-                            <field name="division_id" required="True"/>
+                                   context="{'default_is_doctor':True}" />
+                            <field name="division_id" required="True"  options="{'no_create': True}"/>
                         </group>
                         <group>
                             <field name="pob_date"/>

@@ -9,7 +9,7 @@
                    position="after">
                 <field name="is_gift_order"/>
                 <field name="is_sample_order"/>
-                <field name="division_id" readonly="1"/>
+                <field name="division_id" readonly="1"  options="{'no_create': True}"/>
             </xpath>
         </field>
     </record>

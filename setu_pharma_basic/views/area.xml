@@ -41,8 +41,8 @@
                             <field name="code" required="1"/>
                             <field name="pincode" required="1"/>
                             <field name="city_id" required="1"/>
-                            <field name="division_id"/>
-                            <field name="headquarter_id"/>
+                            <field name="division_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="headquarter_id" options="{'no_create': True, 'no_open': True}"/>
                         </group>
                         <group>
                             <field name="approval_request_id" readonly="1"/>
@@ -114,8 +114,5 @@
             </p>
         </field>
     </record>
-
-
-
 
 </odoo>

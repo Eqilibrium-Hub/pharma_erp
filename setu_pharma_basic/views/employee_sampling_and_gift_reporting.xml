@@ -56,7 +56,7 @@
                         <group>
                             <field name="is_gift_distribution"/>
                             <field name="is_sample_distribution"/>
-                            <field name="division_id" required="1"/>
+                            <field name="division_id" required="1" options="{'no_create': True}"/>
                         </group>
                     </group>
                     <notebook>

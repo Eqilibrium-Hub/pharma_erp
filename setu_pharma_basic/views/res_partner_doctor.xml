@@ -41,9 +41,9 @@
             <xpath expr="//button[@name='schedule_meeting']" position="before">
                 <button name="%(setu_pharma_basic.action_setu_stockist_monthly_statement)d" string="Stockist Statement"
                         type="action" class="oe_stat_button" icon="fa-book"
-                        attrs="{'invisible':[('is_doctor','=',True)]}"/>
+                        attrs="{'invisible':[('is_stockist','=',False)]}"/>
                 <button name="action_view_customer_contract" string="Doctor Statement"
-                        type="object" class="oe_stat_button" icon="fa-book"  attrs="{'invisible':[('is_stockist','=',False)]}"/>
+                        type="object" class="oe_stat_button" icon="fa-book"  attrs="{'invisible':[('is_doctor','=',False)]}"/>
 
             </xpath>
             <xpath expr="//form/sheet/group/group/field[@name='vat']" position="after">

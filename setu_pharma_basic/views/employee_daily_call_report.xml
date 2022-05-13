@@ -57,8 +57,8 @@
                         <group>
                             <field name="employee_id" required="1"
                                    attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
-                            <field name="division_id" required="1"/>
-                            <field name="headquarter_id" required="1"/>
+                            <field name="division_id" required="1"  options="{'no_create': True}"/>
+                            <field name="headquarter_id" required="1" options="{'no_create': True}"/>
                             <field name="distance_calculation_type"
                                    attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
                             <field name="is_join_working" widget="boolean_toggle"

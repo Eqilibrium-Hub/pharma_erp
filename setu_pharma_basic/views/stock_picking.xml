@@ -12,7 +12,7 @@
                 <field name="return_damage" widget="boolean_toggle"/>
             </field>
             <field name="location_dest_id" position="after">
-                <field name="headquarter_id" required="1"/>
+                <field name="headquarter_id" required="1" options="{'no_create': True}"/>
             </field>
         </field>
     </record>

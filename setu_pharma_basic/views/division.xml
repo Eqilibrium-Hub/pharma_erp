@@ -57,7 +57,8 @@
                     <group>
                         <field name="code" required="1"/>
                         <field name="company_id" required="1" readonly="1"/>
-                        <field name="designation_ids" widget="many2many_tags"/>
+                        <field name="designation_ids" widget="many2many_tags"
+                               options="{'no_create': True, 'no_open': True}"/>
                     </group>
                     <notebook>
                         <page string="Employees">
@@ -73,7 +74,7 @@
                         </page>
                         <page string="Products" name="setu_pharma_division_products">
                             <field name="product_ids">
-                                <tree string="Products" >
+                                <tree string="Products">
                                     <field name="default_code"/>
                                     <field name="name"/>
                                     <field name="detailed_type"/>

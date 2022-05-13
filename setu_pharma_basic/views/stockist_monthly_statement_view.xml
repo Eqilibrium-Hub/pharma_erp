@@ -83,7 +83,8 @@
             <form>
                 <header>
                     <button type="object" name="sale_order_creation" class="btn btn-primary"
-                            string="create sale order" attrs="{'invisible': ['|',('next_month_order_total', '=', 0),('sale_order_id','>',0)]}"/>
+                            string="create sale order"
+                            attrs="{'invisible': ['|',('next_month_order_total', '=', 0),('sale_order_id','>',0)]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -93,7 +94,7 @@
                     <group attrs="{'readonly': [('sale_order_id','>',0)]}">
                         <group attrs="{'readonly': [('sale_order_id','>',0)]}">
                             <field name="partner_id" readonly="1"/>
-                            <field name="fiscal_period_id"/>
+                            <field name="fiscal_period_id" options="{'no_create': True}"/>
                             <field name="sale_order_id" invisible="1"/>
                             <field name="division_id" readonly="1"/>
                             <field name="headquarter_id" readonly="1"/>

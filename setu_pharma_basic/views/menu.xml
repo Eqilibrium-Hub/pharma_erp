@@ -130,11 +130,6 @@
             active="False"
     />
 
-    <menuitem name="Master"
-              id="setu_pharma_menu_master"
-              parent="hr.menu_hr_root"
-
-    />
     <!--Masters Menu Child-->
     <menuitem name="Doctors"
               id="setu_pharma_menu_master_doctor"

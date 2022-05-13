@@ -49,15 +49,14 @@
                     </div>
                     <group>
                         <group>
-                            <field name="city_id" required="1" options="{'no_create_edit': True, 'no_create': True}"/>
-                            <field name="area_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                            <field name="city_id" required="1" options="{'no_create': True}"/>
+                            <field name="area_id" options="{'no_create': True}"/>
                             <field name="code" required="1"/>
-                            <field name="division_id" options="{'no_create_edit': True, 'no_create': True}"
+                            <field name="division_id" options="{'no_create': True}"
                                    required="1"/>
                             <field name="warehouse_id" readonly="1"/>
                         </group>
                         <group>
-<!--                            <field name="ex_headquarter_ids"/>-->
                             <field name="company_id" readonly="1" required="1"/>
                         </group>
                     </group>

@@ -27,11 +27,13 @@
                         <group>
                             <field name="name"/>
                             <field name="expense_type_id"/>
-                            <field name="division_id"/>
-                            <field name="headquarter_ids" widget="many2many_tags"/>
+                            <field name="division_id" options="{'no_create': True}"/>
+                            <field name="headquarter_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
                         </group>
                         <group>
-                            <field name="designation_ids" widget="many2many_tags" required="1"/>
+                            <field name="designation_ids" widget="many2many_tags" required="1"
+                                   options="{'no_create': True}"/>
                             <field name="calculation_type" required="1"/>
                             <field name="fixed_amount" attrs="{'invisible': [('calculation_type', '=', 'distance')]}"/>
                         </group>
@@ -40,7 +42,7 @@
                         <page name="distance_range" string="Distance range">
                             <tree string="Distance range">
                                 <field attrs="{'invisible': [('calculation_type', '!=', 'distance')]}"
-                                       name="distance_range_ids" />
+                                       name="distance_range_ids"/>
                             </tree>
                         </page>
                     </notebook>

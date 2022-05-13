@@ -19,7 +19,7 @@
                 <form>
                     <group>
                         <group>
-                            <field name="city_id"/>
+                            <field name="city_id"  options="{'no_create': True}"/>
                             <field name="distance"/>
                         </group>
                     </group>
