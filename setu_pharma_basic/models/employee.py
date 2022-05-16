@@ -19,10 +19,6 @@ class HrEmployeePrivate(models.Model):
     aadhar_no = fields.Char(string="Aadhar No", size=12, copy=False)
     pan_no = fields.Char(string="PAN No", size=10, copy=False)
     headquarter_id = fields.Many2one(comodel_name="setu.pharma.headquarters", string="Headquarter")
-    ex_headquarter_ids = fields.Many2many(comodel_name="setu.pharma.city",
-                                          relation="pharma_employee_ex_headquarter_rel",
-                                          column1='employee_id', column2='city_id',
-                                          string="Ex. Headquarters")
     stock_location_id = fields.Many2one('stock.location', 'Employee Stock Location')
     doctor_ids = fields.One2many('hr.employee.line', 'employee_id')
 

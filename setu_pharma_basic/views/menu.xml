@@ -27,6 +27,7 @@
               sequence="4"/>
 
 
+
     <!-- Employee Menu -->
     <menuitem name="Designation"
               id="setu_pharma_menu_designation"
@@ -148,6 +149,13 @@
               parent="setu_pharma_basic.setu_pharma_menu_master"
               action="setu_pharma_stockist_action_window"
 
+    />
+    <menuitem
+            id="hr.menu_hr_employee_user"
+            name="Employees"
+            action="hr.open_view_employee_list_my"
+            parent="setu_pharma_basic.setu_pharma_menu_master"
+            sequence="3"
     />
 
 

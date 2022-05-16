@@ -44,14 +44,15 @@
             <field name="coach_id" position="after">
                 <field name="division_id" required="1" options="{'no_create': True}"/>
                 <field name="designation_id" required="1" options="{'no_create': True}"/>
-                <field name="headquarter_id" required="1" options="{'no_create': True}"/>
+                <field name="headquarter_id" required="1" options="{'no_create': True}"
+                domain="[('division_id', '=', division_id)]"
+                />
             </field>
             <xpath expr="//page[@name='hr_settings']" position="after">
                 <page name="pharma" string="Pharma">
                     <group>
                         <group>
                             <field name="area_ids" widget="many2many_tags"/>
-                            <field name="ex_headquarter_ids" widget="many2many_tags"/>
                             <field name="stock_location_id" readonly="1"/>
                         </group>
                         <group>
