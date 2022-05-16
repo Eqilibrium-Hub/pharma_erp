@@ -14,6 +14,14 @@ class StockWarehouseExtends(models.Model):
     division_id = fields.Many2one(related='headquarter_id.division_id', string="Division",
                                   copy=False)
     city_id = fields.Many2one(related='headquarter_id.city_id', string="City", copy=False)
+    code = fields.Char(size=8, related='headquarter_id.code', store=True,
+                       inverse='_inverse_hq_code')
+
+    def _inverse_hq_code(self):
+        """ Update Related Headquarter Code while updating in the warehouse. """
+        for wh in self:
+            if wh.headquarter_id:
+                wh.headquarter_id.code = wh.code
 
     def _get_sequence_values(self):
         """ Each picking type is created with a sequence. This method returns

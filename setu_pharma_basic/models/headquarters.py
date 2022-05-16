@@ -8,9 +8,10 @@ class SetuPharmaHeadquarters(models.Model):
 
     name = fields.Char(string='Name', copy=False,
                        index=True, default=lambda self: _('New'))
-    code = fields.Char(string='HQ Code', copy=False, size=5)
+    code = fields.Char(string='HQ Code', copy=False, size=8)
     area_id = fields.Many2one('setu.pharma.area', 'Area')
     city_id = fields.Many2one("setu.pharma.city", string="City")
+    state_id = fields.Many2one("res.country.state", string="City")
     ex_headquarter_ids = fields.One2many("setu.pharma.ex.headquarter", "headquarter_id",
                                          string='Ex. Headquarters')
     division_id = fields.Many2one('setu.pharma.division', string='Division')
