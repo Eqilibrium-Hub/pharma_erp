@@ -40,7 +40,7 @@ class ResPartner(models.Model):
         ('refused', 'Refused'),
         ('cancel', 'Cancel'),
     ],
-        compute="_compute_state", string="Status", depends=['approval_request_id'],
+        compute="_compute_state", string="Status", depends=['approval_request_id.request_status'],
         copy=False, store=True, default='new',
         help="Approving status")
     approval_request_id = fields.Many2one('approval.request', "Approval Request")
@@ -57,7 +57,7 @@ class ResPartner(models.Model):
 
     def _compute_state(self):
         for partner in self:
-            partner.state = partner.approval_request_id.request_status
+            partner.state = partner.approval_request_id.request_status or partner.state
 
     @api.constrains('code')
     def _check_partner_code(self):
