@@ -27,7 +27,6 @@
               sequence="4"/>
 
 
-
     <!-- Employee Menu -->
     <menuitem name="Designation"
               id="setu_pharma_menu_designation"
@@ -83,6 +82,12 @@
               parent="setu_pharma_basic.setu_pharma_menu_configuration"
               action="action_partner_category_form_pharma"
               sequence="2"
+    />
+    <menuitem name="Doctor Class"
+              id="setu_pharma_menu_doctor_class"
+              parent="setu_pharma_basic.setu_pharma_menu_configuration"
+              action="action_doctor_class"
+              sequence="3"
     />
     <menuitem name="Fiscal Year"
               id="setu_pharma_menu_fiscal_year"
