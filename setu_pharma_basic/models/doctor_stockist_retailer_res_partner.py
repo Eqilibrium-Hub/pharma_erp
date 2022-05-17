@@ -23,7 +23,7 @@ class ResPartner(models.Model):
     area_id = fields.Many2one('setu.pharma.area', string="Area")
     city_id = fields.Many2one('setu.pharma.city', string="Pharma City")
     code = fields.Char(string="Code", size=7)
-    doctor_class = fields.Many2one('res.partner.doctor.class',string="Doctor Class")
+    doctor_class = fields.Many2one('res.partner.doctor.class', string="Doctor Class")
     birth_date = fields.Date(string="Date of birth")
     anniversary_date = fields.Date(string="Date of anniversary")
     monthly_visit = fields.Integer(string="Monthly visit")
@@ -44,7 +44,8 @@ class ResPartner(models.Model):
         copy=False, store=True, default='new',
         help="Approving status")
     approval_request_id = fields.Many2one('approval.request', "Approval Request")
-    requester_id = fields.Many2one('res.users', string='Requester', default=lambda self: self.env.user,
+    requester_id = fields.Many2one('res.users', string='Requester',
+                                   default=lambda self: self.env.user,
                                    help="Requester Name")
     approver_id = fields.Many2one('res.users', string='Approved by')
     division_ids = fields.Many2many(comodel_name="setu.pharma.division",
@@ -56,6 +57,7 @@ class ResPartner(models.Model):
     related_employee_ids = fields.One2many('hr.employee.line', 'partner_id')
 
     def _compute_state(self):
+        """ Compute State of Partner. """
         for partner in self:
             partner.state = partner.approval_request_id.request_status or partner.state
 
@@ -79,7 +81,8 @@ class ResPartner(models.Model):
         if partner:
             approval_category = self.env.ref(
                 'setu_pharma_basic.approval_category_data_general_approval')
-            self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category, model_record=partner)
+            self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
+                                                                             model_record=partner)
         return partner
 
     def write(self, vals):
@@ -90,17 +93,21 @@ class ResPartner(models.Model):
 
     def action_view_stockist_monthly_statement(self):
 
-        tree_view_id = self.env.ref('setu_pharma_basic.setu_stockist_monthly_statement_tree_view').id
-        form_view_id = self.env.ref('setu_pharma_basic.setu_stockist_monthly_statement_form_view').id
+        tree_view_id = self.env.ref(
+            'setu_pharma_basic.setu_stockist_monthly_statement_tree_view').id
+        form_view_id = self.env.ref(
+            'setu_pharma_basic.setu_stockist_monthly_statement_form_view').id
 
         report_display_tree_views = [(tree_view_id, 'tree'), (form_view_id, 'form')]
         view_mode = "tree,form"
 
         products = self.env['product.product'].search([('id', 'in', self.product_ids.ids)])
-        fiscal_year = self.env['setu.pharma.fiscalyear'].search([('start_year', '=', datetime.now().year)])
+        fiscal_year = self.env['setu.pharma.fiscalyear'].search(
+            [('start_year', '=', datetime.now().year)])
         statement = self.env['setu.stockist.monthly.statement'].create({
             'partner_id': self.id,
-            'fiscal_period_id': (fiscal_year.period_ids.filtered(lambda x: x.name == datetime.now().strftime('%B'))).id
+            'fiscal_period_id': (fiscal_year.period_ids.filtered(
+                lambda x: x.name == datetime.now().strftime('%B'))).id
 
         })
 
@@ -122,11 +129,14 @@ class ResPartner(models.Model):
         """
         - To call form view if there are no records of particular doctor
         """
-        action = self.env["ir.actions.actions"]._for_xml_id("setu_pharma_basic.action_doctor_support")
-        doctor_support_ids = self.env['setu.pharma.monthly.doctor.support'].search([('employee_id', '=', self.id)])
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "setu_pharma_basic.action_doctor_support")
+        doctor_support_ids = self.env['setu.pharma.monthly.doctor.support'].search(
+            [('employee_id', '=', self.id)])
 
         if not doctor_support_ids:
-            action['views'] = [(self.env.ref('setu_pharma_basic.setu_pharma_doctor_action_window_form').id, 'form')]
+            action['views'] = [(self.env.ref(
+                'setu_pharma_basic.setu_pharma_doctor_action_window_form').id, 'form')]
             action.update({
                 'views': [[False, 'form']]})
         else:
