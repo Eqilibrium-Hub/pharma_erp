@@ -21,8 +21,6 @@ from . import stock_location
 from . import stock_move
 from . import stock_picking
 from . import stock_warehouse
-from . import stockist_statement
-from . import stockist_statement_line
 from . import tour_plan
 from . import res_users
 from . import employee_daily_call_report_line

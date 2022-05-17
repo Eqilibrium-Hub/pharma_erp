@@ -55,8 +55,6 @@
         'views/employee_sampling_and_gift_reporting_line.xml',
         'views/personal_order_booking.xml',
         'views/personal_order_booking_line.xml',
-        'views/stockist_statement.xml',
-        'views/stockist_statement_line.xml',
         'views/tour_plan.xml',
         'views/tour_plan_line.xml',
         'views/speciality_res_partner_category.xml',

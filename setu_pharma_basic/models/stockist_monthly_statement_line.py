@@ -7,6 +7,7 @@ from datetime import datetime
 class StockistMonthlyStatementLine(models.Model):
     _name = 'setu.stockist.monthly.statement.line'
     _rec_name = 'product_id'
+    _description = "Stockist Statement Line"
 
     product_id = fields.Many2one("product.product", string="Product")
     product_price = fields.Float("Product Price", compute="_get_product_price")

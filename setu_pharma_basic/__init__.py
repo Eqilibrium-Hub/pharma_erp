@@ -32,7 +32,7 @@ def init_settings(env):
 
 
 def init_fiscal_years_and_periods(env):
-    """ Create Current Year's Fiscal Period By Defualt. """
+    """ Create Current Year's Fiscal Period By Default. """
     fy = env['setu.pharma.fiscalyear'].create({
         "end_month": '3',
         "start_month": '4',

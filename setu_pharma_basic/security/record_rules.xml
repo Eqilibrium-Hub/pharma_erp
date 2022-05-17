@@ -93,8 +93,8 @@
     </record>
 
     <record id="setu_pharma_monthly_closing_process_user_record_rule" model="ir.rule">
-        <field name="name">Pharma Stockist Statement- User - Multi-Company</field>
-        <field name="model_id" ref="model_setu_pharma_monthly_closing_process"/>
+        <field name="name">Pharma Stockist Statement - User - Multi-Company</field>
+        <field name="model_id" ref="model_setu_stockist_monthly_statement"/>
         <field name="domain_force">[
             ('company_id', 'in', company_ids)
             ]</field>

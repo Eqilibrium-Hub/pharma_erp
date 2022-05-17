@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class SetuPharmaExHeadquarter(models.Model):
     _name = 'setu.pharma.ex.headquarter'
+    _description = "Setu Pharma Ex. Headquarter"
 
     headquarter_id = fields.Many2one('setu.pharma.headquarters')
     city_id = fields.Many2one('setu.pharma.city', string="city")

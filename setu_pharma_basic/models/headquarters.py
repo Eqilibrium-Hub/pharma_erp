@@ -11,7 +11,7 @@ class SetuPharmaHeadquarters(models.Model):
     code = fields.Char(string='HQ Code', copy=False, size=8)
     area_id = fields.Many2one('setu.pharma.area', 'Area')
     city_id = fields.Many2one("setu.pharma.city", string="City")
-    state_id = fields.Many2one("res.country.state", string="City")
+    state_id = fields.Many2one("res.country.state", string="State")
     ex_headquarter_ids = fields.One2many("setu.pharma.ex.headquarter", "headquarter_id",
                                          string='Ex. Headquarters')
     division_id = fields.Many2one('setu.pharma.division', string='Division')
