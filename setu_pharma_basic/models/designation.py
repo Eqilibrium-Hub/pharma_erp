@@ -8,7 +8,8 @@ class Designation(models.Model):
 
     # Fields Declaration
     name = fields.Char(string="Designation", copy=False)
-    code = fields.Char(string="Code",copy=False, size=5)
+    parent_designation = fields.Many2one('setu.pharma.designation', 'Parent Designation')
+    code = fields.Char(string="Code", copy=False, size=5)
     company_id = fields.Many2one("res.company", string="Company",
                                  default=lambda self: self.env.company)
     division_ids = fields.Many2many("setu.pharma.division",
@@ -17,6 +18,10 @@ class Designation(models.Model):
                                     string="Divisions", copy=False)
     active = fields.Boolean(string="Active Designation", default=True,
                             help="Currently Active Designation.")
+    is_root_designation = fields.Boolean('Is Root Designation?',
+                                         help="There is Only One Root Designation in which you "
+                                              "can mark this field as True else it raise a "
+                                              "Validation.")
 
     @api.constrains('code')
     def _check_designation_name(self):

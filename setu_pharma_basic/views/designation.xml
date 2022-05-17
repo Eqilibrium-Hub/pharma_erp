@@ -25,8 +25,10 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="parent_designation"/>
+                <field name="is_root_designation"/>
                 <field name="company_id"/>
-                <field name="division_ids" widget="many2many_tags" />
+                <field name="division_ids" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -38,15 +40,26 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name" required="1"/>
-                        <field name="code" required="1"/>
-                        <field name="company_id" required="1" readonly="1"/>
-                        <field name="division_ids" readonly="1" >
-                            <tree editable="bottom">
-                                <field name="name"/>
-                            </tree>
-                        </field>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="parent_designation"
+                                   attrs="{'required': [('is_root_designation', '!=',True)]}"/>
+                            <field name="is_root_designation"/>
+                        </group>
+                        <group>
+                            <field name="code" required="1"/>
+                            <field name="company_id" required="1" readonly="1"/>
+                        </group>
                     </group>
+                    <notebook>
+                        <page string="Divisions">
+                            <field name="division_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
