@@ -18,7 +18,6 @@
                     <field name="doctor_class" optional="hide"/>
                     <field name="birth_date" optional="hide"/>
                     <field name="anniversary_date" optional="hide"/>
-                    <field name="monthly_visit" optional="hide"/>
                     <field name="product_ids" widget="many2many_tag"/>
                     <field name="state" decoration-success="state == 'approved'"
                            decoration-info="state == 'draft'" decoration-danger="state == 'cancel'" widget="badge"/>

@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class StockPickingExtends(models.Model):
@@ -9,3 +9,8 @@ class StockPickingExtends(models.Model):
     return_damage = fields.Boolean(string="Return damage stock ?")
     is_sample_order = fields.Boolean(string="Sample order ?")
     headquarter_id = fields.Many2one('setu.pharma.headquarters', 'Headquarter')
+
+    @api.onchange('picking_type_id')
+    def _onchange_picking_type_id(self):
+        for picking in self:
+            picking.headquarter_id = picking.picking_type_id.warehouse_id.headquarter_id and picking.picking_type_id.warehouse_id.headquarter_id.id

@@ -63,8 +63,10 @@
         'views/approval_request_view.xml',
         'views/res_partner_doctor_class.xml',
         'views/setu_pharma_ex_headquater.xml',
+        'views/res_config_settings_views.xml',
         # Make this Menu File in Last Order
         'views/menu.xml',
+
 
         # Wizards
         'wizards/tp_line_selection_wizard.xml',

@@ -9,6 +9,8 @@ class TPLinePartnersSelectionWizard(models.TransientModel):
     tp_line = fields.Many2one('setu.pharma.tour.plan.line', 'TP Line')
     partner_ids = fields.Many2many('res.partner', string='Doctor/Stockist/Chemists')
     city_id = fields.Many2one('setu.pharma.city', 'City')
+    employee_id = fields.Many2one("hr.employee", related='tp_line.tour_id.employee_id')
 
     def update_tp_lines_with_selected_partners(self):
-        self.tp_line.visiting_partner_ids = [(6, 0, self.partner_ids.ids)]
+        vals = self.tp_line.visiting_partner_ids.ids + self.partner_ids.ids
+        self.tp_line.visiting_partner_ids = [(6, 0, vals)]

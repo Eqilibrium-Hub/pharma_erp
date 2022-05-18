@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from collections import defaultdict
 
 
 class HrEmployeePrivate(models.Model):
@@ -49,5 +50,15 @@ class HrEmployeeLine(models.Model):
     _description = "HR Employee Line"
 
     employee_id = fields.Many2one('hr.employee', 'Employee')
-    partner_id = fields.Many2one('res.partner', 'Doctor', domain=[('is_doctor', '=', True)])
+    partner_id = fields.Many2one('res.partner', 'Doctor', domain=[('is_doctor', '=', True)],
+                                 required=True)
     total_visit = fields.Integer('Total Visit', default=1)
+
+    @api.constrains('partner_id')
+    def _check_exist_partner_id(self):
+        for partner in self:
+            exist_product_list = []
+            for line in partner.employee_id.doctor_ids:
+                if line.partner_id.id in exist_product_list:
+                    raise ValidationError(_('Doctor should be one per line.'))
+                exist_product_list.append(line.partner_id.id)

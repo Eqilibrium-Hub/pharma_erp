@@ -62,7 +62,15 @@
                             string="Generate TP Lines"/>
                     <button name="click_on_submitted"
                             type="object"
-                            string="Submit"/>
+                            string="Submit"
+                            attrs="{'invisible': [('state', '=', 'pending')]}"
+                    />
+                    <button name="action_reset_tp"
+                            type="object"
+                            string="Reset To Draft"
+                            class="btn btn-danger"
+                            attrs="{'invisible': [('state', '=', 'new')]}"
+                    />
 
                     <field name="state" widget="statusbar"/>
                 </header>

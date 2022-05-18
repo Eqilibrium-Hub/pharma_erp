@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-
+from odoo.exceptions import ValidationError
 
 class ApprovalRequest(models.Model):
     _inherit = 'approval.request'
@@ -13,3 +13,12 @@ class ApprovalRequest(models.Model):
         Use: This method will prepare all model name for approval request
         """
         return [(model.model, model.name) for model in self.env['ir.model'].sudo().search([])]
+
+    """
+       This method also raise error in when tour plan line is empty
+    """
+    def action_confirm(self):
+        if self.approval_request._name == 'setu.pharma.tour.plan':
+            if not self.approval_request.tour_plan_lines:
+                raise ValidationError(("Tourplan line is mandatory Generate or Add TP line"))
+        return super(ApprovalRequest, self).action_confirm()

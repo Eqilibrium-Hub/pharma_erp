@@ -1,6 +1,11 @@
 from odoo import fields, models, api, _
 import datetime
 from ..tools.datetime_tools import *
+import calendar
+import datetime
+from odoo.exceptions import ValidationError
+from dateutil.relativedelta import relativedelta
+day_names = [(str(i), calendar.day_name[i]) for i in range(0, 7)]
 
 
 class TourPlanLine(models.Model):
@@ -59,6 +64,7 @@ class TourPlanLine(models.Model):
             'views': [[False, 'form']]
         }
 
+
     @api.model
     def create(self, vals):
         ctx = self.env.context
@@ -71,3 +77,13 @@ class TourPlanLine(models.Model):
         if 'tour_id' not in vals:
             vals.update({'tour_id': tour_id})
         return super(TourPlanLine, self).create(vals)
+
+    @api.onchange('working_date_start')
+    def onchange_date(self):
+        date = fields.Date.today() + relativedelta(months=1)
+        last_date = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
+        start_date = last_date.replace(day=1)
+        for record in self:
+            if record.working_date_start != False:
+                if record.working_date_start.date() < start_date or record.working_date_start.date() > last_date:
+                    raise ValidationError(_(f"You can only make plan between {start_date} to {last_date}"))

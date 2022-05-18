@@ -16,7 +16,6 @@
                     <field name="doctor_class" optional="hide"/>
                     <field name="birth_date" optional="hide"/>
                     <field name="anniversary_date" optional="hide"/>
-                    <field name="monthly_visit" optional="hide"/>
                     <field name="product_ids" widget="many2many_tag"/>
                     <field name="state" decoration-success="state == 'approved'"
                            decoration-info="state == 'draft'" decoration-danger="state == 'cancel'" widget="badge"/>
@@ -56,7 +55,6 @@
                 <field name="area_id"/>
                 <field name="city_id"/>
                 <field name="birth_date"/>
-                <field name="monthly_visit"/>
                 <field name="degree_tag_ids" widget="many2many_tags"/>
             </xpath>
             <xpath expr="//form/sheet/group/group/field[@name='category_id']" position="after">
@@ -64,9 +62,8 @@
                        attrs="{'invisible':['|',('is_stockist','=',True),('is_chemist','=',True)]}"/>
                 <field name="code" required="1"/>
                 <field name="anniversary_date"/>
-                <field name="requester_id" readonly="True"/>
-                <field name="approver_id"/>
-                <field name="approval_request_id"/>
+                <field name="requester_id" readonly="True" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}"/>
+                <field name="approval_request_id" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}" readonly="True"/>
             </xpath>
             <xpath expr="//form/sheet/notebook/page[last()]" position="after">
                 <page string="Products" name="products">

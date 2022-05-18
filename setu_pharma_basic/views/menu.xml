@@ -93,14 +93,14 @@
               id="setu_pharma_menu_fiscal_year"
               parent="setu_pharma_basic.setu_pharma_menu_configuration"
               action="action_fiscal_year"
-              sequence="3"
+              sequence="4"
 
     />
     <menuitem name="Pharma Work Type"
               id="setu_pharma_menu_work_type"
               parent="setu_pharma_basic.setu_pharma_menu_configuration"
               action="setu_pharma_work_type_action_window"
-              sequence="1"
+              sequence="2"
     />
     <menuitem name="Fiscal Periods"
               id="setu_pharma_menu_fiscal_periods"

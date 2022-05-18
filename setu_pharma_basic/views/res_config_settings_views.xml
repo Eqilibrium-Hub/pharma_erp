@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.stock</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="30"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Pharma" string="Pharma" data-key="setu_pharma_basic">
+                        <h2>Doctor</h2>
+                        <div class="row mt16 o_settings_container" name="pharma_container">
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 id="tour_plan_doctor_selection"
+                            >
+                                <div class="o_setting_left_pane">
+                                    <field name="mandatory_select_doctors"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="mandatory_select_doctors"/>
+                                    <div class="text-muted">
+                                        mark to add doctors mandatory while creating tour plan.
+                                    </div>
+                                </div>
+                                <br></br>
+                                <div class="o_setting_left_pane"
+                                     attrs="{'invisible':[('mandatory_select_doctors','=',False)]}">
+                                    <field name="raise_validation_tp"/>
+                                </div>
+                                <div class="o_setting_right_pane"
+                                     attrs="{'invisible':[('mandatory_select_doctors','=',False)]}">
+                                    <label for="raise_validation_tp"/>
+                                    <div class="text-muted">
+                                        Mark to raise validation while creating a Tour Plan and Total visit of doctors
+                                        are not fulfilled.
+                                    </div>
+                                </div>
+                                 <br></br>
+
+                                 <div class="o_setting_left_pane">
+                                    <field name="create_dcr_on_tp_approval"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="create_dcr_on_tp_approval"/>
+                                    <div class="text-muted">
+                                        Mark to create daily call report on tour plan approval.
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-lg-6 o_setting_box" id="tour_plan">
+                                <div class="o_setting_right_pane">
+                                    <label for="choice"/>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="choice" class="o_light_label"
+                                                   widget="selection"/>
+                                        </div>
+                                    </div>
+                                    <label for="days"/>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="days"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_pharma_config_settings" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'setu_pharma_basic', 'bin_size': False}</field>
+        </record>
+
+        <menuitem id="menu_pharma_config_settings" name="Settings"
+                  parent="setu_pharma_basic.setu_pharma_menu_configuration"
+                  action="action_pharma_config_settings"
+                  sequence="1"
+        />
+
+    </data>
+</odoo>

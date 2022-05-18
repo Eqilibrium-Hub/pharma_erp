@@ -27,6 +27,8 @@ from . import employee_daily_call_report_line
 from . import tour_plan_lines
 from . import res_company
 from . import setu_pharma_work_type
+from . import approval_request
+from . import res_config_settings
 from . import setu_pharma_ex_headquater
 from . import stockist_monthly_statement
 from . import stockist_monthly_statement_line

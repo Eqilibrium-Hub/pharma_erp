@@ -26,7 +26,6 @@ class ResPartner(models.Model):
     doctor_class = fields.Many2one('res.partner.doctor.class', string="Doctor Class")
     birth_date = fields.Date(string="Date of birth")
     anniversary_date = fields.Date(string="Date of anniversary")
-    monthly_visit = fields.Integer(string="Monthly visit")
     is_prescriber = fields.Boolean(string="Prescriber?")
     product_ids = fields.Many2many("product.product",
                                    'setu_pharma_product_product_partner_rel',
@@ -55,11 +54,19 @@ class ResPartner(models.Model):
                                    relation="hr_partner_res_partner_chemist_rel",
                                    column1='partner_id', column2='chemist_id', string="Chemists")
     related_employee_ids = fields.One2many('hr.employee.line', 'partner_id')
+    total_visit = fields.Integer('Total Visit', related="related_employee_ids.total_visit")
 
     def _compute_state(self):
         """ Compute State of Partner. """
         for partner in self:
-            partner.state = partner.approval_request_id.request_status or partner.state
+            partner.state = partner.approval_request_id.request_status
+            emp_type = [partner.is_doctor, partner.is_prescriber, partner.is_stockist, partner.is_chemist]
+            """
+            this code check if all employee type false than state is approved state
+            """
+            if not any(emp_type):
+                partner.state = 'approved'
+
 
     @api.constrains('code')
     def _check_partner_code(self):
@@ -81,8 +88,14 @@ class ResPartner(models.Model):
         if partner:
             approval_category = self.env.ref(
                 'setu_pharma_basic.approval_category_data_general_approval')
-            self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
-                                                                             model_record=partner)
+
+            """
+            this code check if any employee type true than generate approval request
+            """
+            emp_type = [vals.get('is_doctor'),vals.get('is_chemist'),vals.get('is_stockist'),vals.get('is_prescriber')]
+            if any(emp_type):
+                self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category, model_record=partner)
+
         return partner
 
     def write(self, vals):

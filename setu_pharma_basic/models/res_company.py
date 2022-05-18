@@ -10,3 +10,15 @@ class ResCompany(models.Model):
     def _inverse_partner_code(self):
         for company in self:
             company.partner_id.code = company.code
+
+    @api.model
+    def create(self, vals):
+        """ Create New Default Headquarter. """
+        company_create = super(ResCompany, self).create(vals)
+        self.env['setu.pharma.headquarters'].with_context(
+            allowed_company_ids=company_create.ids).create({
+            'name': company_create.name,
+            'code': company_create.code,
+            'company_id': company_create.id
+        })
+        return company_create
