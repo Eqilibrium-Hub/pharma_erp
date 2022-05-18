@@ -25,7 +25,9 @@ def init_settings(env):
     for company in env['res.company'].search([]):
         res_config_id = env['res.config.settings'].create({
             'company_id': company.id,
-            'group_product_variant': True
+            'group_product_variant': True,
+            'days': 5,
+            'choice': 'last'
         })
         # We need to call execute, otherwise the "implied_group" in fields are not processed.
         res_config_id.execute()
