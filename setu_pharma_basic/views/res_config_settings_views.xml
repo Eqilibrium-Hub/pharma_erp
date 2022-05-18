@@ -82,11 +82,6 @@
             <field name="context">{'module' : 'setu_pharma_basic', 'bin_size': False}</field>
         </record>
 
-        <menuitem id="menu_pharma_config_settings" name="Settings"
-                  parent="setu_pharma_basic.setu_pharma_menu_configuration"
-                  action="action_pharma_config_settings"
-                  sequence="1"
-        />
 
     </data>
 </odoo>

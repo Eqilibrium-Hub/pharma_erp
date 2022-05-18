@@ -60,6 +60,11 @@
               id="setu_pharma_menu_city_structure"
               parent="setu_pharma_basic.setu_pharma_menu_configuration"
     />
+    <menuitem id="menu_pharma_config_settings" name="Settings"
+                  parent="setu_pharma_basic.setu_pharma_menu_configuration"
+                  action="action_pharma_config_settings"
+                  sequence="1"
+        />
 
     <menuitem name="Area"
               id="setu_pharma_menu_master_area"
