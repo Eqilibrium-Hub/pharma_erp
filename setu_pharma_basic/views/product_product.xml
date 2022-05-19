@@ -5,14 +5,11 @@
         <field name="inherit_id" ref="product.product_search_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//search" position="inside">
-                <field name="molecule"/>
                 <field name="division_id"/>
                 <filter string="Is Focus Product?" name="filter_is_focus_product"
                         domain="[('is_focus_product','!=',False)]"/>
                 <group string="Group By">
                     <filter name="group_by_division_id" string="Division" context="{'group_by': 'division_id'}"/>
-                    <filter name="group_by_headquarter_id" string="Headquarter"
-                            context="{'group_by': 'headquarter_id'}"/>
                 </group>
             </xpath>
         </field>
@@ -25,10 +22,8 @@
         <field name="arch" type="xml">
             <field name="detailed_type" position="after">
                 <field name="is_gift_product"/>
-                <field name="molecule"/>
                 <field name="is_focus_product"/>
                 <field name="division_id"  options="{'no_create': True}"/>
-                <field name="headquarter_id"  options="{'no_create': True}"/>
             </field>
             <xpath expr="//label[@for='list_price']" position="attributes">
                 <attribute name="string">M.R.P (Maximum Retail Price)</attribute>

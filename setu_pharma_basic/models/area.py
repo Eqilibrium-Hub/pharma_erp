@@ -19,7 +19,7 @@ class Area(models.Model):
     # Fields Declaration
     name = fields.Char(string="Area Name", help="Area Name.")
     code = fields.Char(string="Code", help="Area Code.", copy=False,
-                        tracking=True)
+                       tracking=True)
     pincode = fields.Char(string="PIN", help="Postal Code For The Area.", tracking=True)
     state = fields.Selection([
         ('new', 'To Submit'),
@@ -34,11 +34,11 @@ class Area(models.Model):
     requester_id = fields.Many2one("res.users", string="Requester", default=_default_requester,
                                    help="Requester Name")
     division_id = fields.Many2one("setu.pharma.division", string="Division",
-                                  help="Division To Map With Area", copy=False , tracking=True)
+                                  help="Division To Map With Area", copy=False, tracking=True)
     company_id = fields.Many2one("res.company", string="Company", default=_default_company_sets)
     active = fields.Boolean(string="Active Area", default=True, help="Currently Active Area.")
-    headquarter_id = fields.Many2one('setu.pharma.headquarters', 'Headquarter' , tracking=True)
-    city_id = fields.Many2one('setu.pharma.city', 'City' , tracking=True)
+    headquarter_id = fields.Many2one('setu.pharma.headquarters', 'Headquarter', tracking=True)
+    city_id = fields.Many2one('setu.pharma.city', 'City', tracking=True)
 
     def _compute_state(self):
         """ Compute State for area. """

@@ -63,5 +63,5 @@ class ResConfigSettings(models.TransientModel):
     @api.constrains('days')
     def _constrains_max_input_days_domain(self):
         for rec in self:
-            if rec.days < 1 or rec.days > 31:
+            if rec.days and rec.choice and (rec.days < 1 or rec.days > 31):
                 raise ValidationError(_("Select Days Between 1 to 31 Only."))

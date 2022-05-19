@@ -6,7 +6,6 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     is_gift_product = fields.Boolean(string="Gift Product?")
-    molecule = fields.Text(string="Molecule")
     is_focus_product = fields.Boolean(string="Focus Product?")
     division_id = fields.Many2one("setu.pharma.division", string="Division")
     headquarter_id = fields.Many2one(comodel_name='setu.pharma.headquarters', string='Headquarter')
@@ -14,7 +13,7 @@ class ProductProduct(models.Model):
                                         depends=['price_to_stockist_percentage', 'list_price'],
                                         store=True)
     price_to_stockist_percentage = fields.Float('PTS (%)')
-    price_to_retailer = fields.Monetary('Price To Retailer (PTS)', compute="_compute_ptr",
+    price_to_retailer = fields.Monetary('Price To Retailer (PTR)', compute="_compute_ptr",
                                         store=True,
                                         depends=['price_to_retailer_percentage', 'list_price'])
     price_to_retailer_percentage = fields.Float('PTR (%)')

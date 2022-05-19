@@ -20,7 +20,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_employee_tree">
+    <record model="ir.ui.view" id="view_employee_tree_pharma">
         <field name="name">view.employee.tree</field>
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_tree"/>
@@ -36,7 +36,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_employee_form">
+    <record model="ir.ui.view" id="view_employee_form_pharma">
         <field name="name">view.employee.form</field>
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/>
@@ -45,7 +45,7 @@
                 <field name="division_id" required="1" options="{'no_create': True}"/>
                 <field name="designation_id" required="1" options="{'no_create': True}"/>
                 <field name="headquarter_id" required="1" options="{'no_create': True}"
-                domain="[('division_id', '=', division_id)]"
+                       domain="[('division_id', '=', division_id)]"
                 />
             </field>
             <xpath expr="//page[@name='hr_settings']" position="after">
@@ -63,11 +63,13 @@
                 </page>
                 <page name="doctor_ids" string="Doctors" context="{'doc_id':active_id}">
                     <field name="doctor_ids" filter_domain="[('doctor_ids.partner_id.name','ilike',self)]"
-                           >
+                    >
                         <tree editable="bottom">
-                            <field name="employee_id" invisible="1" />
+                            <field name="employee_id" invisible="1"/>
                             <field name="partner_id"/>
-                            <field name="total_visit"/>
+                            <field name="partner_id"/>
+                            <field name="partner_id"/>
+                            <field name="total_visit" string="Minimum Visit Required"/>
                         </tree>
                     </field>
                 </page>

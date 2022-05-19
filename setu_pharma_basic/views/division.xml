@@ -80,9 +80,8 @@
                                     <field name="detailed_type"/>
                                     <field name="is_gift_product"/>
                                     <field name="is_focus_product"/>
-                                    <field name="molecule"/>
-                                    <field name="headquarter_id"/>
                                     <field name="division_id"/>
+                                    <field name="drug_contain_lines" widget="many2many_tags"/>
                                 </tree>
                             </field>
                         </page>

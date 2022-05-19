@@ -15,7 +15,7 @@
                     <field name="area_id"/>
                     <field name="city_id"/>
                     <field name="code" optional="hide"/>
-                    <field name="doctor_class" optional="hide"/>
+                    <field name="doctor_class" optional="hide" options="{'no_create': True, 'no_open': True}"/>
                     <field name="birth_date" optional="hide"/>
                     <field name="anniversary_date" optional="hide"/>
                     <field name="product_ids" widget="many2many_tag"/>
@@ -94,7 +94,6 @@
         <field name="view_id" ref="setu_pharma_doctor_form"/>
         <field name="act_window_id" ref="setu_pharma_retailer_action_window"/>
     </record>
-
 
 
 </odoo>

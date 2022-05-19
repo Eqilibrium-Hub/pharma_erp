@@ -78,12 +78,12 @@ class TourPlanLine(models.Model):
             vals.update({'tour_id': tour_id})
         return super(TourPlanLine, self).create(vals)
 
-    @api.onchange('working_date_start')
-    def onchange_date(self):
-        date = fields.Date.today() + relativedelta(months=1)
-        last_date = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
-        start_date = last_date.replace(day=1)
-        for record in self:
-            if record.working_date_start != False:
-                if record.working_date_start.date() < start_date or record.working_date_start.date() > last_date:
-                    raise ValidationError(_(f"You can only make plan between {start_date} to {last_date}"))
+    # @api.onchange('working_date_start')
+    # def onchange_date(self):
+    #     date = fields.Date.today() + relativedelta(months=1)
+    #     last_date = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
+    #     start_date = last_date.replace(day=1)
+    #     for record in self:
+    #         if record.working_date_start != False:
+    #             if record.working_date_start.date() < start_date or record.working_date_start.date() > last_date:
+    #                 raise ValidationError(_(f"You can only make plan between {start_date} to {last_date}"))

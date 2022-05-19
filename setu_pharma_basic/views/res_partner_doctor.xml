@@ -52,13 +52,13 @@
                 <field name="is_prescriber"/>
                 <field name="speciality_tag_id"
                        attrs="{'invisible':[('is_doctor','!=',True)]}"/>
-                <field name="area_id"/>
-                <field name="city_id"/>
+                <field name="area_id" options="{'no_create': True, 'no_open': True}"/>
+                <field name="city_id" options="{'no_create': True, 'no_open': True}"/>
                 <field name="birth_date"/>
                 <field name="degree_tag_ids" widget="many2many_tags"/>
             </xpath>
             <xpath expr="//form/sheet/group/group/field[@name='category_id']" position="after">
-                <field name="doctor_class"
+                <field name="doctor_class" options="{'no_create': True, 'no_open': True}"
                        attrs="{'invisible':['|',('is_stockist','=',True),('is_chemist','=',True)]}"/>
                 <field name="code" required="1"/>
                 <field name="anniversary_date"/>
@@ -81,7 +81,7 @@
                         <tree>
                             <field name="partner_id" invisible="1"/>
                             <field name="employee_id"/>
-                            <field name="total_visit" string="Total Visit Of Current Doctor"/>
+                            <field name="total_visit" string="Minimum Visit Required"/>
                         </tree>
                     </field>
                 </page>

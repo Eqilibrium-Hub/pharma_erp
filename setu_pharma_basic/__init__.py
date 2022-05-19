@@ -47,8 +47,26 @@ def init_fiscal_years_and_periods(env):
     fy.generate_fiscal_period()
 
 
+def init_create_new_default_data(env):
+    """ Create Default Headquarter."""
+    code = ""
+    for company in env['res.company'].search([]):
+        division = env['setu.pharma.division'].create({
+            'company_id': company.id,
+            'name': company.name + " - Generic Division",
+            'code': company.name[:2] + "_G",
+        })
+        hq = env['setu.pharma.headquarters'].create({
+            'company_id': company.id,
+            'division_id': division.id,
+            'name': company.name + " - Headquarter",
+            'code': company.name[:4] + "_code",
+        })
+
+
 def post_init(cr, registry):
     import_csv_data(cr, registry)
     env = api.Environment(cr, SUPERUSER_ID, {})
     init_settings(env)
     init_fiscal_years_and_periods(env)
+    init_create_new_default_data(env)

@@ -37,7 +37,6 @@
                 <field name="employee_ids"/>
                 <group string="Group By">
                     <filter string="Headquarter" name="group_headquarter" context="{'group_by':'headquarter_id'}"/>
-                    <filter string="Division" name="group_division_id" context="{'group_by':'division_id'}"/>
                     <filter string="City" name="group_city_id"
                             context="{'group_by':'city_id'}"/>
                 </group>

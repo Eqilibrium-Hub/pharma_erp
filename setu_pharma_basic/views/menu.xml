@@ -41,13 +41,6 @@
               sequence="2"
     />
 
-    <menuitem
-            id="hr.menu_hr_employee_user"
-            name="Employees"
-            action="hr.open_view_employee_list_my"
-            parent="hr.menu_hr_employee_payroll"
-            sequence="3"
-    />
     <menuitem name="Headquarters"
               id="setu_pharma_headquarters_menu"
               parent="setu_pharma_basic.setu_pharma_menu"
@@ -161,7 +154,7 @@
 
     />
     <menuitem
-            id="hr.menu_hr_employee_user"
+            id="menu_hr_employee_user_pharma"
             name="Employees"
             action="hr.open_view_employee_list_my"
             parent="setu_pharma_basic.setu_pharma_menu_master"
