@@ -52,7 +52,14 @@ class HrEmployeeLine(models.Model):
     employee_id = fields.Many2one('hr.employee', 'Employee')
     partner_id = fields.Many2one('res.partner', 'Doctor', domain=[('is_doctor', '=', True)],
                                  required=True)
+    dr_degree = fields.Many2many(related='partner_id.degree_tag_ids',
+                                 relation='emp_line_dr_degree_rel',
+                                 column1='emp_line_id', column2='degree_id',
+                                 string='Degrees')
+    dr_class = fields.Many2one(related='partner_id.doctor_class',
+                               string='Class')
     total_visit = fields.Integer('Total Visit', default=1)
+    dr_city = fields.Char(related='partner_id.city', string='City')
 
     @api.constrains('partner_id')
     def _check_exist_partner_id(self):

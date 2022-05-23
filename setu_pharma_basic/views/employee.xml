@@ -66,10 +66,14 @@
                     >
                         <tree editable="bottom">
                             <field name="employee_id" invisible="1"/>
-                            <field name="partner_id"/>
-                            <field name="partner_id"/>
-                            <field name="partner_id"/>
-                            <field name="total_visit" string="Minimum Visit Required"/>
+                            <field name="partner_id"
+                                   width="40%"/>
+                            <field name="total_visit" string="Minimum Visit Required"
+                                   width="20%"/>
+                            <field name="dr_city" width="10%"/>
+                            <field name="dr_class" width="10%"/>
+                            <field name="dr_degree" width="20%"
+                                   widget="many2many_tags"/>
                         </tree>
                     </field>
                 </page>
