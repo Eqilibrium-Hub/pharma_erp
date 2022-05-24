@@ -59,7 +59,7 @@
             </xpath>
             <xpath expr="//form/sheet/group/group/field[@name='category_id']" position="after">
                 <field name="doctor_class" options="{'no_create': True, 'no_open': True}"
-                       attrs="{'invisible':['|',('is_stockist','=',True),('is_chemist','=',True)]}"/>
+                       attrs="{'invisible':[('is_doctor','!=',True)]}"/>
                 <field name="code" required="1"/>
                 <field name="anniversary_date"/>
                 <field name="requester_id" readonly="True" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}"/>

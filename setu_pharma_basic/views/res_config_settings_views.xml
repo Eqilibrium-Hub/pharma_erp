@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//div[hasclass('settings')]" position="inside">
                     <div class="app_settings_block" data-string="Pharma" string="Pharma" data-key="setu_pharma_basic">
-                        <h2>Doctor</h2>
+                        <h2>Tour Plan</h2>
                         <div class="row mt16 o_settings_container" name="pharma_container">
                             <div class="col-12 col-lg-6 o_setting_box"
                                  id="tour_plan_doctor_selection"
@@ -20,7 +20,7 @@
                                 <div class="o_setting_right_pane">
                                     <label for="mandatory_select_doctors"/>
                                     <div class="text-muted">
-                                        mark to add doctors mandatory while creating tour plan.
+                                        Mark To Add Doctors Mandatory While Creating Tour Plan.
                                     </div>
                                 </div>
                                 <br></br>
@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="o_setting_right_pane"
                                      attrs="{'invisible':[('mandatory_select_doctors','=',False)]}">
-                                    <label for="raise_validation_tp"/>
+                                    <label for="raise_validation_tp" string="Fulfill Doctor Visit on TP Creation"/>
                                     <div class="text-muted">
                                         Mark to raise validation while creating a Tour Plan and Total visit of doctors
                                         are not fulfilled.
