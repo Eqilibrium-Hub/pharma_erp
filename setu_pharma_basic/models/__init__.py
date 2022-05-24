@@ -36,3 +36,4 @@ from . import approval_request
 from . import ir_http
 from .import product_drug_contain
 from . import res_partner_doctor_class
+from . import res_city

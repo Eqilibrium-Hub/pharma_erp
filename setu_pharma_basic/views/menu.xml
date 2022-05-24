@@ -64,11 +64,20 @@
               parent="setu_pharma_basic.setu_pharma_menu_city_structure"
               action="setu_pharma_area_action_window"
     />
+<!--    <menuitem name="City"-->
+<!--              id="setu_pharma_city"-->
+<!--              parent="setu_pharma_basic.setu_pharma_menu_city_structure"-->
+<!--              action="setu_pharma_city_action_window"-->
+<!--    />-->
+
+
+
     <menuitem name="City"
-              id="setu_pharma_city"
+              id="setu_pharma_res_city"
               parent="setu_pharma_basic.setu_pharma_menu_city_structure"
-              action="setu_pharma_city_action_window"
+              action="res_city_action"
     />
+
     <menuitem name="City Distance"
               id="setu_pharma_menu_city_distance"
               parent="setu_pharma_basic.setu_pharma_menu_city_structure"

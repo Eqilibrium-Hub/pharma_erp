@@ -21,7 +21,7 @@ class ResPartner(models.Model):
                                       string="Degree")
     speciality_tag_id = fields.Many2one("res.partner.category", string="Speciality")
     area_id = fields.Many2one('setu.pharma.area', string="Area")
-    city_id = fields.Many2one('setu.pharma.city', string="Pharma City")
+    city_id = fields.Many2one('res.city', string="Pharma City")
     code = fields.Char(string="Code", size=7)
     doctor_class = fields.Many2one('res.partner.doctor.class', string="Doctor Class")
     birth_date = fields.Date(string="Date of birth")

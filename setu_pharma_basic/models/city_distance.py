@@ -18,8 +18,8 @@ class CityDistance(models.Model):
     name = fields.Char(string='Name', copy=False,
                        readonly=True, compute=prepare_from_to_name,
                        index=True)
-    from_city_id = fields.Many2one("setu.pharma.city", string="From")
-    to_city_id = fields.Many2one("setu.pharma.city", string="To")
+    from_city_id = fields.Many2one("res.city", string="From")
+    to_city_id = fields.Many2one("res.city", string="To")
     distance = fields.Integer(string="Distance")
 
     @api.constrains("from_city_id", "to_city_id")

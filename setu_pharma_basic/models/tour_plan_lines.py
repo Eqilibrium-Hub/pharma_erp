@@ -14,7 +14,7 @@ class TourPlanLine(models.Model):
     _rec_name = 'tour_id'
 
     tour_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan')
-    city_id = fields.Many2one('setu.pharma.city', 'City')
+    city_id = fields.Many2one('res.city', 'City')
     working_date_start = fields.Datetime('Start Time')
     working_date_end = fields.Datetime('End Time')
     dcr_id = fields.Many2one('setu.pharma.employee.daily.call', 'DCR Reference')

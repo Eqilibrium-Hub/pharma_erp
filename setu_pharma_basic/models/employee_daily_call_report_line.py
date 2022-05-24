@@ -32,7 +32,7 @@ class EmployeeDailyCallReportLine(models.Model):
                                    'daily_call_report_id',
                                    string="Managers")
     partner_id = fields.Many2one('res.partner', 'Partner')
-    city_id = fields.Many2one("setu.pharma.city", string="City")
+    city_id = fields.Many2one("res.city", string="City")
     doctor_products = fields.One2many('setu.pharma.employee.daily.call.line.doctor.products',
                                       'dcr_line_id')
     call_type = fields.Selection([

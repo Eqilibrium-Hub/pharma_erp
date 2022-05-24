@@ -8,7 +8,7 @@
     'website': 'https://www.setuconsulting.com/',
     'license': 'Other proprietary',
     'depends': ['hr', 'sale_stock', 'sale_management', 'approvals', 'crm', 'sale',
-                'product_expiry'],
+                'product_expiry','base_address_city'],
     'data': [
         # Datas
         'data/speciality_res_partner_category_data.xml',

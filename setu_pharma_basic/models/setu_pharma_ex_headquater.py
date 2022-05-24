@@ -7,7 +7,7 @@ class SetuPharmaExHeadquarter(models.Model):
     _description = "Setu Pharma Ex. Headquarter"
 
     headquarter_id = fields.Many2one('setu.pharma.headquarters')
-    city_id = fields.Many2one('setu.pharma.city', string="city")
+    city_id = fields.Many2one('res.city', string="city")
     distance = fields.Float(string="Distance")
 
     @api.constrains('city_id')

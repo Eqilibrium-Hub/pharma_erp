@@ -10,7 +10,7 @@ class SetuPharmaHeadquarters(models.Model):
                        index=True, default=lambda self: _('New'))
     code = fields.Char(string='HQ Code', copy=False, size=8)
     area_id = fields.Many2one('setu.pharma.area', 'Area')
-    city_id = fields.Many2one("setu.pharma.city", string="City")
+    city_id = fields.Many2one("res.city", string="City")
     state_id = fields.Many2one("res.country.state", string="State")
     ex_headquarter_ids = fields.One2many("setu.pharma.ex.headquarter", "headquarter_id",
                                          string='Ex. Headquarters')
@@ -68,7 +68,7 @@ class SetuPharmaHeadquarters(models.Model):
             action = self.env.ref('hr.open_view_employee_tree').read()[0]
         elif self._context.get('open_ex_headquarters'):
             view_id = self.env.ref("setu_pharma_basic.setu_pharma_city_list")
-            action = self.env.ref('setu_pharma_basic.setu_pharma_city_action_window').read()[0]
+            action = self.env.ref('setu_pharma_basic.res_city_action').read()[0]
         elif self._context.get('open_employee_stock_locations'):
             view_id = self.env.ref("stock.view_location_tree2")
             action = self.env.ref('stock.action_location_form').read()[0]
@@ -136,7 +136,7 @@ class SetuPharmaHeadquarters(models.Model):
         if vals.get('division_id') and vals.get('city_id'):
             div = self.env['setu.pharma.division'].browse(vals.get('division_id'))
             div_name = div.name
-            city = self.env['setu.pharma.city'].browse(vals.get('city_id'))
+            city = self.env['res.city'].browse(vals.get('city_id'))
             city_name = city.name
             vals['name'] = city_name + ' - ' + div_name
 
