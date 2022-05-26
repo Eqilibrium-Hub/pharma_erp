@@ -44,7 +44,8 @@ class TourPlan(models.Model):
                                  default=lambda self: self.env.company, required=True)
     tour_plan_lines = fields.One2many('setu.pharma.tour.plan.line', 'tour_id', 'Tour Plan Lines')
     total_of_planned_date = fields.Integer('Total Plans', compute="_compute_total_plans")
-
+    headquarter_id = fields.Many2one(related='employee_id.headquarter_id', string="Headquarter")
+    parent_id = fields.Many2one(related='employee_id.parent_id',string="Manager")
     @api.depends('tour_plan_lines')
     def _compute_total_plans(self):
         """ Compute total calls. """
@@ -179,6 +180,14 @@ class TourPlan(models.Model):
                     'setu_pharma_basic.approval_category_data_tour_plan_approval')
                 self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
                                                                                  model_record=tour_plan)
+        """ Return Rainbow effect on tp submit """
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'Tour plan submitted successfully',
+                'type': 'rainbow_man',
+            }
+        }
 
     def action_reset_tp(self):
         for record in self:

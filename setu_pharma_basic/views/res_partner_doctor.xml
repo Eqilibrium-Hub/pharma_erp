@@ -64,6 +64,8 @@
                 <field name="anniversary_date"/>
                 <field name="requester_id" readonly="True" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}"/>
                 <field name="approval_request_id" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}" readonly="True"/>
+                <field name="no_of_patients"/>
+                <field name="dr_reg_num"/>
             </xpath>
             <xpath expr="//form/sheet/notebook/page[last()]" position="after">
                 <page string="Products" name="products">

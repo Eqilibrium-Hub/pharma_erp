@@ -47,6 +47,13 @@
                 <field name="headquarter_id" required="1" options="{'no_create': True}"
                        domain="[('division_id', '=', division_id)]"
                 />
+
+                <label for="job_ex_num"/>
+                <div>
+                    <field name="job_ex_num" style="width: 50%"/>
+                    <field name="job_ex_num_ymd" style="width: 50%"/>
+                </div>
+
             </field>
             <xpath expr="//page[@name='hr_settings']" position="after">
                 <page name="pharma" string="Pharma">
@@ -78,10 +85,34 @@
                     </field>
                 </page>
             </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <field name="departure_reason" invisible="1"/>
+                <widget name="web_ribbon" title="Fired" bg_color="bg-danger"
+                        attrs="{'invisible':['|',('active', '=', True),('departure_reason','in',['Resigned','Retired'])]}"/>
+                <widget name="web_ribbon" title="Resigned" bg_color="bg-success"
+                        attrs="{'invisible':['|',('active', '=', True),('departure_reason','in',['Retired','Fired'])]}"/>
+                <widget name="web_ribbon" title="Retired" bg_color="bg-black"
+                        attrs="{'invisible':['|',('active', '=', True),('departure_reason','in',['Resigned','Fired'])]}"/>
+            </xpath>
+
+
             <field name="company_id" position="after">
                 <field name="aadhar_no" required="1"/>
                 <field name="pan_no" required="1"/>
             </field>
+        </field>
+    </record>
+
+    <record id="hr_view_kanban" model="ir.ui.view">
+        <field name="name">hr.view.kanban.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_email']" position="after">
+                <li t-if="record.headquarter_id.raw_value" class="o_force_ltr"><field name="headquarter_id"/></li>
+                <li t-if="record.division_id.raw_value" class="o_force_ltr"><field name="division_id"/></li>
+            </xpath>
         </field>
     </record>
 

@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 from ..tools.math_tools import minus_value_on_percentage
 
 
@@ -19,6 +19,12 @@ class ProductProduct(models.Model):
     price_to_retailer_percentage = fields.Float('PTR (%)')
     drug_contain_lines = fields.One2many('product.product.drug.contain', 'product_id',
                                          'Drug Contains')
+    """ This method Set default value Of product trype"""
+    @api.model
+    def default_get(self, fields):
+        res = super(ProductProduct, self).default_get(fields)
+        res['detailed_type'] = 'product'
+        return res
 
     def _compute_ptr(self):
         """ Calculate PTR (Price To Retailer) value based on percentage in Product."""

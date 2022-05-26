@@ -19,9 +19,12 @@ class HrEmployeePrivate(models.Model):
     dcr_edit_lock_days = fields.Integer(string="DCR Edit Lock Days", tracking=True)
     aadhar_no = fields.Char(string="Aadhar No", size=12, copy=False)
     pan_no = fields.Char(string="PAN No", size=10, copy=False)
-    headquarter_id = fields.Many2one(comodel_name="setu.pharma.headquarters", string="Headquarter")
+    headquarter_id = fields.Many2one(comodel_name="setu.pharma.headquarters", string="Headquarter", copy=False)
     stock_location_id = fields.Many2one('stock.location', 'Employee Stock Location')
     doctor_ids = fields.One2many('hr.employee.line', 'employee_id')
+    job_ex_num = fields.Integer('Job Experience')
+    job_ex_num_ymd = fields.Selection([('day','Day'),('month','Month'),('year','Year')])
+    departure_reason = fields.Char(related='departure_reason_id.name')
 
     @api.constrains('pan_no')
     def _check_pan_no(self):

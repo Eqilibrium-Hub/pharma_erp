@@ -55,6 +55,8 @@ class ResPartner(models.Model):
                                    column1='partner_id', column2='chemist_id', string="Chemists")
     related_employee_ids = fields.One2many('hr.employee.line', 'partner_id')
     total_visit = fields.Integer('Total Visit', related="related_employee_ids.total_visit")
+    no_of_patients = fields.Integer('Number Of Patients')
+    dr_reg_num = fields.Char('Doctor Registration Number')
 
     def _compute_state(self):
         """ Compute State of Partner. """

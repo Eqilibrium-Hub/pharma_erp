@@ -12,7 +12,7 @@ class FiscalPeriod(models.Model):
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
     month_name = fields.Selection(string="Month", selection=get_list_of_months())
-    fiscalyear_id = fields.Many2one("setu.pharma.fiscalyear", string="Fiscal year")
+    fiscalyear_id = fields.Many2one("setu.pharma.fiscalyear", string="Fiscal year", ondelete ="cascade")
 
     def name_get(self):
         """ Prepare Fiscal Period Name """
