@@ -13,7 +13,6 @@
                     <field name="degree_tag_ids" widget="many2many_tags"/>
                     <field name="speciality_tag_id" optional="hide"/>
                     <field name="area_id"/>
-                    <field name="city_id"/>
                     <field name="code" optional="hide"/>
                     <field name="doctor_class" optional="hide" options="{'no_create': True, 'no_open': True}"/>
                     <field name="birth_date" optional="hide"/>
