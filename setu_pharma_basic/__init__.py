@@ -10,7 +10,7 @@ def import_csv_data(cr, registry):
     """ Import CSV data as it is faster than xml and because we can't use noupdate anymore with
     csv """
     filenames = [
-        'data/setu.pharma.city.csv',
+        'data/res.city.csv',
     ]
     for filename in filenames:
         convert_file(
