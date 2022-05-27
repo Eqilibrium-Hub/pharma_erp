@@ -73,7 +73,8 @@
                     >
                         <tree editable="bottom">
                             <field name="employee_id" invisible="1"/>
-                            <field name="partner_id"
+                            <field name="headquarter_city" invisible="1"/>
+                            <field name="partner_id" domain="[('city_id', '=', headquarter_city)]"
                                    width="40%"/>
                             <field name="total_visit" string="Minimum Visit Required"
                                    width="20%"/>
@@ -110,8 +111,12 @@
         <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='work_email']" position="after">
-                <li t-if="record.headquarter_id.raw_value" class="o_force_ltr"><field name="headquarter_id"/></li>
-                <li t-if="record.division_id.raw_value" class="o_force_ltr"><field name="division_id"/></li>
+                <li t-if="record.headquarter_id.raw_value" class="o_force_ltr">
+                    <field name="headquarter_id"/>
+                </li>
+                <li t-if="record.division_id.raw_value" class="o_force_ltr">
+                    <field name="division_id"/>
+                </li>
             </xpath>
         </field>
     </record>

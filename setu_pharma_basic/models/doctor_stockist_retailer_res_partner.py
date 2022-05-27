@@ -57,6 +57,7 @@ class ResPartner(models.Model):
     total_visit = fields.Integer('Total Visit', related="related_employee_ids.total_visit")
     no_of_patients = fields.Integer('Number Of Patients')
     dr_reg_num = fields.Char('Doctor Registration Number')
+    country_id = fields.Many2one(default=lambda self: self.env.company.country_id)
 
     def _compute_state(self):
         """ Compute State of Partner. """

@@ -77,7 +77,7 @@
                         </page>
                         <page name="ex_headquarter_ids" string="Ex. Headquarters">
                             <field name="ex_headquarter_ids">
-                                <tree string="Ex. Headquarter">
+                                <tree string="Ex. Headquarter" editable="bottom">
                                     <field name="city_id"/>
                                     <field name="distance"/>
                                 </tree>
