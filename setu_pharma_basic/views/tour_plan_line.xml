@@ -33,7 +33,7 @@
                             />
                         </group>
                         <group>
-                            <div;>
+                            <div>
                                 <button name="add_partners_to_visit" type="object"
                                         title="Add Doctors/Stockists/Chemists" icon="fa-users"
                                         class="btn btn-danger">
