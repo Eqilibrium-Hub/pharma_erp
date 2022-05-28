@@ -90,7 +90,8 @@
                             <field name="date" readonly="1"/>
                         </group>
                         <group>
-                            <field name="period_id" required="0" readonly="0" options="{'no_create': True}" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="period_id" required="0" readonly="0" options="{'no_create': True}"
+                                   attrs="{'readonly': [('state', '=', 'approved')]}"/>
                             <field name="approval_request_id" readonly="1"/>
                             <field name="requester_id" readonly="1"/>
                             <field name="company_id" required="1" readonly="1"/>
@@ -102,15 +103,18 @@
                         <page string="Plan Lines">
                             <field name="tour_plan_lines" attrs="{'readonly': [('state', '=', 'approved')]}">
                                 <tree editable="bottom" decoration-success="day_name == '6'">
-                                    <field name="tour_id" invisible="1" />
+                                    <field name="tour_id" invisible="1"/>
                                     <field name="state" invisible="1"/>
                                     <field name="dcr_id" readonly="1"/>
                                     <field name="day_working_type"/>
                                     <field name="working_date_start" widget="date"/>
                                     <field name="working_date_end" widget="date" invisible="1"/>
-                                    <field name="city_id" attrs="{'required': [('day_name', 'in', ['0','1','2','3','4','5'])]}"/>
-                                    <field name="visiting_partner_ids" widget="many2many_tags" nolabel="1"
-                                           domain="[('city_id', '=', city_id)]" readonly="1"
+                                    <field name="ex_headquarter_id"
+                                           attrs="{'required': [('day_name', '!=', '6')]}"
+                                           domain="[('headquarter_id', '=', parent.headquarter_id)]"/>
+                                    <field name="visiting_partner_ids" widget="many2many_tags"
+                                           string="Total Doctors To Visit"
+                                           readonly="1"
                                     />
                                     <button name="add_partners_to_visit" type="object" icon="fa-users"
                                             aria-label="Add Doctors/Stockists/Chemists" width="0.1"

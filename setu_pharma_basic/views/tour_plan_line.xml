@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="tour_id"/>
-                <field name="city_id"/>
+                <field name="ex_headquarter_id"/>
                 <field name="working_date_start"/>
                 <field name="working_date_end"/>
             </tree>
@@ -27,19 +27,23 @@
                             <field name="day_working_type"/>
                             <field name="tour_id" invisible="1"/>
                             <field name="dcr_id" readonly="1" invisible="1"/>
-                            <field name="city_id" required="1"/>
+                            <field name="ex_headquarter_id"
+                                   attrs="{'required': [('day_name', '!=', '6')]}"
+                                   domain="[('headquarter_id', '=', parent.headquarter_id)]"
+                            />
                         </group>
                         <group>
-                            <div>
+                            <div;>
                                 <button name="add_partners_to_visit" type="object"
-                                title="Add Doctors/Stockists/Chemists" icon="fa-users"
-                                class="btn btn-danger">
+                                        title="Add Doctors/Stockists/Chemists" icon="fa-users"
+                                        class="btn btn-danger">
                                     Add Users
                                 </button>
                             </div>
-                            <field name="visiting_partner_ids" widget="many2many_tags" nolabel="1"
-                                   domain="[('city_id', '=', city_id)]" readonly="1"
-                            />
+                            <field name="visiting_partner_ids" widget="many2many_tags"
+                                           string="Total Doctors To Visit"
+                                           readonly="1"
+                                    />
                             <field name="visit_counts"/>
                         </group>
                     </group>
@@ -58,8 +62,7 @@
                       form_view_id="%(setu_pharma_basic.view_tour_plan_line_form)d"
                       mode="month"
                       quick_add="False"
-                      color="city_id"
-            >
+                      color="ex_headquarter_id">
                 <field name="tour_id"/>
                 <field name="working_date_start"/>
             </calendar>

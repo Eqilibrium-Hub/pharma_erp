@@ -5,6 +5,7 @@ import calendar
 import datetime
 from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
+
 day_names = [(str(i), calendar.day_name[i]) for i in range(0, 7)]
 
 
@@ -13,15 +14,7 @@ class TourPlanLine(models.Model):
     _description = "Tour Plan Line of employee"
     _rec_name = 'tour_id'
 
-    """This Method return domain for city in tp line"""
-    def _domain_ex_headquarter_ids(self):
-        tour_line = self.env['setu.pharma.tour.plan.line'].search([])
-        exhlist = [city.id for city in tour_line.ex_headquarter_ids.city_id]
-        domain = [('id', 'in', exhlist)]
-        return domain
-
     tour_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan')
-    city_id = fields.Many2one('res.city', 'City', domain=_domain_ex_headquarter_ids)
     working_date_start = fields.Datetime('Start Time')
     working_date_end = fields.Datetime('End Time')
     dcr_id = fields.Many2one('setu.pharma.employee.daily.call', 'DCR Reference')
@@ -36,8 +29,7 @@ class TourPlanLine(models.Model):
                                            'setu_pharma_basic.setu_pharma_work_type_RW',
                                            raise_if_not_found=False))
     visit_counts = fields.Integer('Planned Call', compute='_count_total_visits', store=True)
-    ex_headquarter_ids = fields.One2many(related='tour_id.employee_id.headquarter_id.ex_headquarter_ids',
-                                         string='Ex. Headquarters')
+    ex_headquarter_id = fields.Many2one('setu.pharma.ex.headquarter', string='City')
     state = fields.Selection(related='tour_id.state')
 
     @api.depends('visiting_partner_ids')
@@ -73,7 +65,6 @@ class TourPlanLine(models.Model):
             'context': {'active_id': wiz_obj.id},
             'views': [[False, 'form']]
         }
-
 
     @api.model
     def create(self, vals):
