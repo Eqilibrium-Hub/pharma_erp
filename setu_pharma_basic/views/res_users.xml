@@ -10,9 +10,6 @@
                 <field name="employee_id" invisible="1" string="Related Employee"/>
                 <field name="code" required="1" readonly="0"/>
             </xpath>
-            <field name="company_id" position="after">
-                <field name="division_ids" string="Allowed Divisions" widget="many2many_tags"/>
-            </field>
         </field>
     </record>
 

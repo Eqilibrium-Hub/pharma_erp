@@ -73,15 +73,6 @@
         'wizards/dcr_line_product_selection_wizard.xml',
 
     ],
-    'assets': {
-        'web.assets_backend': [
-            'setu_pharma_basic/static/src/*',
-            'setu_pharma_basic/static/src/webclient/**/*'
-        ],
-        'web.assets_qweb': [
-            'setu_pharma_basic/static/src/webclient/switch_division_menu/*.xml',
-        ],
-    },
     'qweb': [],
     'installable': True,
     'auto_install': False,

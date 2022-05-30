@@ -105,7 +105,7 @@
         <field name="name">setu.pharma.division.kanban</field>
         <field name="model">setu.pharma.division</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban class="o_kanban_dashboard">
                 <field name="name"/>
                 <field name="code"/>
                 <templates>

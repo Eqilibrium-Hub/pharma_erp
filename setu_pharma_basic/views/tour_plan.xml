@@ -106,16 +106,16 @@
                                 <tree editable="bottom" decoration-success="day_name == '6'">
                                     <field name="tour_id" invisible="1"/>
                                     <field name="state" invisible="1"/>
-                                    <field name="dcr_id" readonly="1"/>
-                                    <field name="day_working_type" required="1"/>
-                                    <field name="working_date_start" widget="date" required="1"/>
-                                    <field name="working_date_end" widget="date" invisible="1"/>
-                                    <field name="ex_headquarter_id"
+                                    <field name="dcr_id" readonly="1" width="10%"/>
+                                    <field name="day_working_type" required="1" width="10%"/>
+                                    <field name="working_date_start" widget="date" required="1" width="10%"/>
+                                    <field name="working_date_end" widget="date" invisible="1" width="10%"/>
+                                    <field name="ex_headquarter_id" width="10%"
                                            attrs="{'required': [('day_name', '!=', '6')]}"
                                            domain="[('headquarter_id', '=', parent.headquarter_id)]"/>
                                     <field name="visiting_partner_ids" widget="many2many_tags"
                                            string="Total Doctors To Visit"
-                                           readonly="1"
+                                           readonly="1" width="10%"
                                     />
                                     <button name="add_partners_to_visit" type="object" icon="fa-users"
                                             aria-label="Add Doctors/Stockists/Chemists" width="0.1"
@@ -123,8 +123,8 @@
                                             class="float-right oe_read_only"
                                             attrs="{'invisible': [('state', '=', 'approved')]}"
                                     />
-                                    <field name="visit_counts"/>
-                                    <field name="day_name"/>
+                                    <field name="visit_counts" width="10%"/>
+                                    <field name="day_name"  width="10%"/>
                                 </tree>
                             </field>
                         </page>

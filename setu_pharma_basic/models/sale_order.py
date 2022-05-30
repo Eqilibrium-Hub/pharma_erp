@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _
+from odoo import models, fields
 
 
 class SaleOrderExtends(models.Model):
@@ -6,17 +6,4 @@ class SaleOrderExtends(models.Model):
 
     is_gift_order = fields.Boolean("Gift order ?", copy=False)
     is_sample_order = fields.Boolean("Sample order ?", copy=False)
-    division_id = fields.Many2one('setu.pharma.division')
-
-    @api.model
-    def create(self, vals):
-        """
-        Added By: Mitrarajsinh Jadeja | Date: 29th Apr,2021
-        Use: Assign Division in the Sale order
-        """
-        res = super(SaleOrderExtends, self).create(vals)
-        context = self.env.context
-        division_id = context.get('division_id', False)
-        if division_id:
-            res.update({'division_id': division_id})
-        return res
+    division_id = fields.Many2one('setu.pharma.division', 'Division')

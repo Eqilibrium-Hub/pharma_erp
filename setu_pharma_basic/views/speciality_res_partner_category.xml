@@ -6,6 +6,8 @@
         <field name="model">res.partner.category</field>
         <field name="arch" type="xml">
             <search position="inside">
+                <field name="name"/>
+                <field name="parent_id"/>
                 <group>
                     <filter string="Color" name="group_color" context="{'group_by':'color'}"/>
                     <filter string="Parent Category" name="group_parent_category" context="{'group_by':'parent_id'}"/>

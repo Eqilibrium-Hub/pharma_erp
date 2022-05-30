@@ -103,4 +103,3 @@ class Division(models.Model):
         if difference:
                 self.env['setu.pharma.designation'].browse(difference).division_ids = [(3, div.id) for div in self]
         return result
-

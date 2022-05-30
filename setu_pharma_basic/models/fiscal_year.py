@@ -117,9 +117,9 @@ class FiscalYear(models.Model):
             if not fy.start_year:
                 fy.end_year = False
             else:
-                fy.end_year = fy.start_year if fy.start_month == '1' or fy.start_year == '1999' else str(
-                    int(fy.start_year) + 1)
-                if fy.start_year == '1999':
+                fy.end_year = fy.start_year if fy.start_month == '1' and fy.end_month == '12' \
+                    else str(int(fy.start_year) + 1)
+                if fy.start_year == '1999' and fy.end_year == '1999' and fy.start_month == '1':
                     fy.start_month = '1'
                 else:
                     fy.start_month = fy.start_month

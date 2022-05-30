@@ -6,8 +6,6 @@ class Users(models.Model):
 
     code = fields.Char(related='partner_id.code', store=True, inverse='_inverse_partner_code',
                        readonly=False)
-    division_ids = fields.Many2many('setu.pharma.division', 'setu_pharma_division_users_rel',
-                                    'user_id', 'cid', string='Divisions')
 
     def _inverse_partner_code(self):
         """ Inverse update Partner Code """

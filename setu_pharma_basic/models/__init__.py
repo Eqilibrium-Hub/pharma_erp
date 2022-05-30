@@ -33,7 +33,6 @@ from . import setu_pharma_ex_headquater
 from . import stockist_monthly_statement
 from . import stockist_monthly_statement_line
 from . import approval_request
-from . import ir_http
 from .import product_drug_contain
 from . import res_partner_doctor_class
 from . import res_city

@@ -43,7 +43,7 @@
                         <group>
                             <field name="name" required="1"/>
                             <field name="parent_designation"
-                                   attrs="{'required': [('is_root_designation', '!=',True)]}"/>
+                                   attrs="{'required': [('is_root_designation', '!=',True)], 'readonly': [('is_root_designation', '=',True)], 'invisible': [('is_root_designation', '=',True)]}"/>
                             <field name="is_root_designation"/>
                         </group>
                         <group>
@@ -69,17 +69,23 @@
         <field name="name">view.designation.kanban</field>
         <field name="model">setu.pharma.designation</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban class="o_kanban_dashboard">
                 <field name="name"/>
                 <field name="company_id"/>
                 <field name="division_ids"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div>
+                                <div class="o_kanban_record_headings">
+                                    <b class="o_kanban_record_title" style="font-size:16px">
+                                    <span>
+                                        <field name="name"/>
+                                    </span>
+                                    </b>
+                                </div>
+                            </div>
                             <ul>
-                                <li>Designation:
-                                    <field name="name"/>
-                                </li>
                                 <li>Company :
                                     <field name="company_id"/>
                                 </li>
