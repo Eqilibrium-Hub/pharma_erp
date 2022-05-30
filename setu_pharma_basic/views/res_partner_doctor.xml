@@ -11,6 +11,7 @@
                     <field name="degree_tag_ids" widget="many2many_tags"/>
                     <field name="speciality_tag_id"/>
                     <field name="area_id"/>
+                    <field name="city_id"/>
                     <field name="code" optional="hide"/>
                     <field name="doctor_class" optional="hide"/>
                     <field name="birth_date" optional="hide"/>
@@ -41,7 +42,8 @@
                         type="action" class="oe_stat_button" icon="fa-book"
                         attrs="{'invisible':[('is_stockist','=',False)]}"/>
                 <button name="action_view_customer_contract" string="Doctor Statement"
-                        type="object" class="oe_stat_button" icon="fa-book"  attrs="{'invisible':[('is_doctor','=',False)]}"/>
+                        type="object" class="oe_stat_button" icon="fa-book"
+                        attrs="{'invisible':[('is_doctor','=',False)]}"/>
 
             </xpath>
             <xpath expr="//form/sheet/group/group/field[@name='vat']" position="after">
@@ -60,8 +62,11 @@
                        attrs="{'invisible':[('is_doctor','!=',True)]}"/>
                 <field name="code" required="1"/>
                 <field name="anniversary_date"/>
-                <field name="requester_id" readonly="True" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}"/>
-                <field name="approval_request_id" attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}" readonly="True"/>
+                <field name="requester_id" readonly="True"
+                       attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}"/>
+                <field name="approval_request_id"
+                       attrs="{'invisible':[('is_stockist','=',False),('is_chemist','=',False),('is_doctor','=',False),('is_prescriber','=',False)]}"
+                       readonly="True"/>
                 <field name="no_of_patients"/>
                 <field name="dr_reg_num"/>
             </xpath>
@@ -142,6 +147,7 @@
                 <field name="employee_ids"/>
                 <field name="speciality_tag_id"/>
                 <field name="area_id"/>
+                <field name="city_id"/>
                 <field name="code"/>
                 <field name="doctor_class"/>
                 <field name="state"/>
@@ -164,6 +170,7 @@
                 <filter string="Speciality" name="group_speciality_tag_id"
                         context="{'group_by':'speciality_tag_id'}"/>
                 <filter string="Area" name="group_area_id" context="{'group_by':'area_id'}"/>
+                <filter string="City" name="group_city" context="{'group_by':'city_id'}"/>
                 <filter string="Code" name="group_code" context="{'group_by':'code'}"/>
                 <filter string="Doctor Class" name="group_doctor_class" context="{'group_by':'doctor_class'}"/>
                 <filter string="Date of Birth" name="group_birth_date" context="{'group_by':'birth_date'}"/>

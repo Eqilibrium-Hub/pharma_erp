@@ -46,6 +46,8 @@ class TourPlan(models.Model):
     total_of_planned_date = fields.Integer('Total Plans', compute="_compute_total_plans")
     headquarter_id = fields.Many2one(related='employee_id.headquarter_id', string="Headquarter")
     parent_id = fields.Many2one(related='employee_id.parent_id',string="Manager")
+    tp_line_generated = fields.Boolean('Is TP Line Generated?')
+
     @api.depends('tour_plan_lines')
     def _compute_total_plans(self):
         """ Compute total calls. """
@@ -63,6 +65,7 @@ class TourPlan(models.Model):
                      )
                 )
             tp.tour_plan_lines = tp_line_vals
+            tp.tp_line_generated = True
 
     def _compute_state(self):
         for tour in self:
@@ -70,6 +73,9 @@ class TourPlan(models.Model):
             dcr_config = self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.create_dcr_on_tp_approval')
             if tour.state == 'approved' and dcr_config:
                 tour.create_daily_call_reports()
+            if tour.state == 'new':
+                tour.tour_plan_lines = [(6, 0, False)]
+                tour.tp_line_generated = False
 
     def _compute_fiscal_period(self):
         for record in self:
@@ -172,7 +178,6 @@ class TourPlan(models.Model):
                             raise ValidationError(_("Total visit of doctors are not fulfilled."))
                     else:
                         raise ValidationError(_("Total visit of doctors are not fulfilled."))
-
 
         for tour_plan in self:
             if tour_plan:

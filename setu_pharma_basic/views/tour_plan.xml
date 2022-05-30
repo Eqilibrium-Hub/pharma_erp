@@ -60,7 +60,7 @@
                     <button name="generate_tour_plan_lines"
                             type="object"
                             string="Generate TP Lines"
-                            attrs="{'invisible': [('state', '=', 'approved')]}"
+                            attrs="{'invisible': ['|',('state', '=', 'pending'), ('tp_line_generated', '=', True)]}"
                     />
                     <button name="click_on_submitted"
                             type="object"
@@ -71,7 +71,7 @@
                             type="object"
                             string="Reset To Draft"
                             class="btn btn-danger"
-                            attrs="{'invisible': [('state', '!=', 'pending')]}"
+                            attrs="{'invisible': [('state', 'in', ['approved', 'cancel', 'refused'])]}"
                     />
 
                     <field name="state" widget="statusbar"/>
@@ -88,6 +88,7 @@
                             <field name="designation_id" readonly="1"/>
                             <field name="division_id" readonly="1"/>
                             <field name="date" readonly="1"/>
+                            <field name="tp_line_generated" invisible="1"/>
                         </group>
                         <group>
                             <field name="period_id" required="0" readonly="0" options="{'no_create': True}"
@@ -106,8 +107,8 @@
                                     <field name="tour_id" invisible="1"/>
                                     <field name="state" invisible="1"/>
                                     <field name="dcr_id" readonly="1"/>
-                                    <field name="day_working_type"/>
-                                    <field name="working_date_start" widget="date"/>
+                                    <field name="day_working_type" required="1"/>
+                                    <field name="working_date_start" widget="date" required="1"/>
                                     <field name="working_date_end" widget="date" invisible="1"/>
                                     <field name="ex_headquarter_id"
                                            attrs="{'required': [('day_name', '!=', '6')]}"

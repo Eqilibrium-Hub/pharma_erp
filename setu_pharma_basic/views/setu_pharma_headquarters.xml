@@ -78,8 +78,12 @@
                         <page name="ex_headquarter_ids" string="Ex. Headquarters">
                             <field name="ex_headquarter_ids">
                                 <tree string="Ex. Headquarter" editable="bottom">
-                                    <field name="city_id"/>
-                                    <field name="distance"/>
+                                    <field name="headquarter_id" invisible="1"/>
+                                    <field name="state_id" invisible="1"/>
+                                    <field name="city_id" domain="[('state_id', '=', state_id)]"
+                                           required="1"
+                                    />
+                                    <field name="distance" required="1"/>
                                 </tree>
                             </field>
                         </page>

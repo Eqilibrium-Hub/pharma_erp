@@ -74,7 +74,7 @@
                         <tree editable="bottom">
                             <field name="employee_id" invisible="1"/>
                             <field name="headquarter_city" invisible="1"/>
-                            <field name="partner_id"
+                            <field name="partner_id" options="{'no_create': True}"
                                    width="40%"/>
                             <field name="total_visit" string="Minimum Visit Required"
                                    width="20%"/>

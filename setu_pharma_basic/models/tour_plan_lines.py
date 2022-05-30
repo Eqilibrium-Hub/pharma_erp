@@ -41,7 +41,7 @@ class TourPlanLine(models.Model):
         """ Tour Line Name Preparation """
         tour_line_names = []
         for line in self:
-            state = line.city_id and " %s" % line.city_id.display_name or ''
+            state = line.ex_headquarter_id and " %s" % line.ex_headquarter_id.display_name or ''
             tour_line_names.append((line.id, "%s" % state))
         return tour_line_names
 
@@ -53,8 +53,18 @@ class TourPlanLine(models.Model):
                 tp_line.working_date_start.weekday()) or False
 
     def add_partners_to_visit(self):
+        if not self.ex_headquarter_id and not self.day_name == '6':
+            raise ValidationError(_("Please Select the City to Visit for Date : '{date}' for "
+                                    "Working Type "
+                                    "'{type}'".format(date=self.working_date_end,
+                                                      type=self.day_working_type.name)))
         wiz_obj = self.env['tp.line.partner.selection.wizard']
-        wiz_obj = wiz_obj.create({'tp_line': self.id, 'city_id': self.city_id.id})
+        wiz_obj = wiz_obj.create({
+            'tp_line': self.id,
+            'city_id': self.ex_headquarter_id.city_id.id,
+            'partner_ids': [(6, 0, self.visiting_partner_ids.ids)]
+
+        })
         return {
             'type': 'ir.actions.act_window',
             'name': _('Doctor/Stockists/Chemists Selection Wizard'),

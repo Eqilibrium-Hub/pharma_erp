@@ -9,9 +9,10 @@
                 <sheet>
                     <group>
                         <field name="tp_line" readonly="1" invisible="1"/>
-                        <field name="employee_id" invisible="1"/>
+                        <field name="employee_id" invisible="0"/>
                         <field name="city_id" readonly="1"/>
-                        <field name="partner_ids" domain="[('city_id', '=', city_id),('related_employee_ids.employee_id', '=',employee_id)]"
+                        <field name="partner_ids"
+                               domain="[('city_id', '=', city_id),('related_employee_ids.employee_id', '=',employee_id)]"
                         >
                             <tree>
                                 <field name="name"/>

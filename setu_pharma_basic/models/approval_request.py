@@ -1,6 +1,7 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
+
 class ApprovalRequest(models.Model):
     _inherit = 'approval.request'
 

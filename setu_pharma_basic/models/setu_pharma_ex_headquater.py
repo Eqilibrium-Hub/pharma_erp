@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+from odoo.osv import expression
 
 
 class SetuPharmaExHeadquarter(models.Model):
@@ -8,13 +9,17 @@ class SetuPharmaExHeadquarter(models.Model):
     _rec_name = 'city_id'
 
     headquarter_id = fields.Many2one('setu.pharma.headquarters')
-    city_id = fields.Many2one('res.city', string="city")
+    state_id = fields.Many2one(related='headquarter_id.state_id', string="City", store=True)
+    city_id = fields.Many2one('res.city', string="City",)
     distance = fields.Float(string="Distance")
 
     @api.constrains('city_id')
     def unique_city(self):
         for ex_headquater in self:
-            quarter = self.search([('id', '!=', ex_headquater.id), ('city_id', '=', ex_headquater.city_id.id),
-                                  ('headquarter_id', '=', ex_headquater.headquarter_id.id)])
-            if quarter:
-                raise UserError(_('City must be unique !!!'))
+            if self.search(
+                    [
+                        ('id', '!=', ex_headquater.id),
+                        ('city_id', '=', ex_headquater.city_id.id),
+                        ('headquarter_id', '=', ex_headquater.headquarter_id.id)
+                    ]):
+                raise UserError(_('Ex. Headquarter must be unique !!!'))
