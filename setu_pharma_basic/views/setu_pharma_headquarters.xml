@@ -64,14 +64,14 @@
                     </group>
                     <notebook>
                         <page name="employees" string="Employees">
-                            <field name="employee_ids" readonly="0" domain="[('headquarter_id','=',False)]">
-                                <tree string="Employees">
+                            <field name="employee_ids">
+                                <tree string="Employees" edit="0" create="0" delete="0">
                                     <field name="name"/>
                                     <field name="designation_id"/>
                                     <field name="division_id"/>
                                     <field name="aadhar_no"/>
                                     <field name="pan_no"/>
-                                    <field name="company_id"/>
+                                    <field name="stock_location_id"/>
                                 </tree>
                             </field>
                         </page>
@@ -163,7 +163,7 @@
         <field name="name">setu.pharma.headquarters.kanban</field>
         <field name="model">setu.pharma.headquarters</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban class="o_kanban_dashboard o_appointment_kanban" default_order="name">
                 <field name="name"/>
                 <field name="code"/>
                 <field name="city_id"/>

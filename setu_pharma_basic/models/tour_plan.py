@@ -1,12 +1,12 @@
 import logging
-from datetime import timedelta, datetime
+from datetime import datetime
 from collections import defaultdict
 from odoo.exceptions import ValidationError
-import calendar
 from ..tools.datetime_tools import get_daterange
 from odoo import fields, models, api, _
+from werkzeug.urls import url_encode
+import calendar
 import datetime
-
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class TourPlan(models.Model):
                                   default=lambda self: self.env.user.employee_id)
     designation_id = fields.Many2one("setu.pharma.designation", string="Designation",
                                      default=lambda self: self.env.user.employee_id.designation_id)
-    date = fields.Date(string="Tour date", default=fields.Date.today() ,readonly=True)
+    date = fields.Date(string="Tour date", default=fields.Date.today(), readonly=True)
     state = fields.Selection([
         ('new', 'To Submit'),
         ('pending', 'Submitted'),
@@ -39,13 +39,14 @@ class TourPlan(models.Model):
     approval_request_id = fields.Many2one('approval.request', "Approval Request")
     division_id = fields.Many2one("setu.pharma.division", string="Division", copy=False,
                                   default=lambda self: self.env.user.employee_id.division_id)
-    period_id = fields.Many2one("setu.pharma.fiscalperiod", string="Fiscal period",compute="_compute_fiscal_period")
+    period_id = fields.Many2one("setu.pharma.fiscalperiod", string="Fiscal period",
+                                compute="_compute_fiscal_period")
     company_id = fields.Many2one("res.company", string="Company",
                                  default=lambda self: self.env.company, required=True)
     tour_plan_lines = fields.One2many('setu.pharma.tour.plan.line', 'tour_id', 'Tour Plan Lines')
     total_of_planned_date = fields.Integer('Total Plans', compute="_compute_total_plans")
     headquarter_id = fields.Many2one(related='employee_id.headquarter_id', string="Headquarter")
-    parent_id = fields.Many2one(related='employee_id.parent_id',string="Manager")
+    parent_id = fields.Many2one(related='employee_id.parent_id', string="Manager")
     tp_line_generated = fields.Boolean('Is TP Line Generated?')
 
     @api.depends('tour_plan_lines')
@@ -70,7 +71,8 @@ class TourPlan(models.Model):
     def _compute_state(self):
         for tour in self:
             tour.state = tour.approval_request_id.request_status or tour.state
-            dcr_config = self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.create_dcr_on_tp_approval')
+            dcr_config = self.env['ir.config_parameter'].sudo().get_param(
+                'setu_pharma_basic.create_dcr_on_tp_approval')
             if tour.state == 'approved' and dcr_config:
                 tour.create_daily_call_reports()
             if tour.state == 'new':
@@ -79,9 +81,10 @@ class TourPlan(models.Model):
 
     def _compute_fiscal_period(self):
         for record in self:
-            default = self.env['setu.pharma.fiscalperiod'].search([('start_date', '<=', record.date),
-                                                                   ('end_date', '>=', record.date)
-                                                                      ],limit=1)
+            default = self.env['setu.pharma.fiscalperiod'].search(
+                [('start_date', '<=', record.date),
+                 ('end_date', '>=', record.date)
+                 ], limit=1)
             if len(default):
                 record.period_id = default.id + 1
             else:
@@ -126,7 +129,8 @@ class TourPlan(models.Model):
         """Start Date For Tour Plan Create"""
         start_date = ldofmonth - datetime.timedelta(days=days)
         if date < start_date:
-            raise ValidationError(_(f"You can only create tour plan between {start_date} to {ldofmonth}"))
+            raise ValidationError(
+                _(f"You can only create tour plan between {start_date} to {ldofmonth}"))
         return tour_plan
 
     def action_open_tour_plan_calendar(self):
@@ -145,54 +149,64 @@ class TourPlan(models.Model):
         """
         Check If Tour Plan Is Zero Than Raise Error
         """
-        for record in self:
-            if not record.tour_plan_lines:
+        for tp in self:
+            if not tp.tour_plan_lines:
                 raise ValidationError(_("Tourplan line is mandatory Generate or Add TP line"))
-            if record.period_id.id == False:
-                raise ValidationError(_("Fiscal period not found please go to configuration/fiscal year and create fiscal year and generate fiscal period"))
+            if tp.period_id.id == False:
+                raise ValidationError(
+                    _("Fiscal period not found please go to configuration/fiscal year and create fiscal year and generate fiscal period"))
 
+            if self.env['ir.config_parameter'].sudo().get_param(
+                    'setu_pharma_basic.mandatory_select_doctors'):
+                for tp in self.tour_plan_lines:
+                    if tp.visit_counts < 1:
+                        raise ValidationError(_("Doctor selection is mandatory"))
 
-        if self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.mandatory_select_doctors'):
-            for record in self.tour_plan_lines:
-                if record.visit_counts < 1:
-                    raise ValidationError(_("Doctor selection is mandatory"))
-
-            if self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.raise_validation_tp'):
-                doctorsdict = defaultdict()
-                empdoctor = set()
-                for record in self.tour_plan_lines:
-                    for doctor in record.visiting_partner_ids:
-                        if doctor.name in doctorsdict.keys():
-                            count = doctorsdict[doctor.name][1] + 1
-                            doctorsdict[doctor.name][1] = count
+                if self.env['ir.config_parameter'].sudo().get_param(
+                        'setu_pharma_basic.raise_validation_tp'):
+                    doctorsdict = defaultdict()
+                    empdoctor = set()
+                    for tp in self.tour_plan_lines:
+                        for doctor in tp.visiting_partner_ids:
+                            if doctor.name in doctorsdict.keys():
+                                count = doctorsdict[doctor.name][1] + 1
+                                doctorsdict[doctor.name][1] = count
+                            else:
+                                doctorsdict[doctor.name] = [doctor.total_visit, 1]
+                    for doctor in self.employee_id.doctor_ids:
+                        empdoctor.add(doctor.partner_id.name)
+                    for [total_visit, vc_per_doctor] in doctorsdict.values():
+                        if set(doctorsdict.keys()) == empdoctor:
+                            if total_visit > vc_per_doctor:
+                                raise ValidationError(
+                                    _("Total visit of doctors are not fulfilled."))
                         else:
-                            doctorsdict[doctor.name] = [doctor.total_visit,1]
-
-
-
-                for doctor in self.employee_id.doctor_ids:
-                    empdoctor.add(doctor.partner_id.name)
-                for [total_visit,vc_per_doctor] in doctorsdict.values():
-                    if set(doctorsdict.keys()) == empdoctor:
-                        if total_visit>vc_per_doctor:
                             raise ValidationError(_("Total visit of doctors are not fulfilled."))
-                    else:
-                        raise ValidationError(_("Total visit of doctors are not fulfilled."))
 
-        for tour_plan in self:
-            if tour_plan:
-                approval_category = self.env.ref(
-                    'setu_pharma_basic.approval_category_data_tour_plan_approval')
-                self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
-                                                                                 model_record=tour_plan)
-        """ Return Rainbow effect on tp submit """
-        return {
-            'effect': {
-                'fadeout': 'slow',
-                'message': 'Tour plan submitted successfully',
-                'type': 'rainbow_man',
+            approval_category = self.env.ref(
+                'setu_pharma_basic.approval_category_data_tour_plan_approval')
+            self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
+                                                                             model_record=tp)
+
+            url = '/web#%s' % url_encode({
+                'action': 'approvals.approval_request_action_to_review',
+                'active_id': tp.approval_request_id.id,
+                'active_model': 'setu.pharma.tour.plan',
+                'menu_id': self.env.ref('approvals.approvals_menu_root').id,
+            })
+            tp._message_log(body=_('<b>Tour Plan Submitted Successfully!</b> '
+                                   'You can review your Approval Request '
+                                   '<a href="%s">%s</a>') % (url, tp.approval_request_id.name))
+
+        if len(self) == 1:
+            """ Return Rainbow effect on tp submit """
+            return {
+                'effect': {
+                    'fadeout': 'slow',
+                    'message': 'Tour plan submitted successfully',
+                    'type': 'rainbow_man',
+                }
             }
-        }
 
     def action_reset_tp(self):
         for record in self:

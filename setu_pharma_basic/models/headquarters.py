@@ -20,7 +20,7 @@ class SetuPharmaHeadquarters(models.Model):
 
     active = fields.Boolean(string="Active", default=True,
                             help="Currently Active Headquarters.")
-    employee_ids = fields.Many2many("hr.employee", string='Employees')
+    employee_ids = fields.One2many("hr.employee", 'headquarter_id', string='Employees')
     warehouse_id = fields.Many2one('stock.warehouse', 'Warehouse')
     employee_location_ids = fields.One2many("stock.location", 'headquarter_id',
                                             string='Stock Locations', required=0)
@@ -142,6 +142,12 @@ class SetuPharmaHeadquarters(models.Model):
 
         headquarter = super(SetuPharmaHeadquarters, self).create(vals)
         if headquarter:
+            headquarter.ex_headquarter_ids = [(0, 0, {
+                'headquarter_id': headquarter.id,
+                'state_id': headquarter.state_id.id,
+                'city_id': headquarter.city_id.id,
+                'distance': 0.0
+            })]
             warehouse = self.env['stock.warehouse']
             warehouse = warehouse.create({
                 'name': headquarter.name + ' - Warehouse',
