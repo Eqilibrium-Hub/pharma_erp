@@ -33,6 +33,8 @@ class StockistMonthlyStatement(models.Model):
     division_id = fields.Many2one('setu.pharma.division', string='Division')
     headquarter_id = fields.Many2one('setu.pharma.headquarters', string="Headquater")
     difference_of_order = fields.Float('Difference', compute="_compute_difference")
+    company_id = fields.Many2one("res.company", string="Company",
+                                 default=lambda self: self.env.company)
 
     @api.constrains('fiscal_period_id')
     def check_fiscal_period(self):
