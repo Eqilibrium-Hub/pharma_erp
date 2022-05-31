@@ -50,17 +50,19 @@ def init_fiscal_years_and_periods(env):
 def init_create_new_default_data(env):
     """ Create Default Headquarter."""
     code = ""
+    count = 0
     for company in env['res.company'].search([]):
+        count += 1
         division = env['setu.pharma.division'].create({
             'company_id': company.id,
             'name': company.name + " - Generic Division",
-            'code': company.name[:2] + "_G",
+            'code':str(count).zfill(5)
         })
         hq = env['setu.pharma.headquarters'].create({
             'company_id': company.id,
             'division_id': division.id,
             'name': company.name + " - Headquarter",
-            'code': company.name[:4] + "_code",
+            'code':str(count).zfill(5)
         })
 
 
