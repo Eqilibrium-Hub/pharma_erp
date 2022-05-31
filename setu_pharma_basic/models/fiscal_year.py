@@ -25,7 +25,8 @@ class FiscalYear(models.Model):
     start_month = fields.Selection(string="Start Month", selection=months())
     end_month = fields.Selection(string="End Month", selection=months(),
                                  compute="_compute_start_month", store=True)
-    period_ids = fields.One2many("setu.pharma.fiscalperiod", "fiscalyear_id", string="Periods")
+    period_ids = fields.One2many("setu.pharma.fiscalperiod", "fiscalyear_id", string="Periods",
+                                 ondelete="restrict")
 
     def generate_fiscal_period(self):
         """ Prepare Dynamically Fiscal Period for 1 Year. """

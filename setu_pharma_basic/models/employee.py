@@ -65,7 +65,7 @@ class HrEmployeeLine(models.Model):
     total_visit = fields.Integer('Total Visit', default=1)
     headquarter_city = fields.Many2one(related='employee_id.headquarter_id.city_id',
                                        string='HQ City')
-    dr_city = fields.Char(related='partner_id.city', string='City')
+    dr_city = fields.Many2one(related='partner_id.city_id', string='City')
 
     @api.constrains('partner_id')
     def _check_exist_partner_id(self):
@@ -75,3 +75,10 @@ class HrEmployeeLine(models.Model):
                 if line.partner_id.id in exist_product_list:
                     raise ValidationError(_('Doctor should be one per line.'))
                 exist_product_list.append(line.partner_id.id)
+
+    def name_get(self):
+        result = []
+        for hr_line in self:
+            name = hr_line.partner_id.name + ' - ' + hr_line.partner_id.dr_city.name
+            result.append((hr_line.id, name))
+        return result
