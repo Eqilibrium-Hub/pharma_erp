@@ -14,11 +14,14 @@ class ResCompany(models.Model):
     @api.model
     def create(self, vals):
         """ Create New Default Headquarter. """
-        company_create = super(ResCompany, self).create(vals)
-        self.env['setu.pharma.headquarters'].with_context(
-            allowed_company_ids=company_create.ids).create({
-            'name': company_create.name,
-            'code': company_create.code,
-            'company_id': company_create.id
-        })
+        company_code = vals['code']
+        company_create = super(ResCompany, self.with_context(default_code=company_code+"1")).create(
+            vals)
+        for company in company_create:
+            self.env['setu.pharma.headquarters'].with_context(
+                allowed_company_ids=company.ids).create({
+                'name': company.name,
+                'code': company.code,
+                'company_id': company.id
+            })
         return company_create

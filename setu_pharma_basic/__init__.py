@@ -56,13 +56,13 @@ def init_create_new_default_data(env):
         division = env['setu.pharma.division'].create({
             'company_id': company.id,
             'name': company.name + " - Generic Division",
-            'code':str(count).zfill(5)
+            'code': str(count).zfill(5)
         })
         hq = env['setu.pharma.headquarters'].create({
             'company_id': company.id,
             'division_id': division.id,
             'name': company.name + " - Headquarter",
-            'code':str(count).zfill(5)
+            'code': str(count).zfill(5)
         })
 
 

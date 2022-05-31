@@ -14,13 +14,23 @@ class StockWarehouseExtends(models.Model):
     division_id = fields.Many2one(related='headquarter_id.division_id', string="Division",
                                   copy=False)
     city_id = fields.Many2one(related='headquarter_id.city_id', string="City", copy=False)
-    code = fields.Char(size=8, related='headquarter_id.code', store=True,
+    code = fields.Char(size=8, store=True, compute="_compute_hq_code",
                        inverse='_inverse_hq_code')
+
+    def _compute_hq_code(self):
+        """ Update Related Headquarter Code while updating in the warehouse. """
+        for wh in self:
+            if wh.headquarter_id and wh.headquarter_id.code:
+                wh.code = wh.headquarter_id.code
+            else:
+                wh.code = wh.code
 
     def _inverse_hq_code(self):
         """ Update Related Headquarter Code while updating in the warehouse. """
         for wh in self:
             if wh.headquarter_id:
+                wh.headquarter_id.code = wh.code
+            else:
                 wh.headquarter_id.code = wh.code
 
     def _get_sequence_values(self):
