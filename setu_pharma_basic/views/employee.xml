@@ -60,7 +60,7 @@
                     <group>
                         <group>
                             <field name="area_ids" widget="many2many_tags"/>
-                            <field name="stock_location_id"/>
+                            <field name="stock_location_id" readonly="1"/>
                         </group>
                         <group>
                             <field name="dcr_submit_lock_days"/>
@@ -75,7 +75,7 @@
                             <field name="employee_id" invisible="1"/>
                             <field name="headquarter_city" invisible="1"/>
                             <field name="partner_id" options="{'no_create': True}"
-                                   style="width:180px"/>
+                                   style="width:220px"/>
                             <field name="total_visit" string="Minimum Visit Required"
                                    style="text-align:center; width:140px"/>
                             <field name="dr_city" style=" width:140px"/>
