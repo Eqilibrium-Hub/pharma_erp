@@ -12,8 +12,8 @@
                             class="btn-primary"/>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_view_records"
+                    <div class="oe_button_box" name="button_box" >
+                        <button name="action_view_records" style="width:180px"
                                 type="object"
                                 class="oe_stat_button"
                                 icon="fa-map-marker"
@@ -22,7 +22,7 @@
                         >
                             <field name="total_of_ex_headquarters" widget="statinfo" string="Ex. Headquarters"/>
                         </button>
-                        <button name="action_view_records"
+                        <button name="action_view_records" style="width:180px"
                                 type="object"
                                 class="oe_stat_button"
                                 icon="fa-users"
@@ -31,7 +31,7 @@
                         >
                             <field name="total_employees" widget="statinfo" string="Employees"/>
                         </button>
-                        <button name="action_view_records"
+                        <button name="action_view_records" style="width:180px"
                                 type="object"
                                 class="oe_stat_button"
                                 icon="fa-building-o"

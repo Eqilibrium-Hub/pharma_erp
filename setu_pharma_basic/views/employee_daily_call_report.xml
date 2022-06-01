@@ -15,6 +15,16 @@
                     <filter name="call_date" string="Call date" context="{'group_by':'call_date'}"/>
                     <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
                 </group>
+                <separator/>
+                <filter string="Call Date" name="filter_call_date" date="call_date"
+                        default_period="this_month"/>
+                <filter string="Join Working" name="filter_join_working" domain="[('is_join_working', '=', True)]"/>
+                <separator/>
+                <filter string="Single Working" name="filter_single_working"
+                        domain="[('is_join_working', '=', False)]"/>
+                <separator/>
+                <filter string="New Calls" name="filter_new_calls" domain="[('state', '=', 'draft')]"/>
+                <filter string="Submitted Calls" name="filter_submitted_calls" domain="[('state', '=', 'submitted')]"/>
             </search>
         </field>
     </record>
@@ -57,7 +67,7 @@
                         <group>
                             <field name="employee_id" required="1"
                                    attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
-                            <field name="division_id" required="1"  options="{'no_create': True}"/>
+                            <field name="division_id" required="1" options="{'no_create': True}"/>
                             <field name="headquarter_id" required="1" options="{'no_create': True}"/>
                             <field name="distance_calculation_type"
                                    attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
@@ -66,7 +76,7 @@
                         </group>
                         <group>
                             <field name="call_date" required="1" readonly="1"/>
-                            <field name="tour_plan_id" required="1" domain="[('state', '=', 'approved')]"/>
+                            <field name="tour_plan_id" domain="[('state', '=', 'approved')]"/>
                             <field name="company_id" required="1" readonly="1"/>
                         </group>
                     </group>
@@ -164,6 +174,7 @@
         <field name="res_model">setu.pharma.employee.daily.call</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="view_employee_daily_call_report_search"/>
+        <field name="context">{'search_default_filter_call_date':1, 'search_default_filter_new_calls':1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No Daily Call Report Found!

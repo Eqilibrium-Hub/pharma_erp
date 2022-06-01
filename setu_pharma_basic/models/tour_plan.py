@@ -36,11 +36,12 @@ class TourPlan(models.Model):
         help="Approving status")
     requester_id = fields.Many2one("res.users", string="Requester",
                                    default=lambda self: self.env.user)
-    approval_request_id = fields.Many2one('approval.request', "Approval Request")
+    approval_request_id = fields.Many2one('approval.request', "Approval Request",
+                                          ondelete='cascade')
     division_id = fields.Many2one("setu.pharma.division", string="Division", copy=False,
                                   default=lambda self: self.env.user.employee_id.division_id)
     period_id = fields.Many2one("setu.pharma.fiscalperiod", string="Fiscal period",
-                                compute="_compute_fiscal_period")
+                                compute="_compute_fiscal_period", store=True)
     company_id = fields.Many2one("res.company", string="Company",
                                  default=lambda self: self.env.company, required=True)
     tour_plan_lines = fields.One2many('setu.pharma.tour.plan.line', 'tour_id', 'Tour Plan Lines')
@@ -154,26 +155,27 @@ class TourPlan(models.Model):
                 raise ValidationError(_("Tourplan line is mandatory Generate or Add TP line"))
             if tp.period_id.id == False:
                 raise ValidationError(
-                    _("Fiscal period not found please go to configuration/fiscal year and create fiscal year and generate fiscal period"))
+                    _("Fiscal period not found please go to configuration/fiscal year and "
+                      "create fiscal year and generate fiscal period"))
 
-            if self.env['ir.config_parameter'].sudo().get_param(
+            if tp.env['ir.config_parameter'].sudo().get_param(
                     'setu_pharma_basic.mandatory_select_doctors'):
-                for tp in self.tour_plan_lines:
+                for tp in tp.tour_plan_lines:
                     if tp.visit_counts < 1:
                         raise ValidationError(_("Doctor selection is mandatory"))
 
-                if self.env['ir.config_parameter'].sudo().get_param(
+                if tp.env['ir.config_parameter'].sudo().get_param(
                         'setu_pharma_basic.raise_validation_tp'):
                     doctorsdict = defaultdict()
                     empdoctor = set()
-                    for tp in self.tour_plan_lines:
+                    for tp in tp.tour_plan_lines:
                         for doctor in tp.visiting_partner_ids:
                             if doctor.name in doctorsdict.keys():
                                 count = doctorsdict[doctor.name][1] + 1
                                 doctorsdict[doctor.name][1] = count
                             else:
                                 doctorsdict[doctor.name] = [doctor.total_visit, 1]
-                    for doctor in self.employee_id.doctor_ids:
+                    for doctor in tp.employee_id.doctor_ids:
                         empdoctor.add(doctor.partner_id.name)
                     for [total_visit, vc_per_doctor] in doctorsdict.values():
                         if set(doctorsdict.keys()) == empdoctor:
@@ -182,7 +184,6 @@ class TourPlan(models.Model):
                                     _("Total visit of doctors are not fulfilled."))
                         else:
                             raise ValidationError(_("Total visit of doctors are not fulfilled."))
-
             approval_category = self.env.ref(
                 'setu_pharma_basic.approval_category_data_tour_plan_approval')
             self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
@@ -211,3 +212,12 @@ class TourPlan(models.Model):
     def action_reset_tp(self):
         for record in self:
             record.approval_request_id.action_draft()
+
+    @api.onchange('tour_plan_lines')
+    def onchange_tour_plan_lines(self):
+        """ Update TP Line Generated Boolean. """
+        for tp in self:
+            if tp.tour_plan_lines:
+                tp.tp_line_generated = True
+            else:
+                tp.tp_line_generated = False

@@ -81,7 +81,8 @@ class EmployeeDailyCallReport(models.Model):
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
+                                      submenu=submenu)
         doc = etree.fromstring(res['arch'])
         if view_type == 'form':
             try:
@@ -91,7 +92,8 @@ class EmployeeDailyCallReport(models.Model):
             active_id_browsable = self.env['setu.pharma.employee.daily.call'].browse(active_id)
             call_date = active_id_browsable.call_date
 
-            """Code For Lock DCR for Edit based on Employee's DCR Edit Lock Days Also If Submited Than Also Readonly """
+            # Code For Lock DCR for Edit based on Employee's DCR Edit Lock Days Also If
+            # Submited Than Also Readonly
             dcr_edit_days = active_id_browsable.employee_id.dcr_edit_lock_days
             call_date_edit = call_date + relativedelta(days=+ dcr_edit_days)
             remaining_day_for_edit = (call_date_edit - fields.Date.today()).days
