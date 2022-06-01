@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sales_incentive_tree_view" model="ir.ui.view">
+            <field name="name">sales.incentive.tree</field>
+            <field name="model">setu.pharma.incentive.structure</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="True"/>
+                    <field name="division_id" required="True"/>
+                    <field name="headquarter_id" required="True"/>
+                    <field name="designation_id" required="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sales_incentive_form_view" model="ir.ui.view">
+            <field name="name">sales.incentive.form</field>
+            <field name="model">setu.pharma.incentive.structure</field>
+            <field name="arch" type="xml">
+                <form string="Incentives">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Title" required="True"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group style="margin-top:15px" >
+                                <field name="division_id"></field>
+                                <field name="designation_id"></field>
+                            </group>
+                            <group style="margin-top:15px">
+                                <field name="headquarter_id"></field>
+                            </group>
+                        </group>
+                        <group>
+                            <notebook>
+                                <page string="Targets">
+                                    <field name="target_ids"/>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="sales_incentive_lines_tree_view" model="ir.ui.view">
+            <field name="name">sales.incentive.lines.tree</field>
+            <field name="model">setu.pharma.incentive.structure.lines</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="target_id" required="True"/>
+                    <field name="target_based_on"/>
+                    <field name="fiscal_period"/>
+                    <field name="reward_type"/>
+                    <field name="status"  widget="badge" decoration-info="status == 'draft'"
+                           decoration-warning="status == 'expired'" decoration-success="status == 'running'"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_incentive_filter" model="ir.ui.view">
+            <field name="name">sale.incentive.select</field>
+            <field name="model">setu.pharma.incentive.structure</field>
+            <field name="arch" type="xml">
+                <search string="Search Targets">
+                    <field name="name" string="Incentive Structure Name"/>
+                    <field name="division_id"/>
+                    <field name="designation_id"/>
+                    <field name="headquarter_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Division" name="division_id" context="{'group_by':'division_id'}"/>
+                        <filter string="Designation" name="designation_id" context="{'group_by':'designation_id'}"/>
+                        <filter string="Headquarter" name="headquarter_id" context="{'group_by':'headquarter_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

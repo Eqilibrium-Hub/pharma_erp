@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_target_products_tree_view" model="ir.ui.view">
+            <field name="name">sales.target.tree</field>
+            <field name="model">setu.pharma.target.product.lines</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="product_amount"/>
+                    <field name="incentive_amount_per_quantity"/>
+                    <field name="total_incentive_amount"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

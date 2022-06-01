@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_range_action" model="ir.actions.act_window">
+            <field name="name">Sales Range</field>
+            <field name="res_model">setu.sales.range</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+         <record id="sales_range_tree_view" model="ir.ui.view">
+            <field name="name">sales.range.tree</field>
+            <field name="model">setu.sales.range</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="range_from"/>
+                    <field name="range_to"/>
+                    <field name="incentive_percentage"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

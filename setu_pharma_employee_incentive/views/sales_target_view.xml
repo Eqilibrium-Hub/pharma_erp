@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sales_target_tree_view" model="ir.ui.view">
+            <field name="name">sales.target.tree</field>
+            <field name="model">setu.pharma.sales.target</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="sales_based_on"/>
+                    <field name="fiscal_period"/>
+                    <field name="reward_type"/>
+                    <field name="status" widget="badge" decoration-info="status == 'draft'"
+                           decoration-warning="status == 'expired'" decoration-success="status == 'running'"/>
+                    <field name="target_start_date" invisible="1"/>
+                    <field name="target_end_date" invisible="1"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="sales_target_form_view" model="ir.ui.view">
+            <field name="name">sales.target.form</field>
+            <field name="model">setu.pharma.sales.target</field>
+            <field name="arch" type="xml">
+                <form string="Targets">
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Title" required="True"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Target Based On">
+                                <field name="based_on_product" widget="boolean_toggle"/>
+                                <field name="based_on_sales" widget="boolean_toggle"/>
+                            </group>
+                            <group string="Sales Based On">
+                                <field name="sales_based_on" widget="radio" required="True"/>
+                            </group>
+                            <group style="margin-top:15px" string="Target Periods">
+                                <field name="fiscal_period" widget="radio" options="{'horizontal': true}"
+                                       required="True"/>
+                                <field name="fiscal_month_ids" widget="many2many_tags" required="True"/>
+
+                            </group>
+                            <group style="margin-top:15px" string="Target Rewards">
+                                <field name="reward_type"
+                                       attrs="{'readonly': [('based_on_product','=',True),('based_on_sales','=',False)]}"/>
+
+                            </group>
+                            <group style="margin-top:15px" attrs="{'invisible': [('based_on_sales','=',False)]}"
+                                   string="Target Amount For Sales">
+                                <field name="target_amount"/>
+                            </group>
+                            <group style="margin-top:15px"
+                                   attrs="{'invisible': [('reward_type','!=','based_on_percentage')]}"
+                                   string="Reward Based On Percentage">
+                                <field name="incentive_percentage" />
+                            </group>
+                            <group style="margin-top:15px" attrs="{'invisible': [('fiscal_period','!=','quarterly+1')]}"
+                                   string="Target Percentage For Quarter's Next Month">
+                                <field name="target_percentage_for_quarter" widget="percentage"/>
+                            </group>
+                            <group style="margin-top:15px"
+                                   attrs="{'invisible': ['|',('reward_type','!=','fixed_amount'),('based_on_sales','=',False)]}"
+                                   string="Reward Based On Amount">
+                                <field name="incentive_amount"/>
+                            </group>
+                            <field name="target_start_date" invisible="1"/>
+                            <field name="target_end_date" invisible="1"/>
+                            <field name="message" style="margin-left:550px;margin-top:50px;word-spacing:2px;letter-spacing:1px;font-style:italic" readonly="1"/>
+                        </group>
+
+                        <group>
+                            <notebook>
+                                <page string="Products" attrs="{'invisible': [('based_on_product','=',False)]}">
+                                    <field name="target_product_lines_ids"/>
+                                </page>
+                                <page string="Ranges" attrs="{'invisible': [('reward_type','!=','based_on_range')]}">
+                                    <field name="range_ids"/>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_sales_target_filter" model="ir.ui.view">
+            <field name="name">sale.target.select</field>
+            <field name="model">setu.pharma.sales.target</field>
+            <field name="arch" type="xml">
+                <search string="Search Targets">
+                    <field name="name" string="Target Name"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Reward Type" name="reward_type" context="{'group_by':'reward_type'}"/>
+                        <filter string="Fiscal Period" name="fiscal_period" context="{'group_by':'fiscal_period'}"/>
+                        <filter string="Sales Based On" name="sales_based_on" context="{'group_by':'sales_based_on'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>
