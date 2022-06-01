@@ -129,7 +129,7 @@ class FiscalYear(models.Model):
     @api.depends('start_month')
     def _compute_start_month(self):
         for fy in self:
-            if not fy.start_month:
+            if fy.start_month == '0':
                 fy.end_month = False
             else:
                 fy.end_month = '12' if fy.start_month == '1' else str(

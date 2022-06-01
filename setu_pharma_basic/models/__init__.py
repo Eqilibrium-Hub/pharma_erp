@@ -1,5 +1,4 @@
 from . import area
-from . import city
 from . import city_distance
 from . import designation
 from . import division

@@ -1,7 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_area,area_access,model_setu_pharma_area,base.group_user,1,1,1,1
 access_division,division_access,model_setu_pharma_division,base.group_user,1,1,1,1
-access_city,city_access,model_setu_pharma_city,base.group_user,1,1,1,1
 access_setu_pharma_fiscalyear,setu_pharma_fiscalyear_access,model_setu_pharma_fiscalyear,base.group_user,1,1,1,1
 access_setu_pharma_fiscalperiod,setu_pharma_fiscalperiod_access,model_setu_pharma_fiscalperiod,base.group_user,1,1,1,1
 access_setu_pharma_city_distance,setu_pharma_city_distance_access,model_setu_pharma_city_distance,base.group_user,1,1,1,1
