@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "setu_pharma_employee_incentive",
+    'name': "Setu Pharma Employee Incentive",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -25,11 +25,11 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/sales_target_view.xml',
-        'views/sales_target_products.xml',
-        'views/setu_pharma_incentive.xml',
-        'views/setu_sales_range.xml',
-        'views/sales_menu_extended.xml',
+        'views/setu_pharma_sales_target_view.xml',
+        'views/setu_pharma_sales_target_products.xml',
+        'views/setu_pharma_incentive_structure.xml',
+        'views/setu_pharma_sales_range.xml',
+        'views/setu_pharma_sales_menu_extended.xml',
 
     ],
     # only loaded in demonstration mode
