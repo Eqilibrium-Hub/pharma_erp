@@ -105,14 +105,14 @@
         <field name="name">setu.pharma.division.kanban</field>
         <field name="model">setu.pharma.division</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_dashboard">
+            <kanban class="o_kanban_dashboard oe_kanban_global_click">
                 <field name="name"/>
                 <field name="code"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_content">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
                             <div>
-                                <div class="o_kanban_record_headings">
+                                <div class="o_kanban_record_headings ">
                                     <span>
                                         <b>
                                             <field name="name"/>
