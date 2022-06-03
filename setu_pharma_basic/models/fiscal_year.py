@@ -22,7 +22,7 @@ class FiscalYear(models.Model):
     start_year = fields.Selection(string="Start Year", selection=_prepare_years())
     end_year = fields.Selection(string="End Year", selection=_prepare_years(),
                                 compute="_compute_start_year", store=True)
-    start_month = fields.Selection(string="Start Month", selection=months())
+    start_month = fields.Selection(string="Start Month", selection=months(), default="4")
     end_month = fields.Selection(string="End Month", selection=months(),
                                  compute="_compute_start_month", store=True)
     period_ids = fields.One2many("setu.pharma.fiscalperiod", "fiscalyear_id", string="Periods",
@@ -129,7 +129,7 @@ class FiscalYear(models.Model):
     @api.depends('start_month')
     def _compute_start_month(self):
         for fy in self:
-            if fy.start_month == '0':
+            if fy.start_month in ['0', False, None]:
                 fy.end_month = False
             else:
                 fy.end_month = '12' if fy.start_month == '1' else str(
