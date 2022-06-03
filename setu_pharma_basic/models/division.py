@@ -58,7 +58,7 @@ class Division(models.Model):
     def action_view_records(self):
         """ Open Records for XML button with dynamic context. """
         record_ids = []
-        action, view_id = self.env['setu.pharma.headquarters']._get_action_and_view_id()
+        action, view_id = self.env['setu.pharma.headquarters'].get_action_and_view_id()
         if self._context.get('open_headquarters'):
             record_ids = self.headquarter_ids and self.headquarter_ids.ids
         if self._context.get('open_products'):
@@ -66,9 +66,10 @@ class Division(models.Model):
         if self._context.get('open_employees'):
             record_ids = self.employee_ids and self.employee_ids.ids
         action = self.env['setu.pharma.headquarters']._prepare_context_for_count_fields(action)
-        action['domain'] = [('id', 'in', record_ids)]
-        action['views'] = [(view_id.id, 'tree'), (False, 'form')]
-        return action
+        if record_ids:
+            action['domain'] = [('id', 'in', record_ids)]
+            action['views'] = [(view_id.id, 'tree'), (False, 'form')]
+            return action
 
     @api.model
     def create(self, vals):

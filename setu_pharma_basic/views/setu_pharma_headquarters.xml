@@ -12,7 +12,7 @@
                             class="btn-primary"/>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box" >
+                    <div class="oe_button_box" name="button_box">
                         <button name="action_view_records" style="width:180px"
                                 type="object"
                                 class="oe_stat_button"
@@ -80,7 +80,7 @@
                                 <tree string="Ex. Headquarter" editable="bottom">
                                     <field name="headquarter_id" invisible="1"/>
                                     <field name="state_id" invisible="1"/>
-                                    <field name="city_id" domain="[('state_id', '=', state_id)]"
+                                    <field name="city_id"
                                            required="1"
                                     />
                                     <field name="distance" required="1"/>
@@ -168,18 +168,68 @@
                 <field name="code"/>
                 <field name="city_id"/>
                 <field name="total_employees"/>
+                <field name="ex_headquarter_ids"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_res_partner_kanban">
+                        <div class="o_emphasize_colors oe_kanban_global_click o_res_partner_kanban">
                             <div class="oe_kanban_details">
                                 <strong class="o_kanban_record_title oe_partner_heading">
-                                    <field name="name"/>
-                                    -
-                                    <field name="division_id"/>
+                                    <h4>
+                                        <field name="name"/>
+                                    </h4>
                                 </strong>
-                                <br/>
                                 <field name="area_id"/>
+                                <br/>
+                                <field name="city_id"/>
+                                <br/>
+                                <br/>
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <h5>
+                                            <a class=" oe_kanban_action oe_kanban_action_a"
+                                               type="object"
+                                               name="action_view_records"
+                                               context="{'open_employees':True}">
+                                                <div attrs="{'invisible':[('total_employees', '=', 0)]}"
+                                                     name="total_employees">
+                                                    <i class="fa fa-users"/>
+                                                    <field name="total_employees"/>
+                                                    Employees
+                                                </div>
+
+                                            </a>
+                                        </h5>
+                                        <h5>
+                                            <a class=" oe_kanban_action oe_kanban_action_a"
+                                               type="object"
+                                               name="action_view_records"
+                                               context="{'open_ex_headquarters':True}">
+                                                <div attrs="{'invisible':[('total_of_ex_headquarters', '=', 0)]}"
+                                                     name="total_of_ex_headquarters">
+                                                    <i class="fa fa-map-marker"/>
+                                                    <field name="total_of_ex_headquarters"/>
+                                                    Ex-headquarters
+                                                </div>
+                                            </a>
+                                        </h5>
+                                        <h5>
+                                            <a class=" oe_kanban_action oe_kanban_action_a"
+                                               type="object"
+                                               name="action_view_records"
+                                               context="{'open_employee_stock_locations':True}">
+                                                <div attrs="{'invisible':[('total_employee_locations', '=', 0)]}"
+                                                     name="total_employee_locations">
+                                                    <i class="fa fa-building-o"/>
+                                                    <field name="total_employee_locations"/>
+                                                    Locations
+                                                </div>
+                                            </a>
+                                        </h5>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </div>
                     </t>
                 </templates>

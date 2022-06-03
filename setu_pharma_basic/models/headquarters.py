@@ -46,20 +46,21 @@ class SetuPharmaHeadquarters(models.Model):
     def action_view_records(self):
         """ Open Records for XML button with dynamic context. """
         record_ids = []
-        action, view_id = self._get_action_and_view_id()
+        action, view_id = self.get_action_and_view_id()
         action = self._prepare_context_for_count_fields(action)
         if self._context.get('open_employees'):
             record_ids = self.mapped('employee_ids') and self.mapped('employee_ids').ids
         elif self._context.get('open_ex_headquarters'):
             record_ids = self.mapped('ex_headquarter_ids') and self.mapped('ex_headquarter_ids').ids
         elif self._context.get('open_employee_stock_locations'):
-            record_ids = self.mapped('employee_location_ids') and self.mapped(
-                'employee_location_ids').ids
-        action['domain'] = [('id', 'in', record_ids)]
-        action['view_id'] = view_id.id
-        return action
+            record_ids = self.mapped('employee_location_ids') and self.mapped('employee_location_ids').ids
+        if record_ids:
+            action['domain'] = [('id', 'in', record_ids)]
+            action['view_id'] = view_id.id
+            return action
 
-    def _get_action_and_view_id(self):
+
+    def get_action_and_view_id(self):
         """ Prepare Action and View for XML button with dynamic context. """
         view_id = self.env['ir.ui.view']
         action = self.env['ir.actions.act_window']
@@ -67,8 +68,8 @@ class SetuPharmaHeadquarters(models.Model):
             view_id = self.env.ref("hr.view_employee_tree")
             action = self.env.ref('hr.open_view_employee_tree').read()[0]
         elif self._context.get('open_ex_headquarters'):
-            view_id = self.env.ref("setu_pharma_basic.setu_pharma_city_list")
-            action = self.env.ref('setu_pharma_basic.res_city_action').read()[0]
+            view_id = self.env.ref("setu_pharma_basic.setu_pharma_ex_headquarter_tree_view")
+            action = self.env.ref('setu_pharma_basic.action_ex_head_tree').read()[0]
         elif self._context.get('open_employee_stock_locations'):
             view_id = self.env.ref("stock.view_location_tree2")
             action = self.env.ref('stock.action_location_form').read()[0]
