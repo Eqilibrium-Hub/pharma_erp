@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <record id="view_code" model="ir.ui.view">
+        <field name="model">res.city</field>
+        <field name="inherit_id" ref="base_address_city.view_city_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree//field[@name='zipcode']" position="before">
+                <field name="code"/>
+            </xpath>
+        </field>
+    </record>
 
     <record id="res_city_action" model="ir.actions.act_window">
         <field name="name">City</field>

@@ -105,26 +105,69 @@
         <field name="name">setu.pharma.division.kanban</field>
         <field name="model">setu.pharma.division</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_dashboard">
+            <kanban class="o_kanban_dashboard oe_kanban_global_click">
                 <field name="name"/>
                 <field name="code"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
                             <div>
-                                <div class="o_kanban_record_headings">
-                                    <b class="o_kanban_record_title">Division :</b>
+                                <div class="o_kanban_record_headings ">
                                     <span>
-                                        <field name="name"/>
+                                        <b>
+                                            <field name="name"/>
+                                            -
+                                            <field name="code"/>
+                                        </b>
                                     </span>
                                 </div>
                             </div>
-                            <div>
-                                <div>
-                                    <b class="o_kanban_record_title">Code :</b>
-                                    <span>
-                                        <field name="code"/>
-                                    </span>
+                            <br/>
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <h5>
+                                            <a class=" oe_kanban_action oe_kanban_action_a"
+                                               type="object"
+                                               name="action_view_records"
+                                               context="{'open_headquarters':True}">
+                                                <div attrs="{'invisible':[('total_headquarters', '=', 0)]}"
+                                                     name="total_headquarters" options="{'clickable': '0'}">
+                                                    <i class="fa fa-map-marker"/>
+                                                    <field name="total_headquarters"/>
+                                                    Headquarters
+                                                </div>
+                                            </a>
+                                        </h5>
+
+                                        <h5>
+                                            <a class=" oe_kanban_action oe_kanban_action_a"
+                                               type="object"
+                                               name="action_view_records"
+                                               context="{'open_products':True}">
+                                                <div attrs="{'invisible':[('total_products', '=', 0)]}"
+                                                     name="total_products">
+                                                    <i class="fa fa-cubes"/>
+                                                    <field name="total_products"/>
+                                                    Products
+                                                </div>
+                                            </a>
+                                        </h5>
+
+                                        <h5>
+                                            <a class=" oe_kanban_action oe_kanban_action_a"
+                                               type="object"
+                                               name="action_view_records"
+                                               context="{'open_employees':True}">
+                                                <div attrs="{'invisible':[('total_employees', '=', 0)]}"
+                                                     name="total_employees">
+                                                    <i class="fa fa-users"/>
+                                                    <field name="total_employees"/>
+                                                    Employees
+                                                </div>
+                                            </a>
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>

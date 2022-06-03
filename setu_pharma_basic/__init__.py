@@ -62,6 +62,7 @@ def init_create_new_default_data(env):
             'company_id': company.id,
             'division_id': division.id,
             'name': company.name + " - Headquarter",
+            'city_id':company.city,
             'code': str(count).zfill(5)
         })
 

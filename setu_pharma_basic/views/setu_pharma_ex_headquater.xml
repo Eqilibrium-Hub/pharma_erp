@@ -27,5 +27,12 @@
             </field>
         </record>
 
+        <record id="action_ex_head_tree" model="ir.actions.act_window">
+            <field name="name">Ex-Headquarter</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">setu.pharma.ex.headquarter</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
     </data>
 </odoo>
