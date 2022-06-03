@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <record id="sales_target_products_tree_view" model="ir.ui.view">
-            <field name="name">sales.target.tree</field>
+        <!-- Sales Target Product Tree View -->
+        <record id="setu_view_sales_target_products_tree" model="ir.ui.view">
+            <field name="name">view.sales.target.tree</field>
             <field name="model">setu.pharma.target.product.lines</field>
             <field name="arch" type="xml">
                 <tree editable="bottom">
@@ -13,6 +13,17 @@
                     <field name="incentive_amount_per_quantity"/>
                     <field name="total_incentive_amount"/>
                 </tree>
+            </field>
+        </record>
+
+         <record id="setu_view_sales_target_product_search" model="ir.ui.view">
+            <field name="name">view.sales.target.product.search</field>
+            <field name="model">setu.pharma.target.product.lines</field>
+            <field name="arch" type="xml">
+                <!-- Target Product Search View -->
+                <search string="Search Targets">
+                    <field name="product_id"/>
+                </search>
             </field>
         </record>
     </data>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
         <record id="sales_target_tree_view" model="ir.ui.view">
             <field name="name">sales.target.tree</field>
             <field name="model">setu.pharma.sales.target</field>
             <field name="arch" type="xml">
+                <!-- Sales Target Tree View -->
                 <tree>
                     <field name="name"/>
                     <field name="sales_based_on"/>
@@ -23,6 +25,7 @@
             <field name="name">sales.target.form</field>
             <field name="model">setu.pharma.sales.target</field>
             <field name="arch" type="xml">
+                <!-- Sales Target Form View -->
                 <form string="Targets">
                     <header>
                         <field name="status" widget="statusbar"/>
@@ -60,7 +63,7 @@
                             <group style="margin-top:15px"
                                    attrs="{'invisible': [('reward_type','!=','based_on_percentage')]}"
                                    string="Reward Based On Percentage">
-                                <field name="incentive_percentage" />
+                                <field name="incentive_percentage"/>
                             </group>
                             <group style="margin-top:15px" attrs="{'invisible': [('fiscal_period','!=','quarterly+1')]}"
                                    string="Target Percentage For Quarter's Next Month">
@@ -73,7 +76,9 @@
                             </group>
                             <field name="target_start_date" invisible="1"/>
                             <field name="target_end_date" invisible="1"/>
-                            <field name="message" style="margin-left:550px;margin-top:50px;word-spacing:2px;letter-spacing:1px;font-style:italic" readonly="1"/>
+                            <field name="message"
+                                   style="margin-left:550px;margin-top:50px;word-spacing:2px;letter-spacing:1px;font-style:italic"
+                                   readonly="1"/>
                         </group>
 
                         <group>
@@ -90,12 +95,47 @@
                 </form>
             </field>
         </record>
+
         <record id="view_sales_target_filter" model="ir.ui.view">
             <field name="name">sale.target.select</field>
             <field name="model">setu.pharma.sales.target</field>
             <field name="arch" type="xml">
+                <!-- Sales Target Search View -->
                 <search string="Search Targets">
                     <field name="name" string="Target Name"/>
+                    <filter string="Based On Product" name="based_on_product" domain="[('based_on_product','=',True)]"/>
+                    <filter string="Based On Sales" name="based_on_sales" domain="[('based_on_sales','=',True)]"/>
+                    <seperator/>
+
+                    <filter string="Monthly" name="monthly" domain="[('fiscal_period','=','monthly')]"/>
+                    <filter string="Quarterly" name="quarterly" domain="[('fiscal_period','=','quarterly')]"/>
+                    <filter string="Quarterly+1" name="quarterly+1" domain="[('fiscal_period','=','quarterly+1')]"/>
+                    <filter string="Yearly" name="yearly" domain="[('fiscal_period','=','yearly')]"/>
+                    <seperator/>
+
+                    <filter string="Secondary Sales" name="secondary_sales"
+                            domain="[('sales_based_on','=','secondary_sales')]"/>
+                    <filter string="Primary Sales" name="primary_sales"
+                            domain="[('sales_based_on','=','primary_sales')]"/>
+                    <seperator/>
+                    <filter string="Fixed Amount" name="fixed_amount" domain="[('reward_type','=','fixed_amount')]"/>
+                    <filter string="Based On Percentage" name="based_on_percentage"
+                            domain="[('reward_type','=','based_on_percentage')]"/>
+                    <filter string="International Trip" name="international_trip"
+                            domain="[('reward_type','=','international_trip')]"/>
+                    <filter string="Domestic Trip" name="domestic_trip"
+                            domain="[('reward_type','=','domestic_trip')]"/>
+                    <filter string="international_domestic_trip" name="international_domestic_trip"
+                            domain="[('reward_type','=','international_domestic_trip')]"/>
+                    <filter string="based_on_range" name="based_on_range"
+                            domain="[('reward_type','=','based_on_range')]"/>
+                    <seperator/>
+
+                    <filter string="Draft" name="draft" domain="[('status','=','draft')]"/>
+                    <filter string="Running" name="running" domain="[('status','=','running')]"/>
+                    <filter string="Expired" name="expired" domain="[('status','=','expired')]"/>
+
+                    <!-- Group By -->
                     <group expand="0" string="Group By">
                         <filter string="Reward Type" name="reward_type" context="{'group_by':'reward_type'}"/>
                         <filter string="Fiscal Period" name="fiscal_period" context="{'group_by':'fiscal_period'}"/>

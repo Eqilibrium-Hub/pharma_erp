@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="sales_incentive_tree_view" model="ir.ui.view">
-            <field name="name">sales.incentive.tree</field>
+        <record id="setu_view_sales_incentive_structure_tree" model="ir.ui.view">
+            <field name="name">view.sales.incentive.structure.tree</field>
             <field name="model">setu.pharma.incentive.structure</field>
             <field name="arch" type="xml">
+                <!-- Incentive Structure Tree View-->
                 <tree>
                     <field name="name" required="True"/>
                     <field name="division_id" required="True"/>
@@ -14,10 +15,11 @@
             </field>
         </record>
 
-        <record id="sales_incentive_form_view" model="ir.ui.view">
-            <field name="name">sales.incentive.form</field>
+        <record id="setu_view_sales_incentive_structure_form" model="ir.ui.view">
+            <field name="name">view.sales.incentive.structure.form</field>
             <field name="model">setu.pharma.incentive.structure</field>
             <field name="arch" type="xml">
+                <!-- Incentive Structure Form View-->
                 <form string="Incentives">
                     <sheet>
                         <div class="oe_title">
@@ -46,10 +48,12 @@
                 </form>
             </field>
         </record>
-        <record id="sales_incentive_lines_tree_view" model="ir.ui.view">
-            <field name="name">sales.incentive.lines.tree</field>
+
+        <record id="setu_view_sales_incentive_structure_lines_tree" model="ir.ui.view">
+            <field name="name">view.sales.incentive.structure.lines.tree</field>
             <field name="model">setu.pharma.incentive.structure.lines</field>
             <field name="arch" type="xml">
+                <!-- Incentive Structure Lines Tree View-->
                 <tree editable="bottom">
                     <field name="target_id" required="True"/>
                     <field name="target_based_on"/>
@@ -60,15 +64,18 @@
                 </tree>
             </field>
         </record>
-        <record id="view_incentive_filter" model="ir.ui.view">
-            <field name="name">sale.incentive.select</field>
+
+        <record id="setu_view_sales_incentive_structure_search" model="ir.ui.view">
+            <field name="name">view.sales.incentive.structure.search</field>
             <field name="model">setu.pharma.incentive.structure</field>
             <field name="arch" type="xml">
+                <!-- Incentive Structure Search View -->
                 <search string="Search Targets">
                     <field name="name" string="Incentive Structure Name"/>
                     <field name="division_id"/>
                     <field name="designation_id"/>
                     <field name="headquarter_id"/>
+                    <!-- Group By -->
                     <group expand="0" string="Group By">
                         <filter string="Division" name="division_id" context="{'group_by':'division_id'}"/>
                         <filter string="Designation" name="designation_id" context="{'group_by':'designation_id'}"/>

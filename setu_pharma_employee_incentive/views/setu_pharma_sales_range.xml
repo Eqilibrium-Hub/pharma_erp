@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <record id="sales_range_action" model="ir.actions.act_window">
-            <field name="name">Sales Range</field>
+        <!-- Sales Range Action-->
+        <record id="setu_action_sales_range" model="ir.actions.act_window">
+            <field name="name">Setu Pharma Sales Range</field>
             <field name="res_model">setu.sales.range</field>
             <field name="view_mode">tree</field>
         </record>
-
-         <record id="sales_range_tree_view" model="ir.ui.view">
-            <field name="name">sales.range.tree</field>
+        <!-- Sales Range Tree View-->
+        <record id="setu_view_sales_range_tree" model="ir.ui.view">
+            <field name="name">view.sales.range.tree</field>
             <field name="model">setu.sales.range</field>
             <field name="arch" type="xml">
                 <tree editable="bottom">

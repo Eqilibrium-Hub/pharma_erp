@@ -21,4 +21,3 @@ class City(models.Model):
                                       ('state_id', '=', rec.state_id.id)])
             if city_exist:
                 raise UserError(_('City should be unique !!'))
-

@@ -15,25 +15,25 @@ class PharmaSalesTarget(models.Model):
     incentive_percentage = fields.Float("Incentive Percentage", help="Incentive Percentage For Sales Target")
     target_percentage_for_quarter = fields.Float("Target Percentage", help="Target Percentage For Quarter's Next Month")
     fiscal_period = fields.Selection(selection=[
-                                    ('monthly', 'Monthly'),
-                                    ('quarterly', 'Quarterly'),
-                                    ('quarterly+1', 'Quarterly+1'),
-                                    ('yearly', 'Yearly')],
-                                    string='Fiscal Period', help="To Select Incentive Periods")
+        ('monthly', 'Monthly'),
+        ('quarterly', 'Quarterly'),
+        ('quarterly+1', 'Quarterly+1'),
+        ('yearly', 'Yearly')],
+        string='Fiscal Period', help="To Select Incentive Periods")
     sales_based_on = fields.Selection(selection=[
-                                    ('secondary_sales', 'Secondary Sales'),
-                                    ('primary_sales', 'Primary Sales')])
+        ('secondary_sales', 'Secondary Sales'),
+        ('primary_sales', 'Primary Sales')])
     reward_type = fields.Selection(selection=[
-                    ('fixed_amount', 'Fixed Amount'), ('based_on_percentage', 'Based On Percentage'),
-                   ('international_trip', 'International Trip'), ('domestic_trip', 'Domestic Trip'),
-                   ('international_domestic_trip', 'International+Domestic Trip'),
-                   ('based_on_range', 'Based On Range')],
-                    help="Select Reward Type To Give Rewards To Employees")
+        ('fixed_amount', 'Fixed Amount'), ('based_on_percentage', 'Based On Percentage'),
+        ('international_trip', 'International Trip'), ('domestic_trip', 'Domestic Trip'),
+        ('international_domestic_trip', 'International+Domestic Trip'),
+        ('based_on_range', 'Based On Range')],
+        help="Select Reward Type To Give Rewards To Employees")
     status = fields.Selection([
-                    ('draft', 'Draft'),
-                    ('running', 'Running'),
-                    ('expired', 'Expired')],
-                    readonly="True", default='draft')
+        ('draft', 'Draft'),
+        ('running', 'Running'),
+        ('expired', 'Expired')],
+        readonly="True", default='draft')
     target_product_lines_ids = fields.One2many('setu.pharma.target.product.lines',
                                                'target_id',
                                                help="Focused Products For Target")
@@ -53,16 +53,24 @@ class PharmaSalesTarget(models.Model):
         """
             Generate Status Of Target Based On Fiscal Months
         """
-        self.target_end_date = ''
-        self.target_start_date = ''
         for record in self:
             if record.fiscal_month_ids:
-                record.target_start_date = record.fiscal_month_ids.search([('name', '=',
-                    min(sorted(record.fiscal_month_ids.mapped('name'),
-                    key=lambda m: datetime.strptime(m, "%B"))))]).start_date
-                record.target_end_date = record.fiscal_month_ids.search([('name', '=',
-                    max(sorted(record.fiscal_month_ids.mapped('name'),
-                    key=lambda m: datetime.strptime(m, "%B"))))]).end_date
+                min_fiscal_period_ids = record.fiscal_month_ids.search([
+                    ('name', '=', min(sorted(record.fiscal_month_ids.mapped('name'),
+                                             key=lambda m: datetime.strptime(m, "%B"))))])
+
+                max_fiscal_period_ids = record.fiscal_month_ids.search([
+                    ('name', '=', max(sorted(record.fiscal_month_ids.mapped('name'),
+                                             key=lambda m: datetime.strptime(m, "%B"))))])
+
+                for period in min_fiscal_period_ids:
+                    if record.fiscal_month_ids.filtered(lambda x: x.id == period.id):
+                        record.target_start_date = record.fiscal_month_ids.filtered(
+                            lambda x: x.id == period.id).start_date
+
+                for period in max_fiscal_period_ids:
+                    if record.fiscal_month_ids.filtered(lambda x: x.id == period.id):
+                        record.target_end_date = record.fiscal_month_ids.filtered(lambda x: x.id == period.id).end_date
 
                 current_date = datetime.now().date()
 
@@ -76,6 +84,7 @@ class PharmaSalesTarget(models.Model):
     @api.onchange('based_on_product', 'based_on_sales')
     def _onchange_based_on_product(self):
         """ If Target Is Based On Product Than Reward Type Is Fixed Amount """
+
         if self.based_on_product:
             self.reward_type = 'fixed_amount'
 
@@ -85,7 +94,6 @@ class PharmaSalesTarget(models.Model):
         """
             Generates Message For Employee's Reward Based On Target Conditions
         """
-        self.message = ''
         for record in self:
 
             if record.reward_type == 'based_on_percentage':
@@ -117,13 +125,18 @@ class PharmaSalesTarget(models.Model):
                                str(range.range_to) + "</font></b>.<br> You Will Get <b><font color='#1f1f1f'>" + \
                                str(range.incentive_percentage) + "</font></b>% Incentive.<br>"
                 record.message = message
+            else:
+                record.message = ''
 
             if record.based_on_product:
                 record.message += "If You Achieve The Target Of Below Products You Will Get " + total
+            else:
+                record.message = ''
 
     # @api.constrains('fiscal_month_ids')
     # def _check_fiscal_months(self):
-        """ Note: This Code is for fiscal_months restrictions and commented because of Currently We Can't Add Any Restrictions"""
+    #  Note: This Code is for fiscal_months restrictions and commented because of Currently We Can't Add Any Restrictions
+    #   TODO : Constraints To Check Different Years
     #   for record in self._origin:
     #         if record.fiscal_period == 'monthly' and len(record.fiscal_month_ids) != 1:
     #             raise UserError(_("Select Only One Month"))
