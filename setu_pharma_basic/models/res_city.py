@@ -16,7 +16,7 @@ class City(models.Model):
         """
         for rec in self:
             city_exist = self.search([('id', '!=', rec.id),
-                                      ('name', '=', rec.name),
+                                      ('code', '=', rec.code),
                                       ('country_id', '=', rec.country_id.id),
                                       ('state_id', '=', rec.state_id.id)])
             if city_exist:
