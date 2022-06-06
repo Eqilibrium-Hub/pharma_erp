@@ -41,6 +41,11 @@
                                             <field name="difference_of_order"/>
                                         </span>
                                     </li>
+                                    <li>
+                                        <span class="oe_black" style="font-weight:bold;font-size:16px">Status :
+                                            <field name="state"/>
+                                        </span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -85,12 +90,21 @@
                     <button type="object" name="sale_order_creation" class="btn btn-primary"
                             string="create sale order"
                             attrs="{'invisible': ['|',('next_month_order_total', '=', 0),('sale_order_id','>',0)]}"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_view_sale_order" string="Sale Order"
-                                type="object" class="oe_stat_button" icon="fa-globe icon"/>
+                                type="object" class="oe_stat_button" icon="fa-globe icon"
+                                attrs="{'invisible': [('sale_order_id','=',0)]}"
+                        />
                     </div>
+                    <widget name="web_ribbon" title="Draft" bg_color="bg-secondary"
+                            attrs="{'invisible':[('state','in',['sale_order_created','canceled'])]}"/>
+                    <widget name="web_ribbon" title="SaleOrder Created" bg_color="bg-success"
+                            attrs="{'invisible':[('state','in',['canceled','draft'])]}"/>
+                    <widget name="web_ribbon" title="Canceled" bg_color="bg-danger"
+                            attrs="{'invisible':[('state','in',['sale_order_created','draft'])]}"/>
                     <group attrs="{'readonly': [('sale_order_id','>',0)]}">
                         <group attrs="{'readonly': [('sale_order_id','>',0)]}">
                             <field name="partner_id" readonly="1"/>
@@ -98,11 +112,12 @@
                             <field name="sale_order_id" invisible="1"/>
                             <field name="division_id" readonly="1"/>
                             <field name="headquarter_id" readonly="1"/>
+                            <field name="company_id" readonly="1"/>
                         </group>
                         <group>
-                            <field name="previous_month_total_sales_amount"/>
-                            <field name="closing_month_total_sales_amount"/>
-                            <field name="next_month_order_total"/>
+                            <field name="previous_month_total_sales_amount" style="font-size:16px;"/>
+                            <field name="closing_month_total_sales_amount" style="font-size:16px;"/>
+                            <field name="next_month_order_total" style="font-size:16px;"/>
                         </group>
                     </group>
                     <notebook>
@@ -113,7 +128,22 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="search_state_not_deleted">
+        <field name="name">Stokist Month Statement View Filter</field>
+        <field name="model">setu.stockist.monthly.statement</field>
+        <field name="arch" type="xml">
+            <search string="State Filter">
+                <filter string="Status" name="state_filter" domain="[('state', 'in', ['draft','sale_order_created'])]"/>
+            </search>
         </field>
     </record>
 
@@ -123,6 +153,7 @@
         <field name="res_model">setu.stockist.monthly.statement</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="domain">[('partner_id','=',active_id)]</field>
+        <field name="context">{"search_default_state_filter":1}</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_setu_stockist_monthly_statement_lineX">

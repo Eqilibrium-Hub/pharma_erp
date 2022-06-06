@@ -102,5 +102,5 @@ class Division(models.Model):
         for division in self:
             division.designation_ids.division_ids = [(4, division.id, _)]
         if difference:
-                self.env['setu.pharma.designation'].browse(difference).division_ids = [(3, div.id) for div in self]
+            self.env['setu.pharma.designation'].browse(difference).division_ids = [(3, div.id) for div in self]
         return result

@@ -38,8 +38,8 @@ class Area(models.Model):
     company_id = fields.Many2one("res.company", string="Company", default=_default_company_sets)
     active = fields.Boolean(string="Active Area", default=True, help="Currently Active Area.")
 
-    headquarter_id = fields.Many2one('setu.pharma.headquarters', 'Headquarter' , tracking=True)
-    city_id = fields.Many2one('res.city', 'City' , tracking=True)
+    headquarter_id = fields.Many2one('setu.pharma.headquarters', 'Headquarter', tracking=True)
+    city_id = fields.Many2one('res.city', 'City', tracking=True)
 
     def _compute_state(self):
         """ Compute State for area. """

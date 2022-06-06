@@ -80,6 +80,7 @@ class TourPlan(models.Model):
                 tour.tour_plan_lines = [(6, 0, False)]
                 tour.tp_line_generated = False
 
+    @api.depends('date')
     def _compute_fiscal_period(self):
         for record in self:
             default = self.env['setu.pharma.fiscalperiod'].search(
@@ -221,3 +222,9 @@ class TourPlan(models.Model):
                 tp.tp_line_generated = True
             else:
                 tp.tp_line_generated = False
+
+    @api.constrains('period_id')
+    def _check_fiscal_period_tp_plan(self):
+        """This method generate error if we create multiple tour plan on same fiscal year"""
+        if self.search([('period_id', '=', self.period_id.id), ('id', '!=', self.id)]):
+            raise ValidationError(_("You can't create multiple tourplan for same fiscal period"))

@@ -10,15 +10,16 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     mandatory_select_doctors = fields.Boolean("Mandatory Select Doctors",
-        help="Mark to add doctors mandatory while creating Tour Plan")
-    raise_validation_tp = fields.Boolean("Raise Validation While Creating Tour Plan",
                                               help="Mark to add doctors mandatory while creating Tour Plan")
+    raise_validation_tp = fields.Boolean("Raise Validation While Creating Tour Plan",
+                                         help="Mark to add doctors mandatory while creating Tour Plan")
     create_dcr_on_tp_approval = fields.Boolean("Create Daily Call Report On Tour Plan Approval",
                                                help="Mark to create daily call report on tour plan approval")
     days = fields.Integer(string="Enter Number of Days", default=5)
     choice = fields.Selection([
-        ('last','Last')
-    ], string="Select Last Days Of Month Or First Days Of Month",help="Select Last Days Of Month Or First Days Of Month",default='last'
+        ('last', 'Last')
+    ], string="Select Last Days Of Month Or First Days Of Month",
+        help="Select Last Days Of Month Or First Days Of Month", default='last'
     )
 
 
@@ -29,7 +30,8 @@ class ResConfigSettings(models.TransientModel):
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.raise_validation_tp', self.raise_validation_tp)
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.days', self.days)
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.choice', self.choice)
-        self.env['ir.config_parameter'].set_param('setu_pharma_basic.create_dcr_on_tp_approval', self.create_dcr_on_tp_approval)
+        self.env['ir.config_parameter'].set_param('setu_pharma_basic.create_dcr_on_tp_approval',
+                                                  self.create_dcr_on_tp_approval)
 
         return res
 
@@ -58,7 +60,6 @@ class ResConfigSettings(models.TransientModel):
         for record in self:
             if record.mandatory_select_doctors == False:
                 record.raise_validation_tp = False
-
 
     @api.constrains('days')
     def _constrains_max_input_days_domain(self):

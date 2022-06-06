@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="acoount_move_invoice_extends_form" model="ir.ui.view">
+        <field name="name">acoount.move.invoice.extends.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_reference']"
+                   position="after">
+                <field name="headquarter_id" readonly="1"/>
+                <field name="division_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,6 +1,9 @@
-from lxml import etree
 import json as simplejson
+from datetime import date
+from datetime import datetime
+
 from dateutil.relativedelta import relativedelta
+from lxml import etree
 from odoo import fields, models, _, api
 
 
@@ -26,6 +29,7 @@ class EmployeeDailyCallReport(models.Model):
     company_id = fields.Many2one("res.company", string="Company",
                                  default=lambda self: self.env.company)
     tour_plan_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan')
+    tour_plan_line_ids = fields.One2many(related='tour_plan_id.tour_plan_lines', string='Tour Plan Line')
     distance_calculation_type = fields.Selection([
         ('max_km', 'Maximum Kilometers'),
         ('separate_km', 'Separate Kilometers'),
@@ -113,4 +117,15 @@ class EmployeeDailyCallReport(models.Model):
                 active_id_browsable.state = 'draft'
 
         res['arch'] = etree.tostring(doc, encoding='unicode')
+        return res
+
+    @api.model
+    def default_get(self, fields):
+        """
+            This Method get default tourplan in employee daily call report if tourplan created for this month
+        """
+        res = super(EmployeeDailyCallReport, self).default_get(fields)
+        working_date = datetime.combine(date.today() + relativedelta(months=1), datetime.min.time())
+        tourplan = self.env['setu.pharma.tour.plan.line'].search([('working_date_start', '=', working_date)]).tour_id.id
+        res.update({'tour_plan_id': tourplan})
         return res

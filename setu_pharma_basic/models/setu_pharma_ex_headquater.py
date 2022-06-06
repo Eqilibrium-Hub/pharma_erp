@@ -10,7 +10,7 @@ class SetuPharmaExHeadquarter(models.Model):
 
     headquarter_id = fields.Many2one('setu.pharma.headquarters')
     state_id = fields.Many2one(related='headquarter_id.state_id', string="City", store=True)
-    city_id = fields.Many2one('res.city', string="City",)
+    city_id = fields.Many2one('res.city', string="City", )
     distance = fields.Float(string="Distance")
 
     @api.constrains('city_id')

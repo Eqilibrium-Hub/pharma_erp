@@ -35,3 +35,5 @@ from . import approval_request
 from .import product_drug_contain
 from . import res_partner_doctor_class
 from . import res_city
+from . import account_move
+from . import stock_move_line

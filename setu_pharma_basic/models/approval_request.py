@@ -15,10 +15,10 @@ class ApprovalRequest(models.Model):
         """
         return [(model.model, model.name) for model in self.env['ir.model'].sudo().search([])]
 
-    """
-       This method also raise error in when tour plan line is empty
-    """
     def action_confirm(self):
+        """
+           This method also raise error in when tour plan line is empty
+        """
         if self.approval_request._name == 'setu.pharma.tour.plan':
             if not self.approval_request.tour_plan_lines:
                 raise ValidationError(("Tourplan line is mandatory Generate or Add TP line"))

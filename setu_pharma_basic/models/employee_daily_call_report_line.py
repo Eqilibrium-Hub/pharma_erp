@@ -106,7 +106,8 @@ class EmployeeDailyCallReportLine(models.Model):
     @api.onchange('city_id')
     def onchange_city(self):
         for line in self:
-            city = line.dcr_id.headquarter_id.ex_headquarter_ids.filtered(lambda city: city.city_id.id == line.city_id.id)
+            city = line.dcr_id.headquarter_id.ex_headquarter_ids.filtered(
+                lambda city: city.city_id.id == line.city_id.id)
             line.distance = city.distance
 
 

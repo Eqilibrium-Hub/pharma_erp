@@ -8,7 +8,7 @@
     'website': 'https://www.setuconsulting.com/',
     'license': 'Other proprietary',
     'depends': ['hr', 'sale_stock', 'sale_management', 'approvals', 'crm', 'sale',
-                'product_expiry','base_address_city'],
+                'product_expiry', 'base_address_city', 'mail'],
     'data': [
         # Datas
         'data/speciality_res_partner_category_data.xml',
@@ -64,6 +64,9 @@
         'views/res_partner_doctor_class.xml',
         'views/setu_pharma_ex_headquater.xml',
         'views/res_config_settings_views.xml',
+        'views/account_move.xml',
+        'views/stock_move.xml',
+        'views/stock_move_line.xml',
         # Make this Menu File in Last Order
         'views/menu.xml',
 

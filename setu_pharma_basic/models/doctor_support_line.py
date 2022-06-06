@@ -10,7 +10,7 @@ class DoctorSupportLine(models.Model):
     quantity = fields.Float(string="Quantity", default=1.0)
     date = fields.Date(related="support_id.date", string="Date")
     price_unit = fields.Float(string="Price")
-    sub_total= fields.Float(string='Sub Total', compute="_compute_sub_total")
+    sub_total = fields.Float(string='Sub Total', compute="_compute_sub_total")
 
     @api.onchange('product_id')
     def _onchange_product_id(self):

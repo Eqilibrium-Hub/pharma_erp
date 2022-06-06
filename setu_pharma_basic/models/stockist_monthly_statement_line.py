@@ -8,6 +8,7 @@ class StockistMonthlyStatementLine(models.Model):
     _name = 'setu.stockist.monthly.statement.line'
     _rec_name = 'product_id'
     _description = "Stockist Statement Line"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     product_id = fields.Many2one("product.product", string="Product")
     product_price = fields.Float("Product Price", compute="_get_product_price")
@@ -28,6 +29,8 @@ class StockistMonthlyStatementLine(models.Model):
     next_month_order_value = fields.Float("Next month order value", compute="_compute_next_order")
     stockist_monthly_statement_id = fields.Many2one('setu.stockist.monthly.statement')
     free_schema_amount = fields.Float("Free Schema Amount")
+    company_id = fields.Many2one("res.company", string="Company",
+                                 default=lambda self: self.env.company)
 
     def _get_product_price(self):
         for rec in self:
@@ -85,8 +88,76 @@ class StockistMonthlyStatementLine(models.Model):
             sale_order = self.env['sale.order'].search(
                 [('partner_id', '=', record.stockist_monthly_statement_id.partner_id.id)])
             for sale in sale_order:
-                if sale.date_order.strftime('%B') == record.stockist_monthly_statement_id.fiscal_period_id.name and sale.date_order.year == record.stockist_monthly_statement_id.fiscal_period_id.start_date.year:
+                if sale.date_order.strftime(
+                        '%B') == record.stockist_monthly_statement_id.fiscal_period_id.name and sale.date_order.year == record.stockist_monthly_statement_id.fiscal_period_id.start_date.year:
                     for lines in sale.order_line:
                         if record.product_id == lines.product_id:
                             record.purchase += lines.product_uom_qty
                             record.purchase_amount = record.purchase * lines.product_id.price_to_stockist
+
+    def write(self, vals):
+        """
+            This Function Send chatter message if statement line value updated one2many
+        """
+        if 'purchase_return' in vals:
+            for product_line in self:
+                product_line.stockist_monthly_statement_id.message_post(
+                    body='<div>'
+                         '<strong>The Purchase Return has been updated.</strong>'
+                         '<ul>'
+                         'Ordered Quantity: ' + str(product_line.purchase_return) + ' -&gt; ' + str(
+                        vals['purchase_return']) + '<br/>'
+                                                   '</ul>'
+                                                   '</div>'
+                    , )
+
+        if 'free_schema' in vals:
+            for product_line in self:
+                product_line.stockist_monthly_statement_id.message_post(
+                    body='<div>'
+                         '<strong>The Free Schema has been updated.</strong>'
+                         '<ul>'
+                         'Free Schema: ' + str(product_line.free_schema) + ' -&gt; ' + str(
+                        vals['free_schema']) + '<br/>'
+                                               '</ul>'
+                                               '</div>'
+                    , )
+
+        if 'sales' in vals:
+            for product_line in self:
+                product_line.stockist_monthly_statement_id.message_post(
+                    body='<div>'
+                         '<strong>The sales has been updated.</strong>'
+                         '<ul>'
+                         'Sales: ' + str(product_line.sales) + ' -&gt; ' + str(
+                        vals['sales']) + '<br/>'
+                                         '</ul>'
+                                         '</div>'
+                    , )
+
+        if 'sales_return' in vals:
+            for product_line in self:
+                product_line.stockist_monthly_statement_id.message_post(
+                    body='<div>'
+                         '<strong>The Sales Return has been updated.</strong>'
+                         '<ul>'
+                         'Sales Return: ' + str(product_line.sales_return) + ' -&gt; ' + str(
+                        vals['sales_return']) + '<br/>'
+                                                '</ul>'
+                                                '</div>'
+                    , )
+
+        if 'product_id' in vals:
+            for product_line in self:
+                product_line.stockist_monthly_statement_id.message_post(
+                    body='<div>'
+                         '<strong>The product has been updated.</strong>'
+                         '<ul>'
+                         'Product: ' + str(product_line.product_id.display_name) + ' -&gt; ' +
+                         str(self.env['product.template'].browse(vals['product_id']).display_name) + '<br/>'
+                                                                                                     '</ul>'
+                                                                                                     '</div>'
+                    , )
+
+        res = super(StockistMonthlyStatementLine, self).write(vals)
+        return res

@@ -15,6 +15,7 @@ class TourPlanLine(models.Model):
     _rec_name = 'tour_id'
 
     tour_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan')
+    city_id = fields.Many2one('res.city', 'City')
     working_date_start = fields.Datetime('Start Time')
     working_date_end = fields.Datetime('End Time')
     dcr_id = fields.Many2one('setu.pharma.employee.daily.call', 'DCR Reference')
@@ -29,7 +30,9 @@ class TourPlanLine(models.Model):
                                            'setu_pharma_basic.setu_pharma_work_type_RW',
                                            raise_if_not_found=False))
     visit_counts = fields.Integer('Planned Call', compute='_count_total_visits', store=True)
+
     ex_headquarter_id = fields.Many2one('setu.pharma.ex.headquarter', string='City')
+    headquarter_id = fields.Many2one(related='tour_id.headquarter_id', string="Headquarter")
     state = fields.Selection(related='tour_id.state')
 
     @api.depends('visiting_partner_ids')

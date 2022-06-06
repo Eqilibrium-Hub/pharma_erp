@@ -105,19 +105,19 @@
                     <field name="name" string="Target Name"/>
                     <filter string="Based On Product" name="based_on_product" domain="[('based_on_product','=',True)]"/>
                     <filter string="Based On Sales" name="based_on_sales" domain="[('based_on_sales','=',True)]"/>
-                    <seperator/>
+                    <separator/>
 
                     <filter string="Monthly" name="monthly" domain="[('fiscal_period','=','monthly')]"/>
                     <filter string="Quarterly" name="quarterly" domain="[('fiscal_period','=','quarterly')]"/>
                     <filter string="Quarterly+1" name="quarterly+1" domain="[('fiscal_period','=','quarterly+1')]"/>
                     <filter string="Yearly" name="yearly" domain="[('fiscal_period','=','yearly')]"/>
-                    <seperator/>
+                    <separator/>
 
                     <filter string="Secondary Sales" name="secondary_sales"
                             domain="[('sales_based_on','=','secondary_sales')]"/>
                     <filter string="Primary Sales" name="primary_sales"
                             domain="[('sales_based_on','=','primary_sales')]"/>
-                    <seperator/>
+                    <separator/>
                     <filter string="Fixed Amount" name="fixed_amount" domain="[('reward_type','=','fixed_amount')]"/>
                     <filter string="Based On Percentage" name="based_on_percentage"
                             domain="[('reward_type','=','based_on_percentage')]"/>
@@ -129,7 +129,7 @@
                             domain="[('reward_type','=','international_domestic_trip')]"/>
                     <filter string="based_on_range" name="based_on_range"
                             domain="[('reward_type','=','based_on_range')]"/>
-                    <seperator/>
+                    <separator/>
 
                     <filter string="Draft" name="draft" domain="[('status','=','draft')]"/>
                     <filter string="Running" name="running" domain="[('status','=','running')]"/>

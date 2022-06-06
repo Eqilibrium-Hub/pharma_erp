@@ -70,7 +70,6 @@ class ResPartner(models.Model):
             if not any(emp_type):
                 partner.state = 'approved'
 
-
     @api.constrains('code')
     def _check_partner_code(self):
         """ Check constrains for same Doctor/Stockist/Chemist Code. """
@@ -95,9 +94,11 @@ class ResPartner(models.Model):
             """
             this code check if any employee type true than generate approval request
             """
-            emp_type = [vals.get('is_doctor'),vals.get('is_chemist'),vals.get('is_stockist'),vals.get('is_prescriber')]
+            emp_type = [vals.get('is_doctor'), vals.get('is_chemist'), vals.get('is_stockist'),
+                        vals.get('is_prescriber')]
             if any(emp_type):
-                self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category, model_record=partner)
+                self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
+                                                                                 model_record=partner)
 
         return partner
 

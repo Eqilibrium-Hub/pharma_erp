@@ -15,7 +15,7 @@ class ResCompany(models.Model):
     def create(self, vals):
         """ Create New Default Headquarter. """
         company_code = vals['code']
-        company_create = super(ResCompany, self.with_context(default_code=company_code+"1")).create(
+        company_create = super(ResCompany, self.with_context(default_code=company_code + "1")).create(
             vals)
         for company in company_create:
             self.env['setu.pharma.headquarters'].with_context(

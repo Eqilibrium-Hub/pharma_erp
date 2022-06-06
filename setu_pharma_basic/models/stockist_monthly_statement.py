@@ -9,6 +9,7 @@ class StockistMonthlyStatement(models.Model):
     _name = 'setu.stockist.monthly.statement'
     _rec_name = 'partner_id'
     _description = "Stockist Statement"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     def _get_fiscal_period(self):
         fiscal_period_id = self.env['setu.pharma.fiscalyear'].search(
@@ -35,6 +36,11 @@ class StockistMonthlyStatement(models.Model):
     difference_of_order = fields.Float('Difference', compute="_compute_difference")
     company_id = fields.Many2one("res.company", string="Company",
                                  default=lambda self: self.env.company)
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('sale_order_created', 'SaleOrder Created'),
+        ('canceled', 'Cancelled'),
+    ], string='Status', default='draft')
 
     @api.constrains('fiscal_period_id')
     def check_fiscal_period(self):
@@ -42,7 +48,9 @@ class StockistMonthlyStatement(models.Model):
             fiscal_period = self.env['setu.stockist.monthly.statement'].search(
                 [('partner_id', '=', self.env.context.get('active_id')),
                  ('id', '!=', record.id)]).mapped('fiscal_period_id').mapped('id')
-            if record.fiscal_period_id.id in fiscal_period:
+            smstatement_id = self.env['setu.stockist.monthly.statement'].search(
+                [('partner_id', '=', self.env.context.get('active_id'))])
+            if record.fiscal_period_id.id in fiscal_period and smstatement_id.mapped('state').count('draft') > 1:
                 raise UserError(_('Can not create two statements for any month.'))
 
     @api.model
@@ -54,7 +62,10 @@ class StockistMonthlyStatement(models.Model):
         fiscal_period = self.env['setu.stockist.monthly.statement'].search(
             [('partner_id', '=', self.env.context.get('active_id'))]).mapped(
             'fiscal_period_id').mapped('name')
-        if datetime.now().strftime('%B') in fiscal_period:
+        smstatement_id = self.env['setu.stockist.monthly.statement'].search(
+            [('partner_id', '=', self.env.context.get('active_id'))])
+        if datetime.now().strftime('%B') in fiscal_period and smstatement_id.mapped('state').count(
+                'draft') or smstatement_id.mapped('state').count('sale_order_created') >= 1:
             raise UserError(_('Can not create two statements for any month.'))
         else:
             result.update({'partner_id': self.env.context.get('active_id'),
@@ -106,9 +117,13 @@ class StockistMonthlyStatement(models.Model):
                     'product_id': record.product_id.id,
                     'product_uom_qty': record.next_month_order_qty,
                     'price_unit': record.product_id.price_to_stockist,
-                    'price_subtotal': record.next_month_order_qty * record.product_id.price_to_stockist
+                    'price_subtotal': record.next_month_order_qty * record.product_id.price_to_stockist,
                 })]
             })
+            sale_order.warehouse_id = record.stockist_monthly_statement_id.headquarter_id.warehouse_id
+            sale_order.headquarter_id = record.stockist_monthly_statement_id.headquarter_id
+            sale_order.division_id = record.stockist_monthly_statement_id.headquarter_id.division_id
+            record.stockist_monthly_statement_id.state = 'sale_order_created'
 
             record.stockist_monthly_statement_id.sale_order_id = sale_order.id
 
@@ -125,3 +140,15 @@ class StockistMonthlyStatement(models.Model):
                 [('id', '=', record.sale_order_id), ('state', '=', 'sale')]).order_line.mapped(
                 'price_subtotal'))
             record.difference_of_order = sale_order - record.next_month_order_total
+
+    def unlink(self):
+        """
+        This method doesn't delete statement only cancel also sale order cancel.
+        if picking is validated than it is not cancelled
+        """
+        if self.env['sale.order'].browse(self.sale_order_id)._show_cancel_wizard():
+            raise ValidationError(_("You can't cancel saleorder Because picking is done"))
+        else:
+            self.state = 'canceled'
+            self.env['sale.order'].browse(self.sale_order_id).state = 'cancel'
+        return False
