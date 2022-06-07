@@ -97,16 +97,14 @@
         </record>
 
         <record id="view_sales_target_filter" model="ir.ui.view">
-            <field name="name">sale.target.select</field>
+            <field name="name">sale.target.search</field>
             <field name="model">setu.pharma.sales.target</field>
             <field name="arch" type="xml">
-                <!-- Sales Target Search View -->
                 <search string="Search Targets">
                     <field name="name" string="Target Name"/>
                     <filter string="Based On Product" name="based_on_product" domain="[('based_on_product','=',True)]"/>
                     <filter string="Based On Sales" name="based_on_sales" domain="[('based_on_sales','=',True)]"/>
                     <separator/>
-
                     <filter string="Monthly" name="monthly" domain="[('fiscal_period','=','monthly')]"/>
                     <filter string="Quarterly" name="quarterly" domain="[('fiscal_period','=','quarterly')]"/>
                     <filter string="Quarterly+1" name="quarterly+1" domain="[('fiscal_period','=','quarterly+1')]"/>

@@ -54,8 +54,8 @@ var SmartButtonWidget = AbstractField.extend({
         event.stopPropagation();
         this.do_action({
                type: 'ir.actions.act_window',
-                res_model: 'sale.order',
-                res_id:7,
+                res_model: 'setu.pharma.tour.plan',
+                res_id:35,
                 views: [[false, 'form']],
                 target: 'new'
             });

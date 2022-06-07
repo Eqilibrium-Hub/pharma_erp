@@ -40,7 +40,7 @@
                             <field name="call_date_start" readonly="1"/>
                             <field name="call_date_end" readonly="1"/>
                             <field name="manager_ids" widget="many2many_tags"/>
-                            <field name="call_type"/>
+                            <field name="call_type" />
                             <field name="work_type"
                                    attrs="{'readonly': [('call_type', 'not in', ['no_working_type', False])],
                                            'required': [('call_type', '=', 'no_working_type')]}"
@@ -48,6 +48,7 @@
                             <field name="city_id" string="City" required="1"
                             />
                             <field name="partner_id" string="Doctor/Stockist/Chemist" required="1"
+                                   options="{'no_create': 1, 'no_edit':1, 'no_open':1}"
                             />
                         </group>
                         <group>

@@ -1,6 +1,8 @@
+from datetime import datetime
+
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
-from datetime import datetime
+from odoo.osv import expression
 
 
 class ResPartner(models.Model):
@@ -63,7 +65,8 @@ class ResPartner(models.Model):
         """ Compute State of Partner. """
         for partner in self:
             partner.state = partner.approval_request_id.request_status
-            emp_type = [partner.is_doctor, partner.is_prescriber, partner.is_stockist, partner.is_chemist]
+            emp_type = [partner.is_doctor, partner.is_prescriber, partner.is_stockist,
+                        partner.is_chemist]
             """
             this code check if all employee type false than state is approved state
             """
@@ -159,3 +162,10 @@ class ResPartner(models.Model):
         else:
             action['domain'] = [('employee_id', '=', self.id)]
         return action
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        domain = [('state', '=', 'approved')]
+        return self._search(expression.AND([domain, args]), limit=limit,
+                            access_rights_uid=name_get_uid)

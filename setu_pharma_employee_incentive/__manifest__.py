@@ -18,7 +18,7 @@
         'views/setu_pharma_sales_target_products.xml',
         'views/setu_pharma_incentive_structure.xml',
         'views/setu_pharma_sales_range.xml',
-        'views/setu_pharma_sales_menu_extended.xml',
+        'views/setu_pharma_sales_mxmlenu_extended.',
     ],
     'installable': True,
     'auto_install': False,

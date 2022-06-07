@@ -9,7 +9,7 @@
                 <field name="expense_type_id"/>
                 <field name="designation_ids" widget="many2many_tags"/>
                 <field name="division_id"/>
-                <field name="headquarter_ids"/>
+                <field name="headquarter_ids" widget="many2many_tags"/>
                 <field name="calculation_type"/>
                 <field name="fixed_amount"/>
                 <field name="company_id"/>
@@ -25,10 +25,11 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="name"/>
-                            <field name="expense_type_id"/>
-                            <field name="division_id" options="{'no_create': True}"/>
+                            <field name="name" required="1"/>
+                            <field name="expense_type_id" required="1"/>
+                            <field name="division_id" options="{'no_create': True}" required="1"/>
                             <field name="headquarter_ids" widget="many2many_tags"
+                                   domain="[('division_id', '=', division_id)]"
                                    options="{'no_create': True}"/>
                         </group>
                         <group>
@@ -39,11 +40,16 @@
                         </group>
                     </group>
                     <notebook>
-                        <page name="distance_range" string="Distance range">
-                            <tree string="Distance range">
-                                <field attrs="{'invisible': [('calculation_type', '!=', 'distance')]}"
-                                       name="distance_range_ids"/>
-                            </tree>
+                        <page name="distance_range" string="Distance range"
+                              attrs="{'invisible': [('calculation_type', '!=', 'distance')]}">
+                            <field name="distance_range_ids">
+                                <tree string="Distance Range" editable="bottom">
+                                    <field name="expense_configurator_id" invisible="1"/>
+                                    <field name="distance_range" style="min-width:150px; width:200px"/>
+                                    <field name="designation_ids" widget="many2many_tags"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
@@ -73,8 +79,10 @@
                     <filter string="Company" name="group_company_id" context="{'group_by':'company_id'}"/>
                 </group>
                 <filter string="Fixed" name="filter_state_fixed" domain="[('calculation_type','=','fixed')]"/>
+                <separator/>
                 <filter string="Actual" name="filter_state_actual" domain="[('calculation_type','=','actual')]"/>
-                <filter string="distance" name="filter_state_distance" domain="[('calculation_type','=','distance')]"/>
+                <separator/>
+                <filter string="Distance" name="filter_state_distance" domain="[('calculation_type','=','distance')]"/>
             </search>
         </field>
     </record>
