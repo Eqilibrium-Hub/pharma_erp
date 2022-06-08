@@ -1,15 +1,12 @@
-import calendar
-import datetime
-import logging
 from collections import defaultdict
 from datetime import datetime
-
 from werkzeug.urls import url_encode
-
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 from ..tools.datetime_tools import get_daterange
-
+import calendar
+import datetime
+import logging
 logger = logging.getLogger(__name__)
 
 
@@ -231,5 +228,5 @@ class TourPlan(models.Model):
     @api.constrains('period_id')
     def _check_fiscal_period_tp_plan(self):
         """This method generate error if we create multiple tour plan on same fiscal year"""
-        if self.search([('period_id', '=', self.period_id.id), ('id', '!=', self.id)]):
+        if self.search([('period_id', '=', self.period_id.id), ('id', '!=', self.id), ('state','!=', 'cancel')]):
             raise ValidationError(_("You can't create multiple tourplan for same fiscal period"))
