@@ -102,8 +102,8 @@
                     </group>
                     <notebook>
                         <page string="Plan Lines">
-                            <field name="tour_plan_lines" attrs="{'readonly': [('state', '=', 'approved')]}"
-                            >
+                            <field name="tour_plan_lines"
+                                   attrs="{'readonly': [('state', 'in', ['approved', 'cancel'])]}">
                                 <tree editable="bottom" decoration-success="day_name == '6'">
                                     <field name="tour_id" invisible="1"/>
                                     <field name="state" invisible="1"/>
@@ -122,7 +122,7 @@
                                             aria-label="Add Doctors/Stockists/Chemists" width="0.1"
                                             title="Add Doctors/Stockists/Chemists"
                                             class="float-right oe_read_only"
-                                            attrs="{'invisible': [('state', '=', 'approved')]}"
+                                            attrs="{'invisible': [('state', 'in', ['approved', 'cancel'])]}"
                                     />
                                     <field name="visit_counts" width="10%"/>
                                     <field name="day_name" width="10%"/>

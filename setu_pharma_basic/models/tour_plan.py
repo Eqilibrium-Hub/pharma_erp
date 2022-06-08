@@ -1,13 +1,12 @@
-import logging
-from datetime import datetime
 from collections import defaultdict
+from datetime import datetime
+from werkzeug.urls import url_encode
+from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 from ..tools.datetime_tools import get_daterange
-from odoo import fields, models, api, _
-from werkzeug.urls import url_encode
 import calendar
 import datetime
-
+import logging
 logger = logging.getLogger(__name__)
 
 
@@ -154,6 +153,8 @@ class TourPlan(models.Model):
         for tp in self:
             if not tp.tour_plan_lines:
                 raise ValidationError(_("Tourplan line is mandatory Generate or Add TP line"))
+            if tp.tour_plan_lines.filtered(lambda x: not x.ex_headquarter_id and x.day_name != '6'):
+                raise ValidationError(_("Tour Plan Line City Adding is mandatory."))
             if tp.period_id.id == False:
                 raise ValidationError(
                     _("Fiscal period not found please go to configuration/fiscal year and "
@@ -213,6 +214,7 @@ class TourPlan(models.Model):
     def action_reset_tp(self):
         for record in self:
             record.approval_request_id.action_draft()
+            record.tour_plan_lines.unlink()
 
     @api.onchange('tour_plan_lines')
     def onchange_tour_plan_lines(self):
@@ -226,5 +228,5 @@ class TourPlan(models.Model):
     @api.constrains('period_id')
     def _check_fiscal_period_tp_plan(self):
         """This method generate error if we create multiple tour plan on same fiscal year"""
-        if self.search([('period_id', '=', self.period_id.id), ('id', '!=', self.id)]):
+        if self.search([('period_id', '=', self.period_id.id), ('id', '!=', self.id), ('state','!=', 'cancel')]):
             raise ValidationError(_("You can't create multiple tourplan for same fiscal period"))
