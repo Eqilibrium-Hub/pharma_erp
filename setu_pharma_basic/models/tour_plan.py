@@ -113,6 +113,14 @@ class TourPlan(models.Model):
                 tp_set=(self, self.name), dcr_set=(dcr_id, dcr_id.name)))
 
     @api.model
+    def write(self, vals):
+        result = super(TourPlan, self).write(vals)
+        for tp in self:
+            if not tp.period_id:
+                raise ValidationError("Please Select Fiscal Period.")
+        return result
+
+    @api.model
     def create(self, vals_list):
         """
         Functionality:
@@ -122,7 +130,8 @@ class TourPlan(models.Model):
             vals_list['name'] = self.env['ir.sequence'].next_by_code(
                 'setu.pharma.tour.plan.seq') or _('New')
         tour_plan = super(TourPlan, self).create(vals_list)
-
+        if not tour_plan.period_id:
+            raise ValidationError("Please Select Fiscal Period.")
         days = int(self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.days'))
         date = fields.Date.today()
         """Last Date Of Month Or Last Date To Create To Plan"""
@@ -228,5 +237,8 @@ class TourPlan(models.Model):
     @api.constrains('period_id')
     def _check_fiscal_period_tp_plan(self):
         """This method generate error if we create multiple tour plan on same fiscal year"""
-        if self.search([('period_id', '=', self.period_id.id), ('id', '!=', self.id), ('state','!=', 'cancel')]):
-            raise ValidationError(_("You can't create multiple tourplan for same fiscal period"))
+        for tp in self:
+            if tp.search([('period_id', '=', tp.period_id.id), ('id', '!=', tp.id),
+                          ('state', '!=', 'cancel')]):
+                raise ValidationError(
+                    _("You can't create multiple tourplan for same fiscal period"))
