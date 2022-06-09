@@ -156,7 +156,8 @@
                                 <div class="o_kanban_card_header_title">
                                     <div class="o_primary col-12 p-0 w-75">
                                         <field name="period_id"/>
-                                        -
+                                    </div>
+                                    <div> Submitted on :
                                         <field name="date"/>
                                     </div>
                                 </div>

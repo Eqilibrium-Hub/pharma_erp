@@ -112,7 +112,6 @@ class TourPlan(models.Model):
             logger.info("DCR: {dcr_set} , Created For Tour Plan: {tp_set}".format(
                 tp_set=(self, self.name), dcr_set=(dcr_id, dcr_id.name)))
 
-    @api.model
     def write(self, vals):
         result = super(TourPlan, self).write(vals)
         for tp in self:
@@ -206,6 +205,8 @@ class TourPlan(models.Model):
                 'active_model': 'setu.pharma.tour.plan',
                 'menu_id': self.env.ref('approvals.approvals_menu_root').id,
             })
+            if tp.date != datetime.date.today():
+                tp.date = datetime.date.today()
             tp._message_log(body=_('<b>Tour Plan Submitted Successfully!</b> '
                                    'You can review your Approval Request '
                                    '<a href="%s">%s</a>') % (url, tp.approval_request_id.name))
