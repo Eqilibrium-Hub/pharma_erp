@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 class Division(models.Model):
     _name = 'setu.pharma.division'
-    _description = "All Pharma Divisions"
+    _description = "Pharma Division"
 
     # Default Methods
     def _default_company_sets(self):

@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class TourPlan(models.Model):
     _name = 'setu.pharma.tour.plan'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = "Tour Plan of Company"
+    _description = "Pharma Tour Plan"
 
     name = fields.Char(string='Tour Plan Reference', required=True, copy=False,
                        readonly=True,

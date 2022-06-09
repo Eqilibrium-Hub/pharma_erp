@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 class SetuPharmaHeadquarters(models.Model):
     _name = 'setu.pharma.headquarters'
-    _description = 'All Headquarters listed in this models.'
+    _description = 'Pharma Headquarters'
 
     name = fields.Char(string='Name', copy=False,
                        index=True, default=lambda self: _('New'))

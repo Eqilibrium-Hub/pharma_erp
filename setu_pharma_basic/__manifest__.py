@@ -25,6 +25,7 @@
         'security/ir.model.access.csv',
         # 'security/res_groups.xml',
         'security/record_rules.xml',
+        'security/setu_pharma_division_record_rules.xml',
 
         # Views
         'views/ir_actions_inherited.xml',

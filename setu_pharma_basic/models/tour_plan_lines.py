@@ -11,7 +11,7 @@ day_names = [(str(i), calendar.day_name[i]) for i in range(0, 7)]
 
 class TourPlanLine(models.Model):
     _name = 'setu.pharma.tour.plan.line'
-    _description = "Tour Plan Line of employee"
+    _description = "Pharma Tour Plan Line"
     _rec_name = 'tour_id'
 
     tour_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan')

@@ -5,7 +5,7 @@ from odoo.osv import expression
 
 class SetuPharmaExHeadquarter(models.Model):
     _name = 'setu.pharma.ex.headquarter'
-    _description = "Setu Pharma Ex. Headquarter"
+    _description = "Setu Pharma Ex. Headquarters"
     _rec_name = 'city_id'
 
     headquarter_id = fields.Many2one('setu.pharma.headquarters')

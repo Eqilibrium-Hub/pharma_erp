@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import UserError
+
 
 class City(models.Model):
     _inherit = "res.city"

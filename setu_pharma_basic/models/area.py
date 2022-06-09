@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 class Area(models.Model):
     _name = 'setu.pharma.area'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = "Division and City Wise Area Records."
+    _description = "City Wise Area"
 
     # Default Methods
     def _default_company_sets(self):

@@ -4,7 +4,7 @@ import datetime
 
 class EmployeeDailyCallReportLine(models.Model):
     _name = 'setu.pharma.employee.daily.call.line'
-    _description = "Daily Call Report line for the Employees to Doctors"
+    _description = "Daily Call Report line"
     _rec_name = 'dcr_id'
 
     @api.model

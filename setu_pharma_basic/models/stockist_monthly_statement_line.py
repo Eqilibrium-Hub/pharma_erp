@@ -1,7 +1,4 @@
 from odoo import models, fields, _, api
-from odoo.exceptions import ValidationError
-from dateutil import relativedelta
-from datetime import datetime
 
 
 class StockistMonthlyStatementLine(models.Model):
@@ -41,7 +38,8 @@ class StockistMonthlyStatementLine(models.Model):
         for record in self._origin:
             statement = self.env['setu.stockist.monthly.statement'].search(
                 [('partner_id', '=', record.stockist_monthly_statement_id.partner_id.id),
-                 ('id', '<', record.stockist_monthly_statement_id.id)], limit=1, order='create_date desc')
+                 ('id', '<', record.stockist_monthly_statement_id.id)], limit=1,
+                order='create_date desc')
             if statement:
                 for lines in statement.stockist_monthly_statement_ids:
                     if lines.product_id == record.product_id:
@@ -60,7 +58,8 @@ class StockistMonthlyStatementLine(models.Model):
             record.sales_return_amount = record.sales_return * product.price_to_stockist
             record.purchase_return_amount = record.purchase_return * product.price_to_stockist
 
-    @api.depends('sales', 'sales_return', 'purchase_return', 'purchase', 'closing', 'free_schema', 'opening_stock')
+    @api.depends('sales', 'sales_return', 'purchase_return', 'purchase', 'closing', 'free_schema',
+                 'opening_stock')
     def _compute_closing(self):
         self.closing = 0
         self.closing_amount = 0
@@ -154,9 +153,10 @@ class StockistMonthlyStatementLine(models.Model):
                          '<strong>The product has been updated.</strong>'
                          '<ul>'
                          'Product: ' + str(product_line.product_id.display_name) + ' -&gt; ' +
-                         str(self.env['product.template'].browse(vals['product_id']).display_name) + '<br/>'
-                                                                                                     '</ul>'
-                                                                                                     '</div>'
+                         str(self.env['product.template'].browse(
+                             vals['product_id']).display_name) + '<br/>'
+                                                                 '</ul>'
+                                                                 '</div>'
                     , )
 
         res = super(StockistMonthlyStatementLine, self).write(vals)

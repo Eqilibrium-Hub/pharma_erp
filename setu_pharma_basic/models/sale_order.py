@@ -20,5 +20,6 @@ class SaleOrderExtends(models.Model):
 
     def _prepare_invoice(self):
         invoice_vals = super(SaleOrderExtends, self)._prepare_invoice()
-        invoice_vals.update({'division_id': self.division_id.id, 'headquarter_id': self.headquarter_id.id})
+        invoice_vals.update(
+            {'division_id': self.division_id.id, 'headquarter_id': self.headquarter_id.id})
         return invoice_vals

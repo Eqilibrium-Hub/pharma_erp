@@ -10,7 +10,7 @@ from odoo import fields, models, _, api
 class EmployeeDailyCallReport(models.Model):
     _name = 'setu.pharma.employee.daily.call'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = "Daily Call Report for the Employees"
+    _description = "Daily Call Report"
     _order = "name desc"
 
     name = fields.Char(string='Daily Call Report Reference', required=True, copy=False,

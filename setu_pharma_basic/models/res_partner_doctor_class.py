@@ -1,6 +1,7 @@
 from odoo import fields, models, api
 from random import randint
 
+
 class ResPartnerDoctorClass(models.Model):
     _name = 'res.partner.doctor.class'
     _description = 'Doctor Class'

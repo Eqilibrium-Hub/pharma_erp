@@ -50,7 +50,8 @@ class StockistMonthlyStatement(models.Model):
                  ('id', '!=', record.id)]).mapped('fiscal_period_id').mapped('id')
             smstatement_id = self.env['setu.stockist.monthly.statement'].search(
                 [('partner_id', '=', self.env.context.get('active_id'))])
-            if record.fiscal_period_id.id in fiscal_period and smstatement_id.mapped('state').count('draft') > 1:
+            if record.fiscal_period_id.id in fiscal_period and smstatement_id.mapped('state').count(
+                    'draft') > 1:
                 raise UserError(_('Can not create two statements for any month.'))
 
     @api.model

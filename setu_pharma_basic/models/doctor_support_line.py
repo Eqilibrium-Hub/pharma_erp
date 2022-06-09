@@ -3,7 +3,7 @@ from odoo import fields, models, api
 
 class DoctorSupportLine(models.Model):
     _name = 'setu.pharma.monthly.doctor.support.line'
-    _description = "Doctor Support Line for Pharma Companies"
+    _description = "Doctor Support Line"
 
     support_id = fields.Many2one("setu.pharma.monthly.doctor.support", string="Support")
     product_id = fields.Many2one("product.product", string="Product")

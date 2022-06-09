@@ -3,7 +3,7 @@ from odoo import models, fields, api
 
 class EmployeeSamplingAndGiftReportingLine(models.Model):
     _name = 'setu.pharma.stock.distribution.line'
-    _description = "Records Of Stock Distribution For Sample or Gifted Products Line"
+    _description = "Stock Distribution For Sample or Gifted Products Line"
 
     employee_id = fields.Many2one("hr.employee", string="Employee")
     distribution_date = fields.Date(related="distribution_id.distribution_date",

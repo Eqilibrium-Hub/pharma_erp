@@ -4,7 +4,7 @@ from odoo import api, fields, models, _
 class EmployeeSamplingAndGiftReporting(models.Model):
     _name = 'setu.pharma.stock.distribution'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = "Records Of Stock Distribution For The Sample or Gifted Products."
+    _description = "Stock Distribution For The Sample or Gifted Products."
 
     name = fields.Char(string='Sampling And Gift Reference', required=True, copy=False,
                        readonly=True,

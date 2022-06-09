@@ -9,7 +9,7 @@ from odoo.tools.populate import compute
 class DoctorSupport(models.Model):
     _name = 'setu.pharma.monthly.doctor.support'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = "Doctor Support for Pharma Companies"
+    _description = "Doctor Support"
 
     def previous_fiscal_year(self):
         """

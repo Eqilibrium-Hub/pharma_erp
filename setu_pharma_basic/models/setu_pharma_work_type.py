@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 class PharmaWorkType(models.Model):
     _name = 'setu.pharma.work.type'
-    _description = 'Work Type for Pharma'
+    _description = 'Pharma Work Type'
 
     name = fields.Char("Name")
     code = fields.Char("Code")

@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 class Designation(models.Model):
     _name = 'setu.pharma.designation'
-    _description = "Custom Designation for Pharma Companies"
+    _description = "Pharma Designations"
 
     # Fields Declaration
     name = fields.Char(string="Designation", copy=False)

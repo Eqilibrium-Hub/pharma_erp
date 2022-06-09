@@ -10,11 +10,14 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     mandatory_select_doctors = fields.Boolean("Mandatory Select Doctors",
-                                              help="Mark to add doctors mandatory while creating Tour Plan")
+                                              help="Mark to add doctors mandatory while creating "
+                                                   "Tour Plan")
     raise_validation_tp = fields.Boolean("Raise Validation While Creating Tour Plan",
-                                         help="Mark to add doctors mandatory while creating Tour Plan")
+                                         help="Mark to add doctors mandatory while creating "
+                                              "Tour Plan")
     create_dcr_on_tp_approval = fields.Boolean("Create Daily Call Report On Tour Plan Approval",
-                                               help="Mark to create daily call report on tour plan approval")
+                                               help="Mark to create daily call report on tour "
+                                                    "plan approval")
     days = fields.Integer(string="Enter Number of Days", default=5)
     choice = fields.Selection([
         ('last', 'Last')
@@ -22,12 +25,12 @@ class ResConfigSettings(models.TransientModel):
         help="Select Last Days Of Month Or First Days Of Month", default='last'
     )
 
-
     def set_values(self):
         res = super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.mandatory_select_doctors',
                                                   self.mandatory_select_doctors)
-        self.env['ir.config_parameter'].set_param('setu_pharma_basic.raise_validation_tp', self.raise_validation_tp)
+        self.env['ir.config_parameter'].set_param('setu_pharma_basic.raise_validation_tp',
+                                                  self.raise_validation_tp)
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.days', self.days)
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.choice', self.choice)
         self.env['ir.config_parameter'].set_param('setu_pharma_basic.create_dcr_on_tp_approval',
