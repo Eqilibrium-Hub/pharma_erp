@@ -71,7 +71,7 @@
                             type="object"
                             string="Reset To Draft"
                             class="btn btn-danger"
-                            attrs="{'invisible': [('state', 'in', ['pending','approved', 'cancel', 'refused'])]}"
+                            attrs="{'invisible': [('tp_line_generated', '!=', True)]}"
                     />
 
                     <field name="state" widget="statusbar"/>

@@ -7,6 +7,7 @@ from ..tools.datetime_tools import get_daterange
 import calendar
 import datetime
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -243,3 +244,9 @@ class TourPlan(models.Model):
                           ('state', '!=', 'cancel')]):
                 raise ValidationError(
                     _("You can't create multiple tourplan for same fiscal period"))
+
+    def unlink(self):
+        """ Unlink Inherited. """
+        if self.state == 'approved':
+            raise ValidationError(_("You can't delete 'Approved' Tour Plan"))
+        return super(TourPlan, self).unlink()
