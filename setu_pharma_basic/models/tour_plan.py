@@ -1,5 +1,6 @@
 from collections import defaultdict
 from datetime import datetime
+from dateutil import relativedelta
 from werkzeug.urls import url_encode
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
@@ -15,6 +16,14 @@ class TourPlan(models.Model):
     _name = 'setu.pharma.tour.plan'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Pharma Tour Plan"
+
+    def current_next_fiscal_period(self):
+        period = self.env['setu.pharma.fiscalyear'].search(
+            [('start_year', '=', datetime.datetime.now().year)], order='end_month desc').period_ids.filtered(
+            lambda year: year.name == datetime.datetime.now().strftime('%B') or year.name == (
+                    datetime.datetime.now() + relativedelta.relativedelta(months=1)).strftime('%B')).mapped('id')
+        domain = [('id', 'in', period)]
+        return domain
 
     name = fields.Char(string='Tour Plan Reference', required=True, copy=False,
                        readonly=True,
@@ -40,7 +49,7 @@ class TourPlan(models.Model):
                                           ondelete='cascade')
     division_id = fields.Many2one("setu.pharma.division", string="Division", copy=False,
                                   default=lambda self: self.env.user.employee_id.division_id)
-    period_id = fields.Many2one("setu.pharma.fiscalperiod", string="Fiscal period",
+    period_id = fields.Many2one("setu.pharma.fiscalperiod", string="Fiscal period", domain=current_next_fiscal_period,
                                 compute="_compute_fiscal_period", store=True)
     company_id = fields.Many2one("res.company", string="Company",
                                  default=lambda self: self.env.company, required=True)
