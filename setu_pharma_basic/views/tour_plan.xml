@@ -149,16 +149,26 @@
                 <field name="employee_id"/>
                 <field name="division_id"/>
                 <field name="date"/>
+                <field name="state"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
                             <div class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">
-                                    <div class="o_primary col-12 p-0 w-75">
+                                    <div class="o_primary col-12 row ">
                                         <field name="period_id"/>
+                                        <span class="float-right col-1">
+                                            <field name="state" widget="label_selection"
+                                                   options="{'classes': {'new': 'default', 'pending': 'success', 'approved': 'warning', 'refused': 'warning', 'cancel': 'default'}}"/>
+                                        </span>
                                     </div>
-                                    <div> Submitted on :
-                                        <field name="date"/>
+                                    <div>
+                                        <t t-if="record.state.raw_value == 'new'">Drafted On :
+                                            <field name="date"/>
+                                        </t>
+                                        <t t-else="">Submitted On:
+                                            <field name="date"/>
+                                        </t>
                                     </div>
                                 </div>
                             </div>
