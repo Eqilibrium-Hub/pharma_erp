@@ -111,63 +111,67 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
-                            <div>
-                                <div class="o_kanban_record_headings ">
-                                    <span>
-                                        <b>
-                                            <field name="name"/>
-                                            -
-                                            <field name="code"/>
-                                        </b>
-                                    </span>
-                                </div>
-                            </div>
-                            <br/>
                             <div t-attf-class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">
                                     <div class="o_primary">
-                                        <h5>
-                                            <a class=" oe_kanban_action oe_kanban_action_a"
-                                               type="object"
-                                               name="action_view_records"
-                                               context="{'open_headquarters':True}">
-                                                <div attrs="{'invisible':[('total_headquarters', '=', 0)]}"
-                                                     name="total_headquarters" options="{'clickable': '0'}">
-                                                    <i class="fa fa-map-marker"/>
-                                                    <field name="total_headquarters"/>
-                                                    Headquarters
-                                                </div>
-                                            </a>
-                                        </h5>
-
-                                        <h5>
-                                            <a class=" oe_kanban_action oe_kanban_action_a"
-                                               type="object"
-                                               name="action_view_records"
-                                               context="{'open_products':True}">
-                                                <div attrs="{'invisible':[('total_products', '=', 0)]}"
-                                                     name="total_products">
-                                                    <i class="fa fa-cubes"/>
-                                                    <field name="total_products"/>
-                                                    Products
-                                                </div>
-                                            </a>
-                                        </h5>
-
-                                        <h5>
-                                            <a class=" oe_kanban_action oe_kanban_action_a"
-                                               type="object"
-                                               name="action_view_records"
-                                               context="{'open_employees':True}">
-                                                <div attrs="{'invisible':[('total_employees', '=', 0)]}"
-                                                     name="total_employees">
-                                                    <i class="fa fa-users"/>
-                                                    <field name="total_employees"/>
-                                                    Employees
-                                                </div>
-                                            </a>
-                                        </h5>
+                                        <a type="object" name="get_stock_picking_action_picking_type">
+                                            <field name="name"/>
+                                        </a>
                                     </div>
+                                </div>
+                                <div class="o_kanban_manage_button_section" t-if="!selection_mode">
+                                    <a class="o_kanban_manage_toggle_button" href="#">
+                                        <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                                    </a>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container o_kanban_card_content" t-if="!selection_mode">
+                                <div class="row">
+                                    <h6>
+                                        <a class=" oe_kanban_action oe_kanban_action_a"
+                                           type="object"
+                                           name="action_view_records"
+                                           context="{'open_headquarters':True}">
+                                            <div attrs="{'invisible':[('total_headquarters', '=', 0)]}"
+                                                 name="total_headquarters" options="{'clickable': '0'}">
+                                                <i class="fa fa-map-marker"/>
+                                                <field name="total_headquarters"/>
+                                                Headquarters
+                                            </div>
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div class="row">
+                                    <h6>
+                                        <a class=" oe_kanban_action oe_kanban_action_a"
+                                           type="object"
+                                           name="action_view_records"
+                                           context="{'open_products':True}">
+                                            <div attrs="{'invisible':[('total_products', '=', 0)]}"
+                                                 name="total_products">
+                                                <i class="fa fa-cubes"/>
+                                                <field name="total_products"/>
+                                                Products
+                                            </div>
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div class="row">
+
+                                    <h6>
+                                        <a class=" oe_kanban_action oe_kanban_action_a"
+                                           type="object"
+                                           name="action_view_records"
+                                           context="{'open_employees':True}">
+                                            <div attrs="{'invisible':[('total_employees', '=', 0)]}"
+                                                 name="total_employees">
+                                                <i class="fa fa-users"/>
+                                                <field name="total_employees"/>
+                                                Employees
+                                            </div>
+                                        </a>
+                                    </h6>
                                 </div>
                             </div>
                         </div>

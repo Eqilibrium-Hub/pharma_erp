@@ -163,12 +163,13 @@
                                         </span>
                                     </div>
                                     <div>
-                                        <t t-if="record.state.raw_value == 'new'">Drafted On :
-                                            <field name="date"/>
+                                        <t t-if="record.state.raw_value == 'new'">
+                                            Drafted On:
                                         </t>
-                                        <t t-else="">Submitted On:
-                                            <field name="date"/>
+                                        <t t-else="">
+                                            Submitted On:
                                         </t>
+                                        <field name="date"/>
                                     </div>
                                 </div>
                             </div>

@@ -19,7 +19,7 @@ class FiscalPeriod(models.Model):
         """ Prepare Fiscal Period Name """
         fiscal_periods = []
         for fp in self:
-            fy_name = fp.fiscalyear_id and "(%s)" % fp.fiscalyear_id.name or ''
+            fy_name = fp.fiscalyear_id and "(%s)" % fp.start_date.year or ''
             fiscal_periods.append((fp.id, "%s %s" % (fp.name, fy_name)))
         return fiscal_periods
 
