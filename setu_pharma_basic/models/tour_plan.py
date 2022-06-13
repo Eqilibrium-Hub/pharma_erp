@@ -251,9 +251,11 @@ class TourPlan(models.Model):
             }
 
     def action_reset_tp(self):
+        """ Reset Tour Plan with its associated approval request. """
         for record in self:
             record.approval_request_id.action_draft()
             record.tour_plan_lines.unlink()
+            record.tp_line_generated = False
 
     @api.onchange('tour_plan_lines')
     def onchange_tour_plan_lines(self):
