@@ -62,7 +62,7 @@ class EmployeeDailyCallReportLine(models.Model):
             return {'domain': {'partner_id': domain}}
 
     def add_product_with_quantity(self):
-        wiz_action = self.env.ref('setu_pharma_basic.dcr_prod uct_selection_wizard_action').read(
+        wiz_action = self.env.ref('setu_pharma_basic.dcr_product_selection_wizard_action').read(
 
         )[0]
         view_id = self.env.ref('setu_pharma_basic.view_dcr_product_selection_wizard_form')

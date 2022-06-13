@@ -68,13 +68,22 @@ class TourPlan(models.Model):
     def generate_tour_plan_lines(self):
         for tp in self:
             tp_line_vals = []
-            for date in get_daterange(self.period_id.start_date, self.period_id.end_date):
-                tp_line_vals.append(
-                    (0, 0, {
-                        'working_date_start': date,
-                    }
-                     )
-                )
+            if self.period_id.month_name != str(fields.Date.today().month):
+                for date in get_daterange(self.period_id.start_date, self.period_id.end_date):
+                    tp_line_vals.append(
+                        (0, 0, {
+                            'working_date_start': date,
+                        }
+                         )
+                    )
+            else:
+                for date in get_daterange(fields.Date.today(), self.period_id.end_date):
+                    tp_line_vals.append(
+                        (0, 0, {
+                            'working_date_start': date,
+                        }
+                         )
+                    )
             tp.tour_plan_lines = tp_line_vals
             tp.tp_line_generated = True
 
@@ -89,17 +98,18 @@ class TourPlan(models.Model):
                 tour.tour_plan_lines = [(6, 0, False)]
                 tour.tp_line_generated = False
 
-    @api.depends('date')
-    def _compute_fiscal_period(self):
-        for record in self:
-            default = self.env['setu.pharma.fiscalperiod'].search(
-                [('start_date', '<=', record.date),
-                 ('end_date', '>=', record.date)
-                 ], limit=1)
-            if len(default):
-                record.period_id = default.id + 1
-            else:
-                record.period_id = 0
+    @api.model
+    def default_get(self, fields):
+        result = super(TourPlan, self).default_get(fields)
+        default = self.env['setu.pharma.fiscalperiod'].search(
+            [('start_date', '<=', result['date']),
+             ('end_date', '>=', result['date'])
+             ], limit=1)
+        if len(default):
+            result.update({'period_id': default.id + 1})
+        else:
+            result.update({'period_id': 0})
+        return result
 
     def create_daily_call_reports(self):
         for tour in self:
@@ -143,13 +153,22 @@ class TourPlan(models.Model):
             raise ValidationError("Please Select Fiscal Period.")
         days = int(self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.days'))
         date = fields.Date.today()
-        """Last Date Of Month Or Last Date To Create To Plan"""
-        ldofmonth = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
-        """Start Date For Tour Plan Create"""
-        start_date = ldofmonth - datetime.timedelta(days=days)
-        if date < start_date:
-            raise ValidationError(
-                _(f"You can only create tour plan between {start_date} to {ldofmonth}"))
+        """
+        This method give error if current date is not between start and last date to create tourplan
+        """
+        if tour_plan.period_id.month_name != str(date.month):
+            """Last Date Of Month Or Last Date To Create To Plan"""
+            ldofmonth = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
+            """Start Date For Tour Plan Create"""
+            start_date = ldofmonth - datetime.timedelta(days=days)
+            if date < start_date:
+                raise ValidationError(
+                    _(f"You can only create tour plan between {start_date} to {ldofmonth}"))
+        """
+        This code make tp_line_generated true on create method
+        """
+        if tour_plan.tour_plan_lines:
+            tour_plan.tp_line_generated = True
         return tour_plan
 
     def action_open_tour_plan_calendar(self):

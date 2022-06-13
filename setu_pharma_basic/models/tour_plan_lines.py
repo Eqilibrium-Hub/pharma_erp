@@ -97,10 +97,18 @@ class TourPlanLine(models.Model):
         """
         in this method you cant only able to select date between current fiscal period
         """
-        date = fields.Date.today() + relativedelta(months=1)
-        last_date = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
-        start_date = last_date.replace(day=1)
         for record in self:
-            if record.working_date_start != False:
-                if record.working_date_start.date() < start_date or record.working_date_start.date() > last_date:
-                    raise ValidationError(_(f"You can only make plan between {start_date} to {last_date}"))
+            if self.tour_id.period_id.month_name != str(fields.Date.today().month):
+                date = fields.Date.today() + relativedelta(months=1)
+                last_date = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
+                start_date = last_date.replace(day=1)
+                if record.working_date_start != False:
+                    if record.working_date_start.date() < start_date or record.working_date_start.date() > last_date:
+                        raise ValidationError(_(f"You can only make plan between {start_date} to {last_date}"))
+            else:
+                date = fields.Date.today()
+                last_date = datetime.datetime(date.year, date.month, calendar.mdays[date.month]).date()
+                start_date = date
+                if record.working_date_start != False:
+                    if record.working_date_start.date() < start_date or record.working_date_start.date() > last_date:
+                        raise ValidationError(_(f"You can only make plan between {start_date} to {last_date}"))
