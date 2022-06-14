@@ -38,7 +38,7 @@ class TourPlan(models.Model):
         ('pending', 'Submitted'),
         ('approved', 'Approved'),
         ('refused', 'Refused'),
-        ('cancel', 'Cancel'),
+        ('cancel', 'Cancelled'),
     ],
         compute="_compute_state", string="Status", depends=['approval_request_id.request_status'],
         copy=False, store=True, default='new',
