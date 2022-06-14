@@ -71,7 +71,7 @@
                             type="object"
                             string="Reset To Draft"
                             class="btn btn-danger"
-                            attrs="{'invisible': [('tp_line_generated', '!=', True)]}"
+                            attrs="{'invisible': ['|', ('tp_line_generated', '!=', True), ('state', '=', 'approved')]}"
                     />
 
                     <field name="state" widget="statusbar"/>
