@@ -26,10 +26,11 @@
                             <field name="working_date_end" widget="date" required="1"/>
                             <field name="day_working_type" required="1"/>
                             <field name="tour_id" invisible="1"/>
+                            <field name="headquarter_id" invisible="1"/>
                             <field name="dcr_id" readonly="1" invisible="1"/>
                             <field name="ex_headquarter_id"
                                    attrs="{'required': [('day_name', '!=', '6')]}"
-                                   domain="[('headquarter_id', '=', parent.headquarter_id)]"
+                                   domain="[('headquarter_id', '=', headquarter_id)]"
                             />
                         </group>
                         <group>

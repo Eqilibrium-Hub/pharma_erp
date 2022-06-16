@@ -14,7 +14,7 @@ class TourPlanLine(models.Model):
     _description = "Pharma Tour Plan Line"
     _rec_name = 'tour_id'
 
-    tour_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan')
+    tour_id = fields.Many2one('setu.pharma.tour.plan', 'Tour Plan', ondelete="cascade")
     city_id = fields.Many2one('res.city', 'City')
     working_date_start = fields.Datetime('Start Time')
     working_date_end = fields.Datetime('End Time')
@@ -54,6 +54,7 @@ class TourPlanLine(models.Model):
         for tp_line in self:
             tp_line.day_name = tp_line.working_date_start and str(
                 tp_line.working_date_start.weekday()) or False
+            tp_line.working_date_end = tp_line.working_date_start
 
     def add_partners_to_visit(self):
         if not self.ex_headquarter_id and not self.day_name == '6':

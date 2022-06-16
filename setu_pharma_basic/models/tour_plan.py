@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime,date
 from dateutil import relativedelta
 from werkzeug.urls import url_encode
 from odoo import fields, models, api, _
@@ -102,10 +102,10 @@ class TourPlan(models.Model):
     def default_get(self, fields):
         result = super(TourPlan, self).default_get(fields)
         default = self.env['setu.pharma.fiscalperiod'].search(
-            [('start_date', '<=', result['date']),
-             ('end_date', '>=', result['date'])
+            [('start_date', '<=', date.today()),
+             ('end_date', '>=', date.today())
              ], limit=1)
-        if len(default):
+        if default:
             result.update({'period_id': default.id + 1})
         else:
             result.update({'period_id': 0})
