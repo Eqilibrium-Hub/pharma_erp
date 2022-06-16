@@ -36,9 +36,9 @@
                                         are not fulfilled.
                                     </div>
                                 </div>
-                                 <br></br>
+                                <br></br>
 
-                                 <div class="o_setting_left_pane">
+                                <div class="o_setting_left_pane">
                                     <field name="create_dcr_on_tp_approval"/>
                                 </div>
                                 <div class="o_setting_right_pane">
@@ -67,6 +67,33 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-12 col-lg-6 o_setting_box" id="fiscal_year_month_selection">
+                                <div class="o_setting_right_pane">
+                                    <div class="o_setting_right_pane">
+                                        <div>
+                                            <b style="color:#091124">
+                                                Mark To Add Doctors Mandatory While Creating Tour Plan.
+                                            </b>
+                                        </div>
+                                    </div>
+                                    <label for="start_month"/>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="start_month" class="o_light_label"
+                                                   widget="selection"/>
+                                        </div>
+                                    </div>
+                                    <label for="end_month"/>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="end_month"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </xpath>

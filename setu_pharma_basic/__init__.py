@@ -27,7 +27,8 @@ def init_settings(env):
             'company_id': company.id,
             'group_product_variant': True,
             'days': 5,
-            'choice': 'last'
+            'choice': 'last',
+            'start_month': '4'
         })
         # We need to call execute, otherwise the "implied_group" in fields are not processed.
         res_config_id.execute()

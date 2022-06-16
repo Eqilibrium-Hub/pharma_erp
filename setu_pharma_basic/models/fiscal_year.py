@@ -1,12 +1,11 @@
 import calendar
 import datetime
-import os
 from datetime import datetime
 
 from dateutil import relativedelta
-
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+
 from ..tools.datetime_tools import get_list_of_months as months
 
 
@@ -22,9 +21,8 @@ class FiscalYear(models.Model):
     start_year = fields.Selection(string="Start Year", selection=_prepare_years())
     end_year = fields.Selection(string="End Year", selection=_prepare_years(),
                                 compute="_compute_start_year", store=True)
-    start_month = fields.Selection(string="Start Month", selection=months(), default="4")
-    end_month = fields.Selection(string="End Month", selection=months(),
-                                 compute="_compute_start_month", store=True)
+    start_month = fields.Selection(string="Start Month", selection=months())
+    end_month = fields.Selection(string="End Month", selection=months(),store=True)
     period_ids = fields.One2many("setu.pharma.fiscalperiod", "fiscalyear_id", string="Periods")
 
     def generate_fiscal_period(self):
@@ -82,6 +80,11 @@ class FiscalYear(models.Model):
             self.end_month = False
             self.start_month = False
             self.end_year = False
+        else:
+            self.start_month = self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.start_month')
+            self.end_month = self.env['ir.config_parameter'].sudo().get_param('setu_pharma_basic.end_month')
+            if not int(self.start_month):
+                raise ValidationError(("Select fiscal period start month from configuration/settings"))
 
     @api.constrains('end_year', 'start_year')
     def _check_valid_year(self):
@@ -124,12 +127,3 @@ class FiscalYear(models.Model):
                 else:
                     fy.start_month = fy.start_month
 
-    @api.onchange('start_month')
-    @api.depends('start_month')
-    def _compute_start_month(self):
-        for fy in self:
-            if fy.start_month in ['0', False, None]:
-                fy.end_month = False
-            else:
-                fy.end_month = '12' if fy.start_month == '1' else str(
-                    int(fy.start_month) - 1)

@@ -71,7 +71,7 @@
                                         <br/>
                                         <field name="start_year" required="True"/>
                                         <br/>
-                                        <field name="start_month" required="True"/>
+                                        <field name="start_month" required="True" readonly="1" force_save="1"/>
                                     </div>
                                     -
                                     <div class="col-4">
@@ -81,7 +81,7 @@
                                         <br/>
                                         <field name="end_year" readonly="1"/>
                                         <br/>
-                                        <field name="end_month" readonly="1"/>
+                                        <field name="end_month" readonly="1" force_save="1"/>
                                     </div>
                                 </div>
                             </span>
