@@ -43,6 +43,9 @@ class TourPlan(models.Model):
         compute="_compute_state", string="Status", depends=['approval_request_id.request_status'],
         copy=False, store=True, default='new',
         help="Approving status")
+    has_access_request = fields.Boolean(related='approval_request_id.has_access_to_request')
+
+    approval_user_status = fields.Selection(related='approval_request_id.user_status')
     requester_id = fields.Many2one("res.users", string="Requester",
                                    default=lambda self: self.env.user)
     approval_request_id = fields.Many2one('approval.request', "Approval Request",
@@ -256,6 +259,24 @@ class TourPlan(models.Model):
             record.approval_request_id.action_draft()
             record.tour_plan_lines.unlink()
             record.tp_line_generated = False
+
+    def click_on_approve(self):
+        """
+            ->To approve tour plan by approvers
+        """
+        self.approval_request_id.action_approve()
+
+    def click_on_refuse(self):
+        """
+            ->To refuse tour plan by approvers
+        """
+        self.approval_request_id.action_refuse()
+
+    def click_on_cancel(self):
+        """
+            ->To cancel tour plan by approvers
+        """
+        self.approval_request_id.action_cancel()
 
     @api.onchange('tour_plan_lines')
     def onchange_tour_plan_lines(self):

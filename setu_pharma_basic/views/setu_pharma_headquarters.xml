@@ -178,53 +178,60 @@
                                         <field name="name"/>
                                     </h4>
                                 </strong>
-                                <field name="area_id"/>
-                                <br/>
+                                <t t-if="record.area_id.raw_value">
+                                    <field name="area_id"/>
+                                    <br/>
+                                </t>
                                 <field name="city_id"/>
                                 <br/>
                                 <br/>
                                 <div t-attf-class="o_kanban_card_header">
-                                    <div class="o_kanban_card_header_title">
-                                        <h5>
-                                            <a class=" oe_kanban_action oe_kanban_action_a"
-                                               type="object"
-                                               name="action_view_records"
-                                               context="{'open_employees':True}">
-                                                <div attrs="{'invisible':[('total_employees', '=', 0)]}"
-                                                     name="total_employees">
-                                                    <i class="fa fa-users"/>
-                                                    <field name="total_employees"/>
-                                                    Employees
-                                                </div>
-
-                                            </a>
-                                        </h5>
-                                        <h5>
-                                            <a class=" oe_kanban_action oe_kanban_action_a"
-                                               type="object"
-                                               name="action_view_records"
-                                               context="{'open_ex_headquarters':True}">
-                                                <div attrs="{'invisible':[('total_of_ex_headquarters', '=', 0)]}"
-                                                     name="total_of_ex_headquarters">
-                                                    <i class="fa fa-map-marker"/>
-                                                    <field name="total_of_ex_headquarters"/>
-                                                    Ex-headquarters
-                                                </div>
-                                            </a>
-                                        </h5>
-                                        <h5>
-                                            <a class=" oe_kanban_action oe_kanban_action_a"
-                                               type="object"
-                                               name="action_view_records"
-                                               context="{'open_employee_stock_locations':True}">
-                                                <div attrs="{'invisible':[('total_employee_locations', '=', 0)]}"
-                                                     name="total_employee_locations">
-                                                    <i class="fa fa-building-o"/>
-                                                    <field name="total_employee_locations"/>
-                                                    Locations
-                                                </div>
-                                            </a>
-                                        </h5>
+                                    <div class="container o_kanban_card_header_title">
+                                        <div class="row">
+                                            <h5>
+                                                <a class=" oe_kanban_action oe_kanban_action_a"
+                                                   type="object"
+                                                   name="action_view_records"
+                                                   context="{'open_employees':True}">
+                                                    <div attrs="{'invisible':[('total_employees', '=', 0)]}"
+                                                         name="total_employees">
+                                                        <i class="fa fa-users"/>
+                                                        <field name="total_employees"/>
+                                                        Employees
+                                                    </div>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div class="row">
+                                            <h5>
+                                                <a class=" oe_kanban_action oe_kanban_action_a"
+                                                   type="object"
+                                                   name="action_view_records"
+                                                   context="{'open_ex_headquarters':True}">
+                                                    <div attrs="{'invisible':[('total_of_ex_headquarters', '=', 0)]}"
+                                                         name="total_of_ex_headquarters">
+                                                        <i class="fa fa-map-marker"/>
+                                                        <field name="total_of_ex_headquarters"/>
+                                                        Ex-headquarters
+                                                    </div>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div class="row">
+                                            <h5>
+                                                <a class=" oe_kanban_action oe_kanban_action_a"
+                                                   type="object"
+                                                   name="action_view_records"
+                                                   context="{'open_employee_stock_locations':True}">
+                                                    <div attrs="{'invisible':[('total_employee_locations', '=', 0)]}"
+                                                         name="total_employee_locations">
+                                                        <i class="fa fa-building-o"/>
+                                                        <field name="total_employee_locations"/>
+                                                        Locations
+                                                    </div>
+                                                </a>
+                                            </h5>
+                                        </div>
                                     </div>
 
                                 </div>

@@ -57,6 +57,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <field name="approval_user_status" invisible="1"/>
+                    <field name="has_access_request" invisible="1"/>
                     <button name="generate_tour_plan_lines"
                             type="object"
                             string="Generate TP Lines"
@@ -72,6 +74,22 @@
                             string="Reset To Draft"
                             class="btn btn-danger"
                             attrs="{'invisible': ['|', ('tp_line_generated', '!=', True), ('state', '=', 'approved')]}"
+                    />
+                    <button name="click_on_approve"
+                            type="object"
+                            string="Approve"
+                            attrs="{'invisible': [('approval_user_status','!=','pending')]}"
+                    />
+
+                    <button name="click_on_refuse"
+                            type="object"
+                            string="Refuse"
+                            attrs="{'invisible': [('approval_user_status', '!=', 'pending')]}"
+                    />
+                    <button name="click_on_cancel"
+                            type="object"
+                            string="Cancel"
+                            attrs="{'invisible':['|',('state','in',['new','cancel']),'&amp;',('approval_user_status','==',False),('has_access_request','==',False)]}"
                     />
 
                     <field name="state" widget="statusbar"/>
