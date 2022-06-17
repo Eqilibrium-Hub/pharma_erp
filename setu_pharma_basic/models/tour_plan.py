@@ -48,8 +48,7 @@ class TourPlan(models.Model):
     approval_user_status = fields.Selection(related='approval_request_id.user_status')
     requester_id = fields.Many2one("res.users", string="Requester",
                                    default=lambda self: self.env.user)
-    approval_request_id = fields.Many2one('approval.request', "Approval Request",
-                                          ondelete='cascade')
+    approval_request_id = fields.Many2one('approval.request', "Approval Request")
     division_id = fields.Many2one("setu.pharma.division", string="Division", copy=False,
                                   default=lambda self: self.env.user.employee_id.division_id)
     period_id = fields.Many2one("setu.pharma.fiscalperiod", string="Fiscal period", domain=current_next_fiscal_period,

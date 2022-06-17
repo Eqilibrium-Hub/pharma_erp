@@ -139,7 +139,7 @@
                                     <button name="add_partners_to_visit" type="object" icon="fa-users"
                                             aria-label="Add Doctors/Stockists/Chemists" width="0.1"
                                             title="Add Doctors/Stockists/Chemists"
-                                            class="float-right oe_read_only"
+                                            class="float-right oe_edit_only oe_stat_button clickable"
                                             attrs="{'invisible': [('state', 'in', ['approved', 'cancel'])]}"
                                     />
                                     <field name="visit_counts" width="10%"/>

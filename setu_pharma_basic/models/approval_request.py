@@ -6,7 +6,7 @@ class ApprovalRequest(models.Model):
     _inherit = 'approval.request'
 
     approval_request = fields.Reference(
-        string='Record', selection='_selection_target_model')
+        string='Approval Request For', selection='_selection_target_model', ondelete='cascade')
 
     @api.model
     def _selection_target_model(self):

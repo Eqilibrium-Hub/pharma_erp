@@ -42,9 +42,9 @@
                                 </button>
                             </div>
                             <field name="visiting_partner_ids" widget="many2many_tags"
-                                           string="Total Doctors To Visit"
-                                           readonly="1"
-                                    />
+                                   string="Total Doctors To Visit"
+                                   readonly="1"
+                            />
                             <field name="visit_counts"/>
                         </group>
                     </group>
@@ -63,9 +63,12 @@
                       form_view_id="%(setu_pharma_basic.view_tour_plan_line_form)d"
                       mode="month"
                       quick_add="False"
-                      color="ex_headquarter_id">
+                      color="day_working_type">
                 <field name="tour_id"/>
                 <field name="working_date_start"/>
+                <field name="day_working_type"/>
+                <field name="ex_headquarter_id"/>
+                <field name="visit_counts"/>
             </calendar>
         </field>
     </record>
