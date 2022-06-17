@@ -73,4 +73,4 @@ def post_init(cr, registry):
     env = api.Environment(cr, SUPERUSER_ID, {})
     init_settings(env)
     init_fiscal_years_and_periods(env)
-    init_create_new_default_data(env)
+    # init_create_new_default_data(env)

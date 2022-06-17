@@ -4,7 +4,7 @@
     <record id="setu_pharma_division_employee_rule" model="ir.rule">
         <field name="name">Pharma Division - Employee</field>
         <field name="model_id" ref="model_setu_pharma_division"/>
-        <field name="domain_force">[('id', '=', user.employee_id.division_id.id)]</field>
+        <field name="domain_force">[(1,'=',1)]</field>
         <field name="perm_create" eval="1"/>
         <field name="perm_write" eval="1"/>
         <field name="perm_unlink" eval="1"/>
