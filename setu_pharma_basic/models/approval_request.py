@@ -7,7 +7,7 @@ class ApprovalRequest(models.Model):
 
     approval_request = fields.Reference(company_dependent=True,
                                         string='Approval Request For',
-                                        selection='_selection_target_model', ondelete='restrict')
+                                        selection='_selection_target_model')
 
     @api.model
     def _selection_target_model(self):
