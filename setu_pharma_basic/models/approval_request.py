@@ -5,8 +5,7 @@ from odoo.exceptions import ValidationError
 class ApprovalRequest(models.Model):
     _inherit = 'approval.request'
 
-    approval_request = fields.Reference(company_dependent=True,
-                                        string='Approval Request For',
+    approval_request = fields.Reference(string='Approval Request For',
                                         selection='_selection_target_model')
 
     @api.model
