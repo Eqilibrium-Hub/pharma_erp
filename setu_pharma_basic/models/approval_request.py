@@ -1,12 +1,13 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
 class ApprovalRequest(models.Model):
     _inherit = 'approval.request'
 
-    approval_request = fields.Reference(
-        string='Approval Request For', selection='_selection_target_model', ondelete='cascade')
+    approval_request = fields.Reference(company_dependent=True,
+                                        string='Approval Request For',
+                                        selection='_selection_target_model', ondelete='restrict')
 
     @api.model
     def _selection_target_model(self):
@@ -21,5 +22,5 @@ class ApprovalRequest(models.Model):
         """
         if self.approval_request._name == 'setu.pharma.tour.plan':
             if not self.approval_request.tour_plan_lines:
-                raise ValidationError(("Tourplan line is mandatory Generate or Add TP line"))
+                raise ValidationError(_("Tourplan line is mandatory Generate or Add TP line"))
         return super(ApprovalRequest, self).action_confirm()
