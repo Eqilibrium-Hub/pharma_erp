@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import datetime,date
+from datetime import datetime, date
 from dateutil import relativedelta
 from werkzeug.urls import url_encode
 from odoo import fields, models, api, _
@@ -240,8 +240,8 @@ class TourPlan(models.Model):
             if tp.date != datetime.date.today():
                 tp.date = datetime.date.today()
             tp._message_log(body=_('<b>Tour Plan Submitted Successfully!</b> '
-                                   'You can review your Approval Request '
-                                   '<a href="%s">%s</a>') % (url, tp.approval_request_id.name))
+                                   'You can review your Approval Request :{}').format("<a href=# data-oe-model=approval.request data-oe-id=" + str(
+                                         tp.approval_request_id.id) + ">" + tp.approval_request_id.name + "</a>"))
 
         if len(self) == 1:
             """ Return Rainbow effect on tp submit """

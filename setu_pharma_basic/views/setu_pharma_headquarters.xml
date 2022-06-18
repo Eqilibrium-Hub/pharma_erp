@@ -195,7 +195,7 @@
                                                    context="{'open_employees':True}">
                                                     <div attrs="{'invisible':[('total_employees', '=', 0)]}"
                                                          name="total_employees">
-                                                        <i class="fa fa-users"/>
+                                                        <i class="fa fa-users"  title="Total Employees" />
                                                         <field name="total_employees"/>
                                                         Employees
                                                     </div>
@@ -210,7 +210,7 @@
                                                    context="{'open_ex_headquarters':True}">
                                                     <div attrs="{'invisible':[('total_of_ex_headquarters', '=', 0)]}"
                                                          name="total_of_ex_headquarters">
-                                                        <i class="fa fa-map-marker"/>
+                                                        <i class="fa fa-map-marker" title="Total ex-headquarters"/>
                                                         <field name="total_of_ex_headquarters"/>
                                                         Ex-headquarters
                                                     </div>
@@ -225,7 +225,7 @@
                                                    context="{'open_employee_stock_locations':True}">
                                                     <div attrs="{'invisible':[('total_employee_locations', '=', 0)]}"
                                                          name="total_employee_locations">
-                                                        <i class="fa fa-building-o"/>
+                                                        <i class="fa fa-building-o" title="Total Locations"/>
                                                         <field name="total_employee_locations"/>
                                                         Locations
                                                     </div>
