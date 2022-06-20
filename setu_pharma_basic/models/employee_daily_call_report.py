@@ -1,9 +1,7 @@
-import json as simplejson
 from datetime import date
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
-from lxml import etree
 from odoo import fields, models, _, api
 
 
@@ -36,10 +34,37 @@ class EmployeeDailyCallReport(models.Model):
     ], string='Distance Calculation')
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('submitted', 'Submitted'),
-    ], default='draft', string='State')
+        ('arsubmitted', 'Approval Request Submitted'),
+        ('approved', 'Approved'),
+        ('submitted', 'DCR Submitted'),
+        ('refused', 'Refused'),
+        ('cancel', 'Cancelled'),
+    ], depends=['approval_request_id.request_status'],
+        copy=False, store=True, compute="_compute_state",
+        default='draft', string='State')
     is_join_working = fields.Boolean("Is Join Working?")
     total_of_call_history = fields.Integer('Total Calls', compute="_compute_total_calls")
+    approval_request_id = fields.Many2one('approval.request', "Approval Request",
+                                          ondelete='cascade')
+    requester_id = fields.Many2one("res.users", string="Requester",
+                                   default=lambda self: self.env.user)
+    readonly_line = fields.Boolean(default=True)
+    lock_days = fields.Boolean(default=True)
+
+    def _compute_state(self):
+        for emp_dcr in self:
+            if emp_dcr.approval_request_id.request_status == 'approved':
+                emp_dcr.readonly_line = False
+            elif emp_dcr.approval_request_id.request_status == 'refused' or emp_dcr.approval_request_id.request_status == 'cancel' or emp_dcr.approval_request_id.request_status == 'pending':
+                emp_dcr.readonly_line = True
+            if emp_dcr.approval_request_id.request_status == 'pending':
+                emp_dcr.state = 'arsubmitted'
+            else:
+                emp_dcr.state = emp_dcr.approval_request_id.request_status or emp_dcr.state
+
+            daysdiff = date.today() - emp_dcr.call_date
+            if daysdiff.days > emp_dcr.employee_id.designation_id.dcr_submit_and_edit_lock_days:
+                emp_dcr.lock_days = True
 
     @api.depends('daily_call_history')
     def _compute_total_calls(self):
@@ -71,7 +96,38 @@ class EmployeeDailyCallReport(models.Model):
         if vals_list.get('name', _('New')) == _('New'):
             vals_list['name'] = self.env['ir.sequence'].next_by_code(
                 'setu.pharma.employee.daily.call.seq') or _('New')
-        return super(EmployeeDailyCallReport, self).create(vals_list)
+        """
+        This method is generate approval request if dcr date before lock days
+        """
+        emp_dcr = super(EmployeeDailyCallReport, self).create(vals_list)
+        daysdiff = date.today() - emp_dcr.call_date
+        if emp_dcr and daysdiff.days > emp_dcr.employee_id.designation_id.dcr_submit_and_edit_lock_days:
+            emp_dcr.readonly_line = True
+            approval_category = self.env.ref(
+                'setu_pharma_basic.approval_category_data_dcr_approval')
+            self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
+                                                                             model_record=emp_dcr)
+        else:
+            emp_dcr.readonly_line = False
+        return emp_dcr
+
+    """
+    This method is generate approval request if dcr date before lock days
+    """
+    def write(self, vals):
+        for emp_dcr in self:
+            if vals.get('call_date'):
+                call_date = datetime.strptime(vals.get('call_date'), '%Y-%m-%d').date()
+                daysdiff = date.today() - call_date
+                if emp_dcr and daysdiff.days > emp_dcr.employee_id.designation_id.dcr_submit_and_edit_lock_days:
+                    vals.update({'readonly_line': True})
+                    approval_category = self.env.ref(
+                        'setu_pharma_basic.approval_category_data_dcr_approval')
+                    self.env['setu.pharma.area'].create_approval_request_and_confirm(approval_category,
+                                                                                     model_record=emp_dcr)
+                else:
+                    vals.update({'readonly_line': False})
+        return super(EmployeeDailyCallReport, self).write(vals)
 
     def action_submit_dcr(self):
         """ Submit DCR. """
@@ -83,41 +139,6 @@ class EmployeeDailyCallReport(models.Model):
         for dcr in self:
             dcr.update({'state': 'draft'})
 
-    @api.model
-    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
-                                      submenu=submenu)
-        doc = etree.fromstring(res['arch'])
-        if view_type == 'form':
-            try:
-                active_id = self._context['params']['id']
-            except:
-                return res
-            active_id_browsable = self.env['setu.pharma.employee.daily.call'].browse(active_id)
-            call_date = active_id_browsable.call_date
-
-            # Code For Lock DCR for Edit based on Employee's DCR Edit Lock Days Also If
-            # Submited Than Also Readonly
-            dcr_edit_days = active_id_browsable.employee_id.dcr_edit_lock_days
-            call_date_edit = call_date + relativedelta(days=+ dcr_edit_days)
-            remaining_day_for_edit = (call_date_edit - fields.Date.today()).days
-            if remaining_day_for_edit < 1 or active_id_browsable.state == 'submitted':
-                for node in doc.xpath("//field"):
-                    modifiers = simplejson.loads(node.get("modifiers"))
-                    modifiers['readonly'] = True
-                    node.set('modifiers', simplejson.dumps(modifiers))
-
-            """Code For Lock DCR for Submit based on Employee's DCR Submit Lock Days"""
-            dcr_submit_days = active_id_browsable.employee_id.dcr_submit_lock_days
-            call_date_submit = call_date + relativedelta(days=+ dcr_submit_days)
-            remaining_day_for_submit = (call_date_submit - fields.Date.today()).days
-            if remaining_day_for_submit < 1:
-                active_id_browsable.state = 'submitted'
-            else:
-                active_id_browsable.state = 'draft'
-
-        res['arch'] = etree.tostring(doc, encoding='unicode')
-        return res
 
     @api.model
     def default_get(self, fields):

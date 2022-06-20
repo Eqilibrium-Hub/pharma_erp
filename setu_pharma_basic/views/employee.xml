@@ -30,8 +30,7 @@
                 <field name="division_id"/>
                 <field name="headquarter_id" optional="hide"/>
                 <field name="designation_id"/>
-                <field name="dcr_submit_lock_days" optional="hide"/>
-                <field name="dcr_edit_lock_days" optional="hide"/>
+
             </tree>
         </field>
     </record>
@@ -63,8 +62,7 @@
                             <field name="stock_location_id" readonly="1"/>
                         </group>
                         <group>
-                            <field name="dcr_submit_lock_days"/>
-                            <field name="dcr_edit_lock_days"/>
+
                         </group>
                     </group>
                 </page>

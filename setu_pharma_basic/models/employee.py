@@ -15,8 +15,6 @@ class HrEmployeePrivate(models.Model):
                                   copy=False)
     designation_id = fields.Many2one("setu.pharma.designation", string="Designation",
                                      copy=False)
-    dcr_submit_lock_days = fields.Integer(string="DCR Submit Lock Days", tracking=True)
-    dcr_edit_lock_days = fields.Integer(string="DCR Edit Lock Days", tracking=True)
     aadhar_no = fields.Char(string="Aadhar No", size=12, copy=False)
     pan_no = fields.Char(string="PAN No", size=10, copy=False)
     headquarter_id = fields.Many2one(comodel_name="setu.pharma.headquarters", string="Headquarter",

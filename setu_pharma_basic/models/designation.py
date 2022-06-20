@@ -22,6 +22,8 @@ class Designation(models.Model):
                                          help="There is Only One Root Designation in which you "
                                               "can mark this field as True else it raise a "
                                               "Validation.")
+    dcr_submit_and_edit_lock_days = fields.Integer(string="DCR Submit And Edit Lock Days", tracking=True)
+
 
     @api.constrains('code')
     def _check_designation_name(self):

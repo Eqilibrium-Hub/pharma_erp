@@ -68,15 +68,16 @@
                                 </div>
                             </div>
 
+
+
+                        </div>
+                    </div>
+                    <div class="app_settings_block" data-string="Pharma" string="Pharma" data-key="setu_pharma_basic">
+                        <h2>Fiscal Year</h2>
+                         <div class="row mt16 o_settings_container" name="pharma_container">
                             <div class="col-12 col-lg-6 o_setting_box" id="fiscal_year_month_selection">
                                 <div class="o_setting_right_pane">
-                                    <div class="o_setting_right_pane">
-                                        <div>
-                                            <b style="color:#091124">
-                                                Mark To Add Doctors Mandatory While Creating Tour Plan.
-                                            </b>
-                                        </div>
-                                    </div>
+                                    <b>Select Start Month for Fiscal Year</b> <br></br> <br></br>
                                     <label for="start_month"/>
                                     <div class="content-group">
                                         <div class="mt16">
@@ -92,8 +93,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </xpath>

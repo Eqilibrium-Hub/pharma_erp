@@ -49,6 +49,8 @@
                         <group>
                             <field name="code" required="1"/>
                             <field name="company_id" required="1" readonly="1"/>
+                            <field name="dcr_submit_and_edit_lock_days"/>
+
                         </group>
                     </group>
                     <notebook>

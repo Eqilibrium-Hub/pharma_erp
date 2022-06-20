@@ -50,12 +50,12 @@
             <form>
                 <header>
                     <button name="action_submit_dcr" type="object" string="Submit" class="btn btn-primary"
-                            attrs="{'invisible': [('state', '=', 'submitted')]}"
+                            attrs="{'invisible': ['|',('state', '=', 'submitted'),('readonly_line','=',True)]}"
                     />
                     <button name="action_reset_dcr" type="object" string="Reset To Draft" class="btn btn-danger"
-                            attrs="{'invisible': [('state', '=', 'draft')]}"
+                            attrs="{'invisible': ['|','|',('state', '=', 'draft'),('state','=','approved'),('lock_days','=',True)]}"
                     />
-                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -66,25 +66,29 @@
                     <group>
                         <group>
                             <field name="employee_id" required="1"
-                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
+                                   attrs="{'readonly': ['|',('state', 'in', ('submitted')),('readonly_line','=',True)]}"/>
                             <field name="division_id" required="1" options="{'no_create': True}"/>
                             <field name="headquarter_id" required="1" options="{'no_create': True}"/>
                             <field name="distance_calculation_type"
-                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
+                                   attrs="{'readonly': ['|',('state', 'in', ('submitted')),('readonly_line','=',True)]}"/>
                             <field name="is_join_working" widget="boolean_toggle"
                                    attrs="{'readonly': [('state', 'in', ('submitted'))]}"/>
                         </group>
                         <group>
-                            <field name="call_date" required="1" readonly="1"/>
-                            <field name="tour_plan_id" domain="[('state', '=', 'approved')]"/>
+                            <field name="call_date" required="1" attrs="{'readonly':[('approval_request_id','>', 0 ) ] }"/>
+                            <field name="tour_plan_id" domain="[('state', '=', 'approved')]"
+                                    attrs="{'readonly': [('readonly_line','=',True)]}"/>
                             <field name="tour_plan_line_ids" invisible="1"/>
                             <field name="company_id" required="1" readonly="1"/>
+                            <field name="approval_request_id" readonly="1"/>
+                            <field name="lock_days" readonly="1" invisible="1"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Call History">
+                            <field name="readonly_line" invisible="1"/>
                             <field name="daily_call_history"
-                                   attrs="{'readonly': [('state', 'in', ('submitted'))]}"
+                                   attrs="{'readonly': ['|',('state', 'in', ('submitted')),('readonly_line','=',True)]}"
                             >
                                 <tree editable="bottom">
                                     <field name="call_date" required="1"/>

@@ -16,6 +16,7 @@
         'data/approval_categories/pharma_approval_category_data.xml',
         'data/approval_categories/pharma_approval_tour_plan_category.xml',
         'data/approval_categories/pharma_approval_general_category.xml',
+        'data/approval_categories/pharma_approval_dcr_category.xml',
         'data/uom_data.xml',
 
         # Sequences
