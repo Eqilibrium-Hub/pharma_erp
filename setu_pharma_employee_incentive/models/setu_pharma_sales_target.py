@@ -1,6 +1,5 @@
 from datetime import datetime, date
-from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo import api, fields, models, _, exceptions
 
 
 class PharmaSalesTarget(models.Model):
@@ -33,7 +32,7 @@ class PharmaSalesTarget(models.Model):
         ('draft', 'Draft'),
         ('running', 'Running'),
         ('expired', 'Expired')],
-        readonly="True", default='draft')
+        readonly="True", compute="_compute_target_date")
     target_product_lines_ids = fields.One2many('setu.pharma.target.product.lines',
                                                'target_id',
                                                help="Focused Products For Target")
@@ -45,7 +44,7 @@ class PharmaSalesTarget(models.Model):
                                         help="Select Months To Give Rewards ")
     incentive_structure_id = fields.Many2one('setu.pharma.incentive.structure')
     target_end_date = fields.Date("Target End Date", compute="_compute_target_date")
-    target_start_date = fields.Date("Target Start Date", compute="_compute_target_date")
+    target_start_date = fields.Date("Target Start Date",  compute="_compute_target_date")
     message = fields.Html(compute='_compute_message')
 
     @api.depends('fiscal_month_ids')
@@ -53,6 +52,9 @@ class PharmaSalesTarget(models.Model):
         """
             Generate Status Of Target Based On Fiscal Months
         """
+        self.target_start_date = ''
+        self.target_end_date = ''
+        self.status = 'draft'
         for record in self:
             if record.fiscal_month_ids:
                 min_fiscal_period_ids = record.fiscal_month_ids.search([
@@ -73,13 +75,13 @@ class PharmaSalesTarget(models.Model):
                         record.target_end_date = record.fiscal_month_ids.filtered(lambda x: x.id == period.id).end_date
 
                 current_date = datetime.now().date()
-
-                if current_date >= record.target_start_date and current_date <= record.target_end_date:
-                    record.status = "running"
-                elif current_date > record.target_end_date:
-                    record.status = "expired"
-                else:
-                    record.status = "draft"
+                if record.target_start_date and record.target_end_date:
+                    if current_date < record.target_end_date and current_date < record.target_start_date:
+                        record.status = "draft"
+                    elif current_date > record.target_end_date:
+                        record.status = "expired"
+                    else:
+                        record.status = "running"
 
     @api.onchange('based_on_product', 'based_on_sales')
     def _onchange_based_on_product(self):
